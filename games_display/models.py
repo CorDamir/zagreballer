@@ -5,6 +5,7 @@ from django.db import models
 class FutsalField(models.Model):
     name = models.CharField(max_length=100, unique=True, null=False)
     location_address = models.TextField(null=False)
+    number_of_fields = models.IntegerField(default=1)
 
     CITYBLOCK_CHOICES = (
         (0, "Donji grad"),
