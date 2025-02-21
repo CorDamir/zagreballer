@@ -11,4 +11,6 @@ class FutsalFieldAdmin(admin.ModelAdmin):
     }
 
 
-admin.site.register(models.FutsalGame)
+@admin.register(models.FutsalGame)
+class FutsalGameAdmin(admin.ModelAdmin):
+    filter_horizontal = ['all_joining_players']

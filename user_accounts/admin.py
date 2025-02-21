@@ -9,7 +9,7 @@ class PlayerAdmin(UserAdmin):
     add_form = PlayerCreationForm
     form = PlayerChangeForm
     model = Player
-    list_display = ["email", "username",]
+    list_display = ["username", "email"]
 
 
 admin.site.register(Player, PlayerAdmin)

@@ -1,0 +1,7 @@
+{% extends "index.html" %}
+
+{% block main %}
+    {% for game in games %}
+        <p>{{ game.players_full }} - {{ game.players_missing }}</p>
+    {% endfor %}
+{% endblock %}
