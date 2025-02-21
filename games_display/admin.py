@@ -11,4 +11,4 @@ class FutsalFieldAdmin(admin.ModelAdmin):
     }
 
 
-admin.sites.register(models.FutsalGame)
+admin.site.register(models.FutsalGame)
