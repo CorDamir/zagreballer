@@ -9,3 +9,6 @@ class FutsalFieldAdmin(admin.ModelAdmin):
     formfield_overrides = {
         JSONField: {'widget': JSONEditorWidget},
     }
+
+
+admin.sites.register(models.FutsalGame)
