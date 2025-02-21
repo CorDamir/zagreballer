@@ -1,4 +1,5 @@
 from django.db import models
+from user_accounts.models import Player
 
 
 # Create your models here.
@@ -37,7 +38,7 @@ class FutsalField(models.Model):
     location_gps = models.JSONField(default=returnDictionary)
 
     def __str__(self):
-        return f"{self.name} | {self.get_cityblock}"
+        return f"{self.name} | {self.get_location_cityblock_display()}"
 
     @property
     def get_cityblock(self):
@@ -45,3 +46,26 @@ class FutsalField(models.Model):
             if i[0] == int(self.location_cityblock):
                 return i[1]
         return self.location_cityblock
+
+
+class FutsalGame(models.Model):
+    players_full = models.IntegerField()
+    players_missing = models.IntegerField()
+    custom_description = models.TextField()
+    age_min = models.IntegerField()
+    age_max = models.IntegerField()
+    play_time_start = models.DateTimeField()
+    play_time_end = models.TimeField()
+    field_number = models.IntegerField()
+
+    creator = models.ForeignKey(
+        Player, on_delete=models.CASCADE, related_name="game_creator"
+        )
+
+    futsal_field = models.OneToOneField(
+        FutsalField, on_delete=models.CASCADE
+        )
+
+    all_joining_players = models.ManyToManyField(
+        Player, related_name="joining_players"
+        )
