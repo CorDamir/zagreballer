@@ -12,10 +12,23 @@
 </head>
 
 <body>
-    <div id="games-container">
-        {% block main %}
-        {% endblock %}
-    </div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}" class="active-link">HOME</a></li>
+                <li><a href="{% url 'index' %}">ABOUT</a></li>
+                <li><a href="{% url 'index' %}">SIGN UP / LOGIN</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <div id="games-container">
+            {% block main %}
+            {% endblock %}
+        </div>
+    </main>
+
 </body>
 
 </html>

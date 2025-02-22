@@ -1,18 +1,67 @@
-body {
-    margin: 0;
-    padding: 0;
-    background: 
-    background-size: cover;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* DEFINE COLOR SCHEME */
+:root {
+    --strong: #3d2617;
+    --bg: #BDB2A0;
+    --accent: #02f24e;
+    --accent-dim: #31572C;
+    --catch: #254E70;
+    --menu: #e3e3e3;
 }
 
+/* GENERAL STYLES */
+body {
+    font-family: "Noto Sans", serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+}
+
+/* HEADER AND NAVIGATION */
+header{
+    background-color: var(--strong);
+    padding: 15px;
+    letter-spacing: 0.1em;
+    box-shadow: 0 0 3px 5px black;
+}
+
+nav ul,
+nav li,
+nav a {
+    all: unset;
+    color: var(--menu);
+}
+
+nav li{
+    margin: 8px;
+    margin-bottom: 3px;
+}
+
+nav li:hover {
+    cursor: pointer;
+    text-shadow: 0 0 10px white;
+}
+
+.active-link {
+    border-bottom: 1px solid white;
+    padding-bottom: 2px;
+}
+
+/* GAME CARDS DISPLAY */
+
 #games-container{
-    flex-grow: 1;
-    max-width: 80%;
+    margin: 10px;
 }
 
 .game-card{
+    border: 2px solid var(--strong);
+    border-radius: 10px;
+    background-color: #3d2617ca;
+    color: floralwhite;
+    padding: 1rem;
+}
 
+.game-card table td{
+    padding-right: 40px;
 }
