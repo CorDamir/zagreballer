@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: 
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+#games-container{
+    flex-grow: 1;
+    max-width: 80%;
+}
+
+.game-card{
+
+}

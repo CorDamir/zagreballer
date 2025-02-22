@@ -40,13 +40,6 @@ class FutsalField(models.Model):
     def __str__(self):
         return f"{self.name} | {self.get_location_cityblock_display()}"
 
-    @property
-    def get_cityblock(self):
-        for i in self.CITYBLOCK_CHOICES:
-            if i[0] == int(self.location_cityblock):
-                return i[1]
-        return self.location_cityblock
-
 
 class FutsalGame(models.Model):
     players_full = models.IntegerField()

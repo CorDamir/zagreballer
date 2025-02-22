@@ -1,7 +1,28 @@
+<!-- games players_full 
+           players_missing
+           custom_description
+           age_min
+           age_max
+           play_time_start
+           play_time_end
+           field_number
+           creator
+           futsal_field
+           all_joining_players
+-->
 {% extends "index.html" %}
 
 {% block main %}
     {% for game in games %}
-        <p>{{ game.players_full }} - {{ game.players_missing }}</p>
+        <div class="game-card">
+            <p>{{ game.creator.first_name }} <span class="username-link">({{ game.creator }})</span></p>
+            <p>{{ game.futsal_field.name }}</p>
+            <p>{{ game.futsal_field.location_address | safe }}</p>
+            <p>{{ game.futsal_field.get_location_cityblock_display }}</p>
+            <time>{{ game.play_time_start }}</time>
+            <p>Age range: {{ game.age_min }} - <span>{{ game.age_max }}</span></p>
+            <p>{{ game.custom_description | safe }}</p>
+        </div>
+        <hr>
     {% endfor %}
 {% endblock %}
