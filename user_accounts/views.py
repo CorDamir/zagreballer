@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 from .models import Player
@@ -60,4 +61,10 @@ def signup_handler(request):
             message = "Sign up completed. You can now log in."
 
     request.session["message"] = message
+    return redirect("index")
+
+
+def logout_handler(request):
+    logout(request)
+    request.session["message"] = "You are now logged out."
     return redirect("index")

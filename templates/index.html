@@ -20,10 +20,12 @@
     </div>
 
     <main>
-        {% include "login-forms.html" %}
+        {% if not user.is_authenticated %}
+            {% include "login-forms.html" %}
+        {% endif %}
         <div id="grid-container">
             <section id="menu-options">
-
+                {% include "options-menu.html" %}
             </section>
 
             <section id="games-container">

@@ -7,6 +7,8 @@ def display_games(request):
     joinable_games = FutsalGame.objects.all()
     if "message" in request.session:
         message = request.session["message"]
+    else:
+        message = ""
 
     return render(
         request,

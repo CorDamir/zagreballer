@@ -84,10 +84,22 @@ body > header {
 /* MENU AND OPTIONS */
 #menu-options {
     grid-area: 1 / 1 / span 4 / span 1;
-    background-color: var(--strong);
     box-shadow: 1px 0 7px 5px black;
     background: url('../images/background_field.jpeg') no-repeat 60% 80%;
     background-size: cover;
+    padding: 1rem;
+    color: white;
+}
+
+#menu-options a {
+    all: unset;
+    cursor: pointer;
+    user-select: none;
+    color: var(--accent);
+}
+
+#menu-options a:hover {
+    text-decoration: underline;
 }
 
 /* GAME CARDS DISPLAY */
