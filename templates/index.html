@@ -12,16 +12,17 @@
 </head>
 
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="{% url 'index' %}" class="active-link">HOME</a></li>
-                <li><a href="{% url 'index' %}">ABOUT</a></li>
-                <li id="login-signup-link"><a href="#">SIGN UP / LOGIN</a></li>
-            </ul>
-        </nav>
-    </header>
-    
+    <section id="options-menu">
+
+    </section>
+
+    <div id="popup-message" {% if not message %} class="hidden" {% endif %}>
+        <span class="error-message">
+            {{ message | safe }}
+        </span>
+        <span id="popup-close-button">X</span>
+    </div>
+
     <main>
         {% include "login-forms.html" %}
         <div id="grid-container">

@@ -1,15 +1,7 @@
-<div id="login-form-container" {% if not messages or user.is_authenticated %}class="hidden"{% endif %}>
+<div id="login-form-container" {% if not message or user.is_authenticated %} class="hidden" {% endif %}>
     <input type="checkbox" id="form-toggler">
 
     <div class="login form">
-        <div id="login-message" {% if not messages %} class="hidden" {% endif %}>
-            {% for message in messages %}
-                <span class="error-message">
-                    {{ message }}
-                </span> 
-            {% endfor %}
-        </div>
-
         <header>Log in</header>
 
         <form action="{% url 'login_handler' %}" method="POST">
@@ -30,11 +22,12 @@
     <div class="registration form">
         <header>Sign up</header>
 
-        <form action="#">
-            <input type="email" placeholder="Enter your email" required>
-            <input type="text" placeholder="Choose a username" required>
-            <input type="password" placeholder="Create a password" required>
-            <input type="password" placeholder="Confirm your password" required>
+        <form action="{% url 'signup_handler' %}" method="POST">
+            {% csrf_token %}
+            <input name="email" type="email" placeholder="Enter your email" required>
+            <input name="username" type="text" placeholder="Choose a username" required>
+            <input name="password" type="password" placeholder="Create a password" required>
+            <input name="confirm-password" type="password" placeholder="Confirm your password" required>
             <input type="submit" class="button" value="Sign up">
         </form>
 
