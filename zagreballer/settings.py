@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 import dj_database_url
 if os.path.isfile('env.py'):
-    import env
+    import env # noqa
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +29,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ["127.0.0.1", ".herokuapp.com"]
 
 CSRF_TRUSTED_ORIGINS = [

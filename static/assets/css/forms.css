@@ -1,0 +1,95 @@
+#login-form-container {
+    background-color: var(--strong);
+    color: var(--menu);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    max-width: 350px;
+    width: 85%;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+#login-form-container .registration {
+    display: none;
+}
+
+#form-toggler:checked ~ .registration {
+    display: block;
+}
+
+#form-toggler:checked ~ .login {
+    display: none;
+}
+
+#form-toggler {
+    display: none;
+}
+
+#login-form-container .form {
+    padding: 2rem;
+}
+
+.form header {
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form input {
+    box-sizing: border-box;
+    padding: 0 15px;
+    background-color: var(--bg);
+    height: 50px;
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 1.3rem;
+    border: 1px solid var(--bg);
+    border-radius: 6px;
+    outline: none;
+}
+
+.form input:focus {
+    box-shadow: 0 0px 3px rgb(255, 255, 255);
+}
+
+.form a {
+    padding-left: 3px;
+    font-size: 14px;
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.form a:hover {
+    text-decoration: underline;
+}
+
+.form input.button {
+    color: #fff;
+    background: var(--accent-dim);
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: 1.7rem;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.form input.button:hover {
+    background: var(--accent);
+}
+
+.signup {
+    font-size: 17px;
+    text-align: center;
+}
+
+.signup label {
+    color: var(--accent);
+    cursor: pointer;
+}
+
+.signup label:hover {
+    text-decoration: underline;
+}

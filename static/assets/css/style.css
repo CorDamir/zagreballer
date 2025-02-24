@@ -4,10 +4,16 @@
 :root {
     --strong: #3d2617;
     --bg: #BDB2A0;
-    --accent: #02f24e;
-    --accent-dim: #31572C;
+    --accent: #6290C3;
+    --accent-dim: #41337A;
     --catch: #254E70;
     --menu: #e3e3e3;
+    --whitish: floralwhite;
+}
+
+/* TOGGLE CLASSES FOR JS */
+.hidden {
+    display: none;
 }
 
 /* GENERAL STYLES */
@@ -19,7 +25,7 @@ body {
 }
 
 /* HEADER AND NAVIGATION */
-header{
+body > header {
     background-color: var(--strong);
     padding: 15px;
     letter-spacing: 0.1em;
@@ -62,6 +68,6 @@ nav li:hover {
     padding: 1rem;
 }
 
-.game-card table td{
+.game-card td:first-child{
     padding-right: 40px;
 }
