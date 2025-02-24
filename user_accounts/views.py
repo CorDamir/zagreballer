@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
@@ -8,63 +7,85 @@ from .models import Player
 
 # Create your views here.
 def login_handler(request):
-    username = request.POST["username"]
-    password = request.POST["password"]
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
 
-    user = authenticate(
-        request,
-        username=username,
-        password=password
-        )
+        user = authenticate(
+            request,
+            username=username,
+            password=password
+            )
 
-    if user is not None:
-        login(request, user)
-        message = "Logged in as " + user.username + "."
+        if user is not None:
+            login(request, user)
+            message = "Logged in as " + user.username + "."
+        else:
+            message = "Login failed. Check your credentials."
+
+        request.session["message"] = message
+
+        if "signup" in request.session:
+            del request.session["signup"]
+
     else:
-        message = "Login failed. Check your credentials."
+        request.session["message"] = "Wrong request."
 
-    request.session["message"] = message
     return redirect("index")
 
 
 def signup_handler(request):
-    data = request.POST
-    user = Player
+    if request.method == "POST":
+        data = request.POST
+        user = Player
 
-    user.email = data["email"]
-    user.username = data["username"]
-    user.password = data["password"]
+        user.email = data["email"]
+        user.username = data["username"]
+        user.password = data["password"]
 
-    if len(user.username) < 3 or len(user.username) > 15:
-        message = "Username should be between 3 and 15 characters long."
+        if len(user.username) < 3 or len(user.username) > 15:
+            message = "Username should be between 3 and 15 characters long."
 
-    elif user.password != data["confirm-password"]:
-        message = "Passwords do not match."
+        elif user.password != data["confirm-password"]:
+            message = "Passwords do not match."
+
+        else:
+            try:
+                validate_password(
+                    user.password, user=user, password_validators=None
+                )
+
+            except ValidationError as e:
+                message = ""
+                for error in e.error_list:
+                    for err in error.messages:
+                        message += err + "<br>"
+
+            else:
+                user = Player.objects.create_user(
+                    username=user.username,
+                    email=user.email,
+                    password=user.password
+                    )
+                message = "Sign up completed. You can now log in."
+
+        request.session["message"] = message
+        request.session["signup"] = True
 
     else:
-        try:
-            validate_password(
-                user.password, user=user, password_validators=None
-            )
+        request.session["message"] = "Wrong request."
 
-        except ValidationError as e:
-            message = ""
-            for error in e.error_list:
-                for err in error.messages:
-                    message += err + "<br>"
-        else:
-            user = Player.objects.create_user(
-                username=user.username,
-                email=user.email,
-                password=user.password
-                )
-            message = "Sign up completed. You can now log in."
-
-    request.session["message"] = message
     return redirect("index")
 
 
 def logout_handler(request):
-    logout(request)
-    request.session["message"] = "You are now logged out."
+    if request.user.is_authenticated:
+        logout(request)
+        request.session["message"] = "You are now logged out."
+    else:
+        request.session["message"] = "Not logged in."
+
+    if "signup" in request.session:
+        del request.session["signup"]
+
     return redirect("index")

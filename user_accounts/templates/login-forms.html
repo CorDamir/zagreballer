@@ -1,5 +1,5 @@
-<div id="login-form-container" {% if not message or user.is_authenticated %} class="hidden" {% endif %}>
-    <input type="checkbox" id="form-toggler">
+<div id="login-form-container">
+    <input type="checkbox" id="form-toggler" {% if request.session.signup %} checked {% endif %}>
 
     <div class="login form">
         <header>Log in</header>
