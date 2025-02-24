@@ -24,9 +24,15 @@
     
     <main>
         {% include "login-forms.html" %}
-        <div id="games-container">
-            {% block main %}
-            {% endblock %}
+        <div id="grid-container">
+            <div id="user-options">
+                
+            </div>
+
+            <div id="games-container">
+                {% block main %}
+                {% endblock %}
+            </div>
         </div>
     </main>
 

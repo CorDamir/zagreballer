@@ -16,21 +16,27 @@
     {% for game in games %}
         <div class="game-card">
             <table>
-                <tr>
-                    <td>Playing field:</td>
-                    <td>{{ game.futsal_field.name }}</td>
-                </tr>
-                <tr>
-                    <td>Date and time:</td>
-                    <td>{{ game.play_time_start }}</td>
-                </tr>
-                <tr>
-                    <td>City block:</td>
-                    <td>{{ game.futsal_field.get_location_cityblock_display }}</td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td>Playing field:</td>
+                        <td>{{ game.futsal_field.name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Date and time:</td>
+                        <td>{{ game.play_time_start }}</td>
+                    </tr>
+                    <tr>
+                        <td>City block:</td>
+                        <td>{{ game.futsal_field.get_location_cityblock_display }}</td>
+                    </tr>
+                </tbody>
             </table>
-            
+
             <hr>
+
+            <div class="game-card-info-text">
+                {{ game.custom_description }}
+            </div>
         </div>
     {% endfor %}
 {% endblock %}

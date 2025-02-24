@@ -12,7 +12,7 @@
     --reddish: #ec0b43;
 }
 
-/* TOGGLE CLASSES FOR JS */
+/* TOGGLE-able CLASSES */
 .hidden {
     display: none;
 }
@@ -63,18 +63,50 @@ nav li:hover {
     padding-bottom: 2px;
 }
 
-/* GAME CARDS DISPLAY */
-
-#games-container{
-    margin: 10px;
+/* GRID SYSTEM */
+#grid-container {
+    display: grid;
 }
 
+#games-container {
+    display: flex;
+    justify-content: center;
+}   
+
+#user-options {
+
+}
+/* MENU AND OPTIONS */
+
+
+
+/* GAME CARDS DISPLAY */
 .game-card{
+    user-select: none;
     border: 2px solid var(--strong);
     border-radius: 10px;
-    background-color: #3d2617ca;
-    color: floralwhite;
-    padding: 1rem;
+    background: url('../images/simple-background.jpeg') no-repeat center 65%;
+    background-size: cover;
+    color: white;
+    padding: 0.7rem;
+    width: 85%;
+    max-width: 350px;
+    margin: 1rem;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.game-card:hover .game-card{
+    transform: scale(98%);
+}
+
+.game-card:hover{
+    transform: scale(102%);
+    box-shadow: 1px 1px 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.game-card-info-text{
+    padding: 10px;
 }
 
 .game-card td:first-child{

@@ -1,13 +1,10 @@
-<div id="login-form-container" {% if not messages %}class="hidden"{% endif %}>
+<div id="login-form-container" {% if not messages or user.is_authenticated %}class="hidden"{% endif %}>
     <input type="checkbox" id="form-toggler">
 
     <div class="login form">
         <div id="login-message" {% if not messages %} class="hidden" {% endif %}>
             {% for message in messages %}
-                <span {% if message.tags == "success" %} class="success-message"
-                      {% else %} class="error-message" 
-                      {% endif %}
-                >
+                <span class="error-message">
                     {{ message }}
                 </span> 
             {% endfor %}

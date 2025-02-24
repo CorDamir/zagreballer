@@ -15,12 +15,12 @@ def login_handler(request):
         )
 
     if user is not None:
-        user = login(request, user)
+        login(request, user)
 
         messages.add_message(
             request,
             messages.SUCCESS,
-            "You are now logged in."
+            "Logged in as " + user.username + "."
         )
     else:
         messages.add_message(
