@@ -36,6 +36,7 @@ def login_handler(request):
 
 def signup_handler(request):
     if request.method == "POST":
+        request.session["signup"] = True
         data = request.POST
         user = Player
 
@@ -43,7 +44,10 @@ def signup_handler(request):
         user.username = data["username"]
         user.password = data["password"]
 
-        if len(user.username) < 3 or len(user.username) > 15:
+        if (Player.objects.filter(username=user.username).exists()):
+            message = "Username already taken :("
+
+        elif len(user.username) < 3 or len(user.username) > 15:
             message = "Username should be between 3 and 15 characters long."
 
         elif user.password != data["confirm-password"]:
@@ -70,7 +74,8 @@ def signup_handler(request):
                 message = "Sign up completed. You can now log in."
 
         request.session["message"] = message
-        request.session["signup"] = True
+        if "signup" in request.session:
+            del request.session["signup"]
 
     else:
         request.session["message"] = "Wrong request."
