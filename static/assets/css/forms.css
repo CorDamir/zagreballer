@@ -1,6 +1,7 @@
 /* LOGIN / SIGNUP FORMS STYLING */
 
 #login-form-container {
+    z-index: 10;
     background-color: var(--strong);
     color: var(--menu);
     position: absolute;
