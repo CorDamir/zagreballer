@@ -9,11 +9,20 @@
     --catch: #254E70;
     --menu: #e3e3e3;
     --whitish: floralwhite;
+    --reddish: #ec0b43;
 }
 
 /* TOGGLE CLASSES FOR JS */
 .hidden {
     display: none;
+}
+
+.error-message {
+    color: var(--reddish);
+}
+
+.success-message {
+    color: var(--accent)
 }
 
 /* GENERAL STYLES */

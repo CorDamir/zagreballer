@@ -1,12 +1,24 @@
-<div id="login-form-container" class="hidden">
+<div id="login-form-container" {% if not messages %}class="hidden"{% endif %}>
     <input type="checkbox" id="form-toggler">
-    
+
     <div class="login form">
+        <div id="login-message" {% if not messages %} class="hidden" {% endif %}>
+            {% for message in messages %}
+                <span {% if message.tags == "success" %} class="success-message"
+                      {% else %} class="error-message" 
+                      {% endif %}
+                >
+                    {{ message }}
+                </span> 
+            {% endfor %}
+        </div>
+
         <header>Log in</header>
 
-        <form action="#" method="POST">
-            <input type="text" placeholder="Enter your username" required>
-            <input type="password" placeholder="Enter your password" required>
+        <form action="{% url 'login_handler' %}" method="POST">
+            {% csrf_token %}
+            <input name="username" type="text" placeholder="Enter your username" required>
+            <input name="password" type="password" placeholder="Enter your password" required>
             <a href="#">Forgot password?</a>
             <input type="submit" class="button" value="Log in">
         </form>

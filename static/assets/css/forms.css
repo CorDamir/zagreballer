@@ -1,3 +1,5 @@
+/* LOGIN / SIGNUP FORMS STYLING */
+
 #login-form-container {
     background-color: var(--strong);
     color: var(--menu);
@@ -92,4 +94,15 @@
 
 .signup label:hover {
     text-decoration: underline;
+}
+
+/* POPUP MESSAGES FOR LOGIN FORMS */
+#login-message {
+    position: absolute;
+    box-sizing: border-box;
+    top: 0;
+    z-index: 10;
+    padding: 10px;
+    width: 85%;
+    text-align: center;
 }
