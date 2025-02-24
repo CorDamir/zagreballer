@@ -12,10 +12,6 @@
 </head>
 
 <body>
-    <section id="options-menu">
-
-    </section>
-
     <div id="popup-message" {% if not message %} class="hidden" {% endif %}>
         <span class="error-message">
             {{ message | safe }}
@@ -26,14 +22,14 @@
     <main>
         {% include "login-forms.html" %}
         <div id="grid-container">
-            <div id="user-options">
-                
-            </div>
+            <section id="menu-options">
 
-            <div id="games-container">
+            </section>
+
+            <section id="games-container">
                 {% block main %}
                 {% endblock %}
-            </div>
+            </section>
         </div>
     </main>
 
