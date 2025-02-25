@@ -37,6 +37,10 @@ fieldset{
     transition: 0.4s;
 }
 
+#image-upload-form label::after {
+    
+}
+
 #image-upload-form label:hover {
     background: var(--accent);
 }
