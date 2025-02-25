@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 from .models import Player
+from .forms import PlayerImageUpdate
 
 
 # views
@@ -103,13 +104,14 @@ def show_personal_profile(request, slg):
         player is not None
         and request.user.id == player.id
         and request.user.is_authenticated
-         ):
-
+    ):
         votes = player.star_rating["votes"]
         if votes:
             rating = player.star_rating["total"] / votes
         else:
             rating = 0
+
+        img_upload = PlayerImageUpdate(use_required_attribute=False)
 
         return render(
             request,
@@ -117,7 +119,8 @@ def show_personal_profile(request, slg):
             {
                 "player": player,
                 "rating": rating,
-                "votes": votes
+                "votes": votes,
+                "img_upload": img_upload
             }
         )
 
@@ -139,15 +142,38 @@ def show_profile(request, slg):
     return redirect("index")
 
 
-def user_data_change_handler():
-    pass
+def user_data_change_handler(request, slg):
+    if request.method == "POST":
+        player = check_player(slg)
+
+        if (
+            player is not None
+            and request.user.id == player.id
+            and request.user.is_authenticated
+        ):
+
+            data = request.POST
+            player.first_name = data["first_name"]
+            player.last_name = data["last_name"]
+            player.email = data["email"]
+            player.birthdate = data["birthdate"]
+
+            # image works through form
+            PlayerImageUpdate(request.user.image,
+                              request.FILES,
+                              instance=player).save()
+
+            player.save()
+            return redirect("my_profile", slg)
+
+
 
 
 # helper functions
 def check_player(slg):
     """
     argument: username;
-    returns 'Player' model if username exists in databese
+    returns 'Player' model instance if username exists in databese
     returns 'None' otherwise
     """
     try:

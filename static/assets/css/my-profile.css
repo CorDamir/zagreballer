@@ -13,21 +13,17 @@ fieldset{
     all: unset;
 }
 
-body {
-    background-color: var(--strong);
-}
-
 #user-image,
 #user-image > img {
     width: 200px;
     height: 200px;
 }
 
-#image-upload {
+#image-upload-form input {
     display: none;
 }
 
-#upload-label {
+#image-upload-form label {
     display: inline-block;
     box-sizing: border-box;
     border-radius: 6px;
@@ -41,6 +37,6 @@ body {
     transition: 0.4s;
 }
 
-#upload-label:hover {
+#image-upload-form label:hover {
     background: var(--accent);
 }

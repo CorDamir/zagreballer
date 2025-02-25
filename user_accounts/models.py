@@ -11,7 +11,7 @@ class Player(AbstractUser):
         return dict(total=0, votes=0)
 
     star_rating = models.JSONField(default=returnDictionary)
-    image = CloudinaryField("image")
+    image = CloudinaryField("image", overwrite=True)
 
     def __str__(self):
         return self.username

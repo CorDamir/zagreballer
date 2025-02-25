@@ -17,19 +17,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'assets/css/my-profile.css' %}" type="text/css">
-    <title>{{ user.username }} @ZagreBaller</title>
+    <title>{{ player.username }} @ZagreBaller</title>
 </head>
 
 <body>
-    <form action="{% url 'submit_changes' %}">
+    <form action="{% url 'submit_changes' user.username %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
         <div id="user-profile-hero">
             <div id="user-image">
                 <img src="{{ player.image.url }}" alt="profile photo">
             </div>
 
-            <fieldset>
-                <label id="upload-label" for="image-upload">Change image</label>
-                <input type="file" id="image-upload" name="image-upload">
+            <fieldset id="image-upload-form">
+                {{ img_upload }}
             </fieldset>
 
             <div id="user-star-rating">
@@ -60,7 +60,7 @@
                 </tbody>
             </table>
         </fieldset>
-        
+
         <div id="form-buttons">
             <button type="submit">Save changes</button>
             <button>Reset</button>
