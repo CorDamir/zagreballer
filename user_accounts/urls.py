@@ -8,4 +8,6 @@ urlpatterns = [
     path('users/edit/<slug:slg>', views.show_personal_profile,
          name="my_profile"),
     path('users/<slug:slg>', views.show_profile, name="profile"),
+    path('users/edit/submit-changes', views.user_data_change_handler,
+         name="submit_changes")
 ]

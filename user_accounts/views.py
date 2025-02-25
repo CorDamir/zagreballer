@@ -71,11 +71,11 @@ def signup_handler(request):
                     email=user.email,
                     password=user.password
                     )
+
                 message = "Sign up completed. You can now log in."
+                del request.session["signup"]
 
         request.session["message"] = message
-        if "signup" in request.session:
-            del request.session["signup"]
 
     else:
         request.session["message"] = "Wrong request."
@@ -137,6 +137,10 @@ def show_profile(request, slg):
 
     request.session["message"] = "User does not exist."
     return redirect("index")
+
+
+def user_data_change_handler():
+    pass
 
 
 # helper functions

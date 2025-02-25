@@ -21,7 +21,7 @@
 </head>
 
 <body>
-    <form action="">
+    <form action="{% url 'submit_changes' %}">
         <div id="user-profile-hero">
             <div id="user-image">
                 <img src="{{ player.image.url }}" alt="profile photo">
@@ -62,7 +62,8 @@
         </fieldset>
         
         <div id="form-buttons">
-            <button>Save changes</button><button>Reset</button>
+            <button type="submit">Save changes</button>
+            <button>Reset</button>
         </div>
     </form>
 </body>
