@@ -1,0 +1,46 @@
+:root {
+    --strong: #3d2617;
+    --bg: #BDB2A0;
+    --accent: #6290C3;
+    --accent-dim: #41337A;
+    --catch: #254E70;
+    --menu: #e3e3e3;
+    --whitish: floralwhite;
+    --reddish: #ec0b43;
+}
+
+fieldset{
+    all: unset;
+}
+
+body {
+    background-color: var(--strong);
+}
+
+#user-image,
+#user-image > img {
+    width: 200px;
+    height: 200px;
+}
+
+#image-upload {
+    display: none;
+}
+
+#upload-label {
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 6px;
+    padding: 2px 5px;
+    margin: 2px;
+    font-size: smaller;
+    color: #fff;
+    background: var(--accent-dim);
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+#upload-label:hover {
+    background: var(--accent);
+}

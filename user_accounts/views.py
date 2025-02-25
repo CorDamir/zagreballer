@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
@@ -104,11 +104,25 @@ def show_personal_profile(request, slg):
         and request.user.id == player.id
         and request.user.is_authenticated
          ):
+
+        votes = player.star_rating["votes"]
+        if votes:
+            rating = player.star_rating["total"] / votes
+        else:
+            rating = 0
+
         return render(
             request,
             "my-profile.html",
-            {"player": player}
-            )
+            {
+                "player": player,
+                "rating": rating,
+                "votes": votes
+            }
+        )
+
+    request.session["message"] = "Not authorized."
+    return redirect("index")
 
 
 def show_profile(request, slg):

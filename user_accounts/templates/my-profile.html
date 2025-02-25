@@ -1,1 +1,70 @@
-<h1>PRIVATE: USER: {{ player.username }}</h1>
+<!--
+    player: image
+            star_rating
+            birthdate
+            first_name
+            last_name
+            email
+    rating
+    votes
+    img
+-->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'assets/css/my-profile.css' %}" type="text/css">
+    <title>{{ user.username }} @ZagreBaller</title>
+</head>
+
+<body>
+    <form action="">
+        <div id="user-profile-hero">
+            <div id="user-image">
+                <img src="{{ player.image.url }}" alt="profile photo">
+            </div>
+
+            <fieldset>
+                <label id="upload-label" for="image-upload">Change image</label>
+                <input type="file" id="image-upload" name="image-upload">
+            </fieldset>
+
+            <div id="user-star-rating">
+                rated {{ rating }} by {{ votes }} voters
+            </div>
+            <hr>
+        </div>
+        <fieldset>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><label for="first_name">First name:</label></td>
+                        <td><input type="text" value="{{ player.first_name }}" name="first_name" id="first_name"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="last_name">Last name:</label></td>
+                        <td><input type="text" value="{{ player.last_name }}" name="last_name" id="last_name"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="email">Email:</label></td>
+                        <td><input type="text" value="{{ player.email }}" name="email" id="email"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="birthdate">Date of birth:</label></td>
+                        <td><input type="date" value="{{ player.birthdate | date:'Y-m-d' }}" name="birthdate"
+                                id="birthdate"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+        
+        <div id="form-buttons">
+            <button>Save changes</button><button>Reset</button>
+        </div>
+    </form>
+</body>
+
+</html>
