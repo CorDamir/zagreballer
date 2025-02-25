@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 from .models import Player
 
 
-# Create your views here.
+# views
 def login_handler(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -94,3 +94,46 @@ def logout_handler(request):
         del request.session["signup"]
 
     return redirect("index")
+
+
+def show_personal_profile(request, slg):
+    player = check_player(slg)
+
+    if (
+        player is not None
+        and request.user.id == player.id
+        and request.user.is_authenticated
+         ):
+        return render(
+            request,
+            "my-profile.html",
+            {"player": player}
+            )
+
+
+def show_profile(request, slg):
+    player = check_player(slg)
+
+    if player is not None:
+        return render(
+            request,
+            "user-profile.html",
+            {"player": player}
+        )
+
+    request.session["message"] = "User does not exist."
+    return redirect("index")
+
+
+# helper functions
+def check_player(slg):
+    """
+    argument: username;
+    returns 'Player' model if username exists in databese
+    returns 'None' otherwise
+    """
+    try:
+        player = Player.objects.get(username=slg)
+    except Player.DoesNotExist:
+        player = None
+    return player
