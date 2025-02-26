@@ -5,7 +5,7 @@ urlpatterns = [
     path('login', views.login_handler, name="login_handler"),
     path('signup', views.signup_handler, name="signup_handler"),
     path('logout', views.logout_handler, name="logout_handler"),
-    path('users/<slug:slg>/edit', views.show_personal_profile,
+    path('users/<slug:slg>/edit/', views.show_personal_profile,
          name="my_profile"),
     path('users/<slug:slg>', views.show_profile, name="profile"),
     path('users/<slug:slg>/submit-changes', views.user_data_change_handler,
