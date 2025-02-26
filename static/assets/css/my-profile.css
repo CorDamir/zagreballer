@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
     --strong: #3d2617;
     --bg: #BDB2A0;
@@ -9,21 +11,32 @@
     --reddish: #ec0b43;
 }
 
+body {
+    background-color: var(--bg);
+    font-family: "Noto Sans", serif;
+}
+
 fieldset{
     all: unset;
+}
+
+hr {
+    margin: 10px 0;
 }
 
 #user-image,
 #user-image > img {
     width: 200px;
     height: 200px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
 }
 
-#image-upload-form input {
+#image-upload input {
     display: none;
 }
 
-#image-upload-form label {
+#image-upload label {
     display: inline-block;
     box-sizing: border-box;
     border-radius: 6px;
@@ -37,10 +50,54 @@ fieldset{
     transition: 0.4s;
 }
 
-#image-upload-form label::after {
-    
+#data-edit-form {
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--strong);
+    padding: 10px;
+    color: var(--menu);
+    font-size: smaller;
+    font-weight: bold;
 }
 
-#image-upload-form label:hover {
-    background: var(--accent);
+#star-upload-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#user-data-set {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+}
+
+#user-data-set input,
+#data-edit-buttons button {
+    margin-bottom: 0.5rem;
+    height: 30px;
+    font-size: larger;
+    background-color: var(--bg);
+    padding: 0 7px;
+    border-radius: 6px;
+}
+
+#data-edit-buttons {
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#data-edit-buttons button {
+    transition: all 0.4s;
+    color: white;
+    margin: 15px 0;
+    background-color: var(--accent-dim);
+    border: 1px solid gray;
+}
+
+#data-edit-buttons button:hover,
+#image-upload label:hover {
+    background-color: var(--accent);
 }

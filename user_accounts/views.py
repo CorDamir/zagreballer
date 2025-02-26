@@ -167,8 +167,6 @@ def user_data_change_handler(request, slg):
             return redirect("my_profile", slg)
 
 
-
-
 # helper functions
 def check_player(slg):
     """
