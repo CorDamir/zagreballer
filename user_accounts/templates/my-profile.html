@@ -1,62 +1,47 @@
-<!--
-    player: image
-            star_rating
-            birthdate
-            first_name
-            last_name
-            email
-    rating
-    votes
-    img
--->
+{% extends "index.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'assets/css/my_profile.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'assets/css/forms.css' %}" type="text/css">
-    <title>{{ player.username }} @ZagreBaller</title>
-</head>
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'assets/css/my-profile.css' %}">
+    {% endblock %}
 
-<body>
-    <form id="data-edit-form" action="{% url 'submit_changes' user.username %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
+    {% block main %}
+        <form id="data-edit-form" action="{% url 'my_profile' user.username %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
 
-        <div id="user-profile-hero">
-            <div id="user-image">
-                <img src="{{ player.image.url }}" alt="profile photo">
+            <div id="user-profile-hero">
+                <div id="user-image">
+                    <img src="{{ player.image.url }}" alt="profile photo">
+                </div>
+
+                <div id="star-upload-container">
+                    <div id="user-star-rating">TODO: STAR</div>
+                    <fieldset id="image-upload">{{ img_upload }}</fieldset>
+                </div>
+
+                <hr>
             </div>
 
-            <div id="star-upload-container">
-                <div id="user-star-rating">TODO: STAR</div>
-                <fieldset id="image-upload">{{ img_upload }}</fieldset>
+            <fieldset id="user-data-set">
+                <label for="first_name">First name:</label>
+                <input type="text" value="{{ player.first_name }}" name="first_name" id="first_name">
+            
+                <label for="last_name">Last name:</label>
+                <input type="text" value="{{ player.last_name }}" name="last_name" id="last_name">
+            
+                <label for="email">Email:</label>
+                <input type="text" value="{{ player.email }}" name="email" id="email">
+            
+                <label for="birthdate">Date of birth:</label>
+                <input type="date" value="{{ player.birthdate | date:'Y-m-d' }}" name="birthdate" id="birthdate">
+            </fieldset>
+
+            <div id="data-edit-buttons">
+                <button type="submit">Save changes</button>
+                <button type="reset">Reset</button>
             </div>
-
-            <hr>
-        </div>
-
-        <fieldset id="user-data-set">
-            <label for="first_name">First name:</label>
-            <input type="text" value="{{ player.first_name }}" name="first_name" id="first_name">
-        
-            <label for="last_name">Last name:</label>
-            <input type="text" value="{{ player.last_name }}" name="last_name" id="last_name">
-        
-            <label for="email">Email:</label>
-            <input type="text" value="{{ player.email }}" name="email" id="email">
-        
-            <label for="birthdate">Date of birth:</label>
-            <input type="date" value="{{ player.birthdate | date:'Y-m-d' }}" name="birthdate" id="birthdate">
-        </fieldset>
-
-        <div id="data-edit-buttons">
-            <button type="submit">Save changes</button>
-            <button type="reset">Reset</button>
-        </div>
-    </form>
+        </form>
+    {% endblock %}
 </body>
 
 </html>

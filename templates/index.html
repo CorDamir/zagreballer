@@ -8,24 +8,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'assets/css/forms.css' %}" type="text/css">
+    {% block head %}
+    {% endblock %}
     <title>ZagreBaller</title>
 </head>
 
 <body>
-    <div id="popup-message" {% if not message %} class="hidden" {% endif %}>
-        <span class="error-message">
-            {{ message | safe }}
+    <div id="popup-message" {% if not request.session.message %} class="hidden" {% endif %}>
+        <span class={% if request.session.success %}"success-message" {% else %}"error-message" {% endif %}>
+            {{ request.session.message | safe }}
         </span>
         <span id="popup-close-button">X</span>
     </div>
 
     <main>
-        {% if not user.is_authenticated %}
-            {% include "login-forms.html" %}
-        {% endif %}
         <div id="grid-container">
             <section id="menu-options">
-                {% include "options-menu.html" %}
+                {% if not user.is_authenticated %}
+                    You must be logged in to join games.
+                    <a href="{% url 'login_form' %}">Login / Signup</a>
+                    <hr>
+
+                {% else %}
+                    Welcome {{ user.username }} <a href="{% url 'logout_handler' %}"><small>(logout)</small></a>
+                    <hr>
+                    <nav>
+                        <a href="{% url 'index' %}">Home</a>
+                        <br>
+                        <a href="{% url 'my_profile' user.username %}">My profile</a>
+                        <br>
+                        <a href="#">My games</a>
+                        <br>
+                        <a href="{% url 'create_game' %}">Create new game</a>
+                        <br>
+                    </nav>
+                {% endif %}
             </section>
 
             <section id="games-container">
@@ -37,5 +54,4 @@
 
     <script src="{% static 'assets/js/script.js' %}"></script>
 </body>
-
 </html>

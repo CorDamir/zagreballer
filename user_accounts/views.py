@@ -8,6 +8,8 @@ from .forms import PlayerImageUpdate
 
 # views
 def login_handler(request):
+    del_msg(request)
+
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
@@ -21,6 +23,7 @@ def login_handler(request):
         if user is not None:
             login(request, user)
             message = "Logged in as " + user.username + "."
+            request.session["success"] = True
         else:
             message = "Login failed. Check your credentials."
 
@@ -36,6 +39,8 @@ def login_handler(request):
 
 
 def signup_handler(request):
+    del_msg(request)
+
     if request.method == "POST":
         request.session["signup"] = True
         data = request.POST
@@ -73,38 +78,60 @@ def signup_handler(request):
                     password=user.password
                     )
 
-                message = "Sign up completed. You can now log in."
                 del request.session["signup"]
+                message = "Sign up completed. You can now log in."
+                request.session["success"] = True
 
         request.session["message"] = message
+        return redirect("index")
 
     else:
         request.session["message"] = "Wrong request."
 
-    return redirect("index")
+    return redirect("login_form")
 
 
 def logout_handler(request):
+    del_msg(request)
+
     if request.user.is_authenticated:
         logout(request)
         request.session["message"] = "You are now logged out."
+        request.session["success"] = True
     else:
         request.session["message"] = "Not logged in."
-
-    if "signup" in request.session:
-        del request.session["signup"]
 
     return redirect("index")
 
 
 def show_personal_profile(request, slg):
+    del_msg(request)
     player = check_player(slg)
 
     if (
         player is not None
         and request.user.id == player.id
         and request.user.is_authenticated
-    ):
+       ):
+
+        if request.method == "POST":
+            data = request.POST
+            player.first_name = data["first_name"]
+            player.last_name = data["last_name"]
+            player.email = data["email"]
+            player.birthdate = data["birthdate"]
+
+            # image works through form
+            PlayerImageUpdate(request.user.image,
+                              request.FILES,
+                              instance=player).save()
+
+            player.save()
+
+            request.session["message"] = "Changes saved successfully."
+            request.session["success"] = True
+            return redirect("index")
+
         votes = player.star_rating["votes"]
         if votes:
             rating = player.star_rating["total"] / votes
@@ -129,6 +156,8 @@ def show_personal_profile(request, slg):
 
 
 def show_profile(request, slg):
+    del_msg(request)
+
     player = check_player(slg)
 
     if player is not None:
@@ -142,29 +171,13 @@ def show_profile(request, slg):
     return redirect("index")
 
 
-def user_data_change_handler(request, slg):
-    if request.method == "POST":
-        player = check_player(slg)
+def login_form(request):
+    del_msg(request)
 
-        if (
-            player is not None
-            and request.user.id == player.id
-            and request.user.is_authenticated
-        ):
-
-            data = request.POST
-            player.first_name = data["first_name"]
-            player.last_name = data["last_name"]
-            player.email = data["email"]
-            player.birthdate = data["birthdate"]
-
-            # image works through form
-            PlayerImageUpdate(request.user.image,
-                              request.FILES,
-                              instance=player).save()
-
-            player.save()
-            return redirect("my_profile", slg)
+    return render(
+        request,
+        "login-forms.html"
+    )
 
 
 # helper functions
@@ -179,3 +192,10 @@ def check_player(slg):
     except Player.DoesNotExist:
         player = None
     return player
+
+
+def del_msg(request):
+    if "message" in request.session:
+        del request.session["message"]
+    if "success" in request.session:
+        del request.session["success"]

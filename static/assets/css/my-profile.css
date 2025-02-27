@@ -1,21 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
-
-:root {
-    --strong: #3d2617;
-    --bg: #BDB2A0;
-    --accent: #6290C3;
-    --accent-dim: #41337A;
-    --catch: #254E70;
-    --menu: #e3e3e3;
-    --whitish: floralwhite;
-    --reddish: #ec0b43;
-}
-
-body {
-    background-color: var(--bg);
-    font-family: "Noto Sans", serif;
-}
-
 fieldset{
     all: unset;
 }
@@ -51,12 +33,12 @@ hr {
 }
 
 #data-edit-form {
-    max-width: 250px;
+    width: 350px;
+    padding: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: var(--strong);
-    padding: 10px;
     color: var(--menu);
     font-size: smaller;
     font-weight: bold;

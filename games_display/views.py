@@ -1,25 +1,24 @@
 from django.shortcuts import render, redirect
 import datetime as dt
+from user_accounts.views import del_msg
 from .models import FutsalGame
 from .forms import CreateGameForm
 
 
 # Create your views here.
 def display_games(request):
-    joinable_games = FutsalGame.objects.all()
-    message = request.session["message"]
+    joinable_games = FutsalGame.objects.all().order_by("play_time_start")
 
     return render(
         request,
         "display.html",
-        {
-            "games": joinable_games,
-            "message": message
-        }
+        {"games": joinable_games}
     )
 
 
 def create_game(request):
+    del_msg(request)
+
     if request.method == "POST":
         data = request.POST
 
@@ -44,6 +43,9 @@ def create_game(request):
             game.play_time_end = data.play_time_end
             game.creator = request.user
             game.save()
+
+            request.session["message"] = "Game successfully created."
+            request.session["success"] = True
             return redirect("index")
 
     new_game_form = CreateGameForm
@@ -52,4 +54,16 @@ def create_game(request):
         request,
         "create-game.html",
         {"form": new_game_form}
+    )
+
+
+def game_info(request, slg):
+    del_msg(request)
+
+    game = FutsalGame.objects.filter(id=slg).first()
+
+    return render(
+        request,
+        "game-info.html",
+        {"game": game}
     )

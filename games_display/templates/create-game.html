@@ -1,72 +1,71 @@
+{% extends "index.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'assets/css/game_creation.css' %}" type="text/css">
-    <title>Document</title>
-</head>
-<body>
+{% block head %}
+    <link rel="stylesheet" href="{% static 'assets/css/game-creation.css' %} type=text/css">
+{% endblock %}
+
+{% block main %}
     <div class="form-container">
-        <form action="{% url 'create_game' %}" method="POST">
-            {% csrf_token %}
-            <div>
-                <label for="id_futsal_field">Select sports hall: </label>
-                {{ form.futsal_field }}
-            </div>
-            <hr>
-            <div class="label-input-container">
-                <label for="start_date">Game day: </label>
-                <input type="date" value="{% now 'Y-m-d' %}" min="{% now 'Y-m-d' %}" name="start_date" id="start_date">
-            </div>
-            <hr>
-            <div class="label-input-container">
-                <span>Start time: </span>
+            <form action="{% url 'create_game' %}" method="POST">
+                {% csrf_token %}
                 <div>
-                    <label for="id_start_hours" hidden>Hours</label>
-                    {{ form.start_hours }} :
-                    <label for="id_start_minutes" hidden>Minutes</label>
-                    {{ form.start_minutes }}
+                    <label for="id_futsal_field">Select sports hall: </label>
+                    {{ form.futsal_field }}
                 </div>
-            </div>
-            <hr>
-            <div class="label-input-container">
-                <span>Game duration: </span>
+                <hr>
+                <div class="label-input-container">
+                    <label for="start_date">Game day: </label>
+                    <input type="date" value="{% now 'Y-m-d' %}" min="{% now 'Y-m-d' %}" name="start_date" id="start_date">
+                </div>
+                <hr>
+                <div class="label-input-container">
+                    <span>Start time: </span>
+                    <div>
+                        <label for="id_start_hours" hidden>Hours</label>
+                        {{ form.start_hours }} :
+                        <label for="id_start_minutes" hidden>Minutes</label>
+                        {{ form.start_minutes }}
+                    </div>
+                </div>
+                <hr>
+                <div class="label-input-container">
+                    <span>Game duration: </span>
+                    <div>
+                        <label for="id_duration_hours" hidden>Hours</label>
+                        {{ form.duration_hours }} :
+                        <label for="id_duration_minutes" hidden>Minutes</label>
+                        {{ form.duration_minutes }}
+                    </div>
+                </div>
+                <hr>
+                <div class="label-input-container">
+                    <label for="id_players_full">Total players for game: </label>
+                    {{ form.players_full }}
+                </div>
+                <hr>
+                <div class="label-input-container">
+                    <label for="id_players_missing">Players missing: </label>
+                    {{ form.players_missing }}
+                </div>
+                <hr>
+                <div class="label-input-container">
+                    <span>Preferred age range: </span>
+                    <div>
+                        <label for="id_age_min" hidden>Minimum prefferred age </label>
+                        <label for="id_age_max" hidden>Maximum preferred age</label>
+                        {{ form.age_min }} - {{ form.age_max }}
+                    </div>
+                </div>
+                <hr>
                 <div>
-                    <label for="id_duration_hours" hidden>Hours</label>
-                    {{ form.duration_hours }} :
-                    <label for="id_duration_minutes" hidden>Minutes</label>
-                    {{ form.duration_minutes }}
+                    <label for="id_custom_description">Description: </label>
+                    {{ form.custom_description }}
                 </div>
-            </div>
-            <hr>
-            <div class="label-input-container">
-                <label for="id_players_full">Total players for game: </label>
-                {{ form.players_full }}
-            </div>
-            <hr>
-            <div class="label-input-container">
-                <label for="id_players_missing">Players missing: </label>
-                {{ form.players_missing }}
-            </div>
-            <hr>
-            <div class="label-input-container">
-                <span>Preferred age range: </span>
-                <div>
-                    <label for="id_age_min" hidden>Minimum prefferred age </label>
-                    <label for="id_age_max" hidden>Maximum preferred age</label>
-                    {{ form.age_min }} - {{ form.age_max }}
-                </div>
-            </div>
-            <hr>
-            <div>
-                <label for="id_custom_description">Description: </label>
-                {{ form.custom_description }}
-            </div>
-            <button type="submit">Create game!</button>
-        </form>
+                <button type="submit">Create game!</button>
+            </form>
     </div>
+{% endblock %}
+
 </body>
 </html>

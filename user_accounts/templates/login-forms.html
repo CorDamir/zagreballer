@@ -1,41 +1,45 @@
-<div id="login-form-container">
-    <input type="checkbox" id="form-toggler" {% if request.session.signup %} checked {% endif %}>
+{% extends "index.html" %}
 
-    <div class="login form">
-        <header>Log in</header>
+{% block main %}
+    <div id="login-form-container">
+        <input type="checkbox" id="form-toggler" {% if request.session.signup %} checked {% endif %}>
 
-        <form action="{% url 'login_handler' %}" method="POST">
-            {% csrf_token %}
-            <input name="username" type="text" placeholder="Enter your username" required>
-            <input name="password" type="password" placeholder="Enter your password" required>
-            <a href="#">Forgot password?</a>
-            <input type="submit" class="button" value="Log in">
-        </form>
+        <div class="login form">
+            <header>Log in</header>
 
-        <div class="signup">
-            <span class="signup">Don't have an account?
-                <label for="form-toggler">Sign up</label>
-            </span>
+            <form action="{% url 'login_handler' %}" method="POST">
+                {% csrf_token %}
+                <input name="username" type="text" placeholder="Enter your username" required>
+                <input name="password" type="password" placeholder="Enter your password" required>
+                <a href="#">Forgot password?</a>
+                <input type="submit" class="button" value="Log in">
+            </form>
+
+            <div class="signup">
+                <span class="signup">Don't have an account?
+                    <label for="form-toggler">Sign up</label>
+                </span>
+            </div>
+        </div>
+        
+        <div class="registration form">
+            <header>Sign up</header>
+
+            <form action="{% url 'signup_handler' %}" method="POST">
+                {% csrf_token %}
+                <input name="email" type="email" placeholder="Enter your email" required>
+                <input name="username" type="text" placeholder="Choose a username" required>
+                <input name="password" type="password" placeholder="Create a password" required>
+                <input name="confirm-password" type="password" placeholder="Confirm your password" required>
+                <input type="submit" class="button" value="Sign up">
+            </form>
+
+            <div class="signup">
+                <span class="signup">Already have an account?
+                    <label for="form-toggler">Log in</label>
+                </span>
+            </div>
+
         </div>
     </div>
-    
-    <div class="registration form">
-        <header>Sign up</header>
-
-        <form action="{% url 'signup_handler' %}" method="POST">
-            {% csrf_token %}
-            <input name="email" type="email" placeholder="Enter your email" required>
-            <input name="username" type="text" placeholder="Choose a username" required>
-            <input name="password" type="password" placeholder="Create a password" required>
-            <input name="confirm-password" type="password" placeholder="Confirm your password" required>
-            <input type="submit" class="button" value="Sign up">
-        </form>
-
-        <div class="signup">
-            <span class="signup">Already have an account?
-                <label for="form-toggler">Log in</label>
-            </span>
-        </div>
-
-    </div>
-</div>
+{% endblock %}

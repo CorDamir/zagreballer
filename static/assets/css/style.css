@@ -49,6 +49,9 @@ body {
     background: rgba(0, 0, 0, 0.95);
     border-radius: 15px;
     user-select: none;
+    font-size: larger;
+    width: 25%;
+    font-weight: bold;
 }
 
 #popup-close-button {
@@ -59,6 +62,7 @@ body {
     width: 15px;
     height: 10px;
     color: white;
+    cursor: pointer;
 }
 
 #popup-close-button:hover {
@@ -98,30 +102,44 @@ body {
 #games-container {
     grid-area: 1 / 2 / span 4 / span 3;
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: flex-start;
+    padding: 1rem;
 }   
 
 .game-card{
     user-select: none;
+    width: 330px;
     border: 2px solid var(--strong);
     border-radius: 10px;
     background: url('../images/simple-background.jpeg') no-repeat center 65%;
     background-size: cover;
     color: white;
     padding: 0.7rem;
-    max-width: 350px;
-    margin: 1rem;
+    margin: 0.5rem;
     cursor: pointer;
     transition: all 0.5s;
-    height: fit-content;
+    height: auto;
 }
 
-.game-card:hover .game-card{
-    transform: scale(98%);
+.game-card > a {
+    all: unset;
+    z-index: 3;
+    visibility: hidden;
+    position: fixed;
+    width: 330px;
+    height: 160px;
+}
+
+#games-container:hover .game-card:not(:hover) {
+    filter: brightness(50%);
 }
 
 .game-card:hover{
+    filter: brightness(140%);
     transform: scale(102%);
-    box-shadow: 1px 1px 0 2px rgba(0, 0, 0, 0.2);
+    /*box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);*/
 }
 
 .game-card-info-text{
@@ -129,7 +147,7 @@ body {
 }
 
 .game-card td:first-child{
-    padding-right: 40px;
+    padding-right: 30px;
 }
 
 
