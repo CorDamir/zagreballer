@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+
+{% block main %}
+    <div>
+        <h2>CREATED GAMES</h2>
+        <hr>
+    </div>
+        {% for game in created %}
+            <div class="game-card" onclick="location.href='{% url 'game_info' game.id %}'">
+                {% include "card-display.html" %}
+            </div>
+        {% endfor %}
+    
+    <div>
+        <h2>JOINED GAMES</h2>
+        <hr>
+    </div>
+        {% for game in joined %}
+        <div class="game-card" onclick="location.href='{% url 'game_info' game.id %}'">
+            {% include "card-display.html" %}
+        </div>
+        {% endfor %}
+{% endblock %}

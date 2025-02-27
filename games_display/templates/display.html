@@ -1,44 +1,9 @@
-<!-- games players_full 
-           players_missing
-           custom_description
-           age_min
-           age_max
-           play_time_start
-           play_time_end
-           field_number
-           creator
-           futsal_field
-           all_joining_players
--->
 {% extends "index.html" %}
 
 {% block main %}
-    <section id="games-container">
-        {% for game in games %}
-            <div class="game-card" onclick="location.href='{% url 'game_info' game.id %}'">
-                <table>
-                        <tbody>
-                            <tr>
-                                <td>Playing field:</td>
-                                <td>{{ game.futsal_field.name }}</td>
-                            </tr>
-                            <tr>
-                                <td>Date and time:</td>
-                                <td>{{ game.play_time_start | date:'l: d.m.Y G:i' }}</td>
-                            </tr>
-                            <tr>
-                                <td>City block:</td>
-                                <td>{{ game.futsal_field.get_location_cityblock_display }}</td>
-                            </tr>
-                        </tbody>
-                </table>
-                
-                <hr>
-
-                <div class="game-card-info-text">
-                        {{ game.custom_description }}
-                </div>     
-            </div>
-        {% endfor %}
-    </section>
+    {% for game in games %}
+        <div class="game-card" onclick="location.href='{% url 'game_info' game.id %}'">
+            {% include "card-display.html" %}
+        </div>
+    {% endfor %}
 {% endblock %}

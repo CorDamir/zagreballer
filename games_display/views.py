@@ -67,3 +67,19 @@ def game_info(request, slg):
         "game-info.html",
         {"game": game}
     )
+
+
+def my_games(request):
+    del_msg(request)
+
+    created_games = request.user.game_creator.all()
+    joined_games = FutsalGame.objects.filter(all_joining_players=request.user)
+
+    return render(
+        request,
+        "my-games.html",
+        {
+            "created": created_games,
+            "joined": joined_games
+        }
+    )
