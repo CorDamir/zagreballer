@@ -48,7 +48,7 @@ def signup_handler(request):
         if (Player.objects.filter(username=user.username).exists()):
             message = "Username already taken :("
 
-        elif len(user.username) < 3 or len(user.username) > 15:
+        elif not (3 <= len(user.username) <= 15):
             message = "Username should be between 3 and 15 characters long."
 
         elif user.password != data["confirm-password"]:

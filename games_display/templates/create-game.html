@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="{% url 'create_game' %}" method="POST">
+        <label for="id_futsal_field">Select sports hall: </label>
+        {{ form.futsal_field }}
+        <label for="start_date">Game day: </label>
+        <input type="date" value="{% now 'Y-m-d' %}" name="start_date" id="start_date">
+        <div id="time-start-container">
+            <span>Start time: </span>
+            <label for="id_start_hours" hidden>Hours</label>
+            {{ form.start_hours }}h 
+            <label for="id_start_mins" hidden>Minutes</label>
+            {{ form.start_minutes }}min
+        </div>
+        <div id="duration-time-container">
+            <span>Game duration: </span>
+            <label for="id_duration_hours" hidden>Hours</label>
+            {{ form.duration_hours }}h
+            <label for="id_duration_mins" hidden>Minutes</label>
+            {{ form.duration_minutes }}min
+        </div>
+        <label for="id_players_full">Total players for game: </label>
+        {{ form.players_full }}
+        <label for="id_players_missing">Players missing: </label>
+        {{ form.players_missing }}
+        <div id="age-range-container">
+            <span>Preferred age range: </span>
+            <label for="id_age_min" hidden>Minimum prefferred age </label>
+            <label for="id_age_max" hidden>Maximum preferred age</label>
+            {{ form.age_min }} - {{ form.age_max }}
+        </div>
+        <label for="id_custom_description">Optional description: </label>
+        {{ form.custom_description }}
+        <button type="submit">Create game!</button>
+    </form>
+</body>
+</html>
