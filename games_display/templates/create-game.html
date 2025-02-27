@@ -11,6 +11,7 @@
 <body>
     <div class="form-container">
         <form action="{% url 'create_game' %}" method="POST">
+            {% csrf_token %}
             <div>
                 <label for="id_futsal_field">Select sports hall: </label>
                 {{ form.futsal_field }}
@@ -18,14 +19,14 @@
             <hr>
             <div class="label-input-container">
                 <label for="start_date">Game day: </label>
-                <input type="date" value="{% now 'Y-m-d' %}" name="start_date" id="start_date">
+                <input type="date" value="{% now 'Y-m-d' %}" min="{% now 'Y-m-d' %}" name="start_date" id="start_date">
             </div>
             <hr>
             <div class="label-input-container">
                 <span>Start time: </span>
                 <div>
                     <label for="id_start_hours" hidden>Hours</label>
-                    {{ form.start_hours }}h 
+                    {{ form.start_hours }} :
                     <label for="id_start_minutes" hidden>Minutes</label>
                     {{ form.start_minutes }}
                 </div>
@@ -35,7 +36,7 @@
                 <span>Game duration: </span>
                 <div>
                     <label for="id_duration_hours" hidden>Hours</label>
-                    {{ form.duration_hours }}h
+                    {{ form.duration_hours }} :
                     <label for="id_duration_minutes" hidden>Minutes</label>
                     {{ form.duration_minutes }}
                 </div>
@@ -61,7 +62,7 @@
             </div>
             <hr>
             <div>
-                <label for="id_custom_description">Optional description: </label>
+                <label for="id_custom_description">Description: </label>
                 {{ form.custom_description }}
             </div>
             <button type="submit">Create game!</button>

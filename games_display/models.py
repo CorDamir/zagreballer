@@ -49,13 +49,12 @@ class FutsalGame(models.Model):
     age_max = models.IntegerField()
     play_time_start = models.DateTimeField()
     play_time_end = models.TimeField()
-    field_number = models.IntegerField()
 
     creator = models.ForeignKey(
         Player, on_delete=models.CASCADE, related_name="game_creator"
         )
 
-    futsal_field = models.OneToOneField(
+    futsal_field = models.ForeignKey(
         FutsalField, on_delete=models.CASCADE
         )
 
