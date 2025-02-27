@@ -109,6 +109,16 @@ textarea:focus {
 #id_futsal_field{
     width: 100%;
 }
+
+select {
+    appearance: none;
+}
+
+select:focus,
+input:focus,
+textarea:focus {
+    outline: 2px solid saddlebrown;
+}
 /* end added*/
 
 

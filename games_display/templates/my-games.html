@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 
 {% block main %}
-    <div>
+    <div class="text-description-in-flex">
         <h2>CREATED GAMES</h2>
         <hr>
     </div>
@@ -11,10 +11,11 @@
             </div>
         {% endfor %}
     
-    <div>
+    <div class="text-description-in-flex">
         <h2>JOINED GAMES</h2>
         <hr>
     </div>
+    
         {% for game in joined %}
         <div class="game-card" onclick="location.href='{% url 'game_info' game.id %}'">
             {% include "card-display.html" %}

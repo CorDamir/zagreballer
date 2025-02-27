@@ -10,6 +10,7 @@
     --menu: #e3e3e3;
     --whitish: floralwhite;
     --reddish: #ec0b43;
+    --accent-shine: #85bfff;
 }
 
 /* TOGGLE-able CLASSES */
@@ -91,7 +92,7 @@ body {
     all: unset;
     cursor: pointer;
     user-select: none;
-    color: var(--accent);
+    color: var(--accent-shine);
 }
 
 #menu-options a:hover {
@@ -148,6 +149,22 @@ body {
 
 .game-card td:first-child{
     padding-right: 30px;
+}
+
+.text-description-in-flex {
+    width: 100%;
+    justify-self: center;
+    text-align: center;
+}
+
+.text-description-in-flex h2 {
+    font-weight: bold;
+    font-size: xx-large;
+    margin: 5px;
+}
+
+.text-description-in-flex hr {
+    height: 3px;
 }
 
 

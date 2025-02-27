@@ -62,9 +62,3 @@ class CreateGameForm(forms.ModelForm):
     duration_minutes = forms.IntegerField(
         widget=forms.Select(choices=mins)
     )
-
-    # play_time_end = models.TimeField()
-    # field_number = models.IntegerField()
-    # creator = Player
-    # play time start
-    # play time end
