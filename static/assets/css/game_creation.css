@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --strong: #3d2617;
+    --bg: #BDB2A0;
+    --accent: #6290C3;
+    --accent-dim: #41337A;
+    --catch: #254E70;
+    --menu: #e3e3e3;
+    --whitish: floralwhite;
+    --reddish: #ec0b43;
+}
+
+body {
+    background-color: var(--bg);
+    font-family: "Noto Sans", serif;
+}
+
+fieldset{
+    all: unset;
+}
+
+hr {
+   /* margin: 10px 0;*/
+   margin: 15px 0;
+}
+
+#user-image,
+#user-image > img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+#image-upload input {
+    display: none;
+}
+
+#image-upload label {
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 6px;
+    padding: 2px 5px;
+    margin: 2px;
+    font-size: smaller;
+    color: #fff;
+    background: var(--accent-dim);
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.form-container {
+    max-width: 350px;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    /*align-items: center;*/
+    background-color: var(--strong);
+    padding: 10px;
+    color: var(--menu);
+    /*font-size: smaller;*/
+    /*font-weight: bold;*/
+
+   padding: 20px 30px;
+   border-radius: 7px;
+   font-size: larger;
+   
+}
+
+/* added */
+button[type="submit"] {
+    transition: all 0.4s;
+    color: white;
+    margin: 15px 0;
+    background-color: var(--accent-dim);
+    border: 1px solid gray;
+}
+
+button:hover {
+    background-color: var(--accent);
+}
+
+.label-input-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+form > div {
+    align-items: flex-end;
+}
+
+textarea {
+    height: 90px;
+    background-color: var(--bg);
+    padding: 7px;
+    border-radius: 6px;
+    font-size: 17px;
+    margin-top: 3px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+#id_futsal_field{
+    width: 100%;
+}
+/* end added*/
+
+
+#star-upload-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#user-data-set {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+}
+
+input, button, select {
+    height: 30px;
+    background-color: var(--bg);
+    padding: 0 7px;
+    border-radius: 6px;
+    font-size: 17px;
+}
+
+#data-edit-buttons {
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#data-edit-buttons button {
+    transition: all 0.4s;
+    color: white;
+    margin: 15px 0;
+    background-color: var(--accent-dim);
+    border: 1px solid gray;
+}
+
+#data-edit-buttons button:hover,
+#image-upload label:hover {
+    background-color: var(--accent);
+}
