@@ -2,7 +2,7 @@
 
 {% block main %}
     <div id="login-form-container">
-        <input type="checkbox" id="form-toggler" {% if request.session.signup %} checked {% endif %}>
+        <input type="checkbox" id="form-toggler" {% if 'signup' in request.session %} checked {% endif %}>
 
         <div class="login form">
             <header>Log in</header>

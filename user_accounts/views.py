@@ -35,7 +35,7 @@ def login_handler(request):
     else:
         request.session["message"] = "Wrong request."
 
-    return redirect("index")
+    return redirect("login_form")
 
 
 def signup_handler(request):
@@ -83,7 +83,7 @@ def signup_handler(request):
                 request.session["success"] = True
 
         request.session["message"] = message
-        return redirect("index")
+        return redirect("login_form")
 
     else:
         request.session["message"] = "Wrong request."
@@ -172,8 +172,6 @@ def show_profile(request, slg):
 
 
 def login_form(request):
-    del_msg(request)
-
     return render(
         request,
         "login-forms.html"
