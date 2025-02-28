@@ -37,7 +37,7 @@
             
             <tr>
                 <td>Game length:</td>
-                <td>{{ duration | date 'h : i'}}</td>
+                <td>{{ hs }}:{{ mins }}</td>
             </tr>
             
             <tr>
@@ -52,14 +52,15 @@
 
             <tr>
                 <td><strong>Spots still available:</strong></td>
-                <td>{{ players_missing }}</td>
+                <td><strong>{{ players_missing }}</strong></td>
             </tr>
         </tbody>
 
         <div>
             <div>Creator's notes</div>
             <div>{{ game.custom_description }}</div>
-
+            <a href="{% url 'join_game' game.id %}"><button>JOIN</button></a>
+            <a href="{% url 'delete_game' game.id %}"><button>DELETE</button></a>
             {% if players %}
                 <div>Users already joined
                     <div>

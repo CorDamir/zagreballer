@@ -22,17 +22,15 @@ def login_handler(request):
 
         if user is not None:
             login(request, user)
-            message = "Logged in as " + user.username + "."
+            request.session["message"] = "Logged in as " + user.username + "."
             request.session["success"] = True
-        else:
-            message = "Login failed. Check your credentials."
+            return redirect("index")
 
-        request.session["message"] = message
-
+        request.session["message"] = "Login failed. Check your credentials."
         if "signup" in request.session:
             del request.session["signup"]
-
-        return redirect("index")
+            
+        return redirect("login_form")
 
     else:
         request.session["message"] = "Wrong request."
