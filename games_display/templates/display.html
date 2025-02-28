@@ -2,8 +2,6 @@
 
 {% block main %}
     {% for game in games %}
-        <div class="game-card" onclick="location.href='{% url 'game_info' game.id %}'">
             {% include "card-display.html" %}
-        </div>
     {% endfor %}
 {% endblock %}

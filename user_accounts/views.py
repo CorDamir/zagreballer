@@ -2,14 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.messages import info, success
 from .models import Player
 from .forms import PlayerImageUpdate
 
 
 # views
 def login_handler(request):
-    del_msg(request)
-
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
@@ -22,25 +21,22 @@ def login_handler(request):
 
         if user is not None:
             login(request, user)
-            request.session["message"] = "Logged in as " + user.username + "."
-            request.session["success"] = True
+            success(request, "Logged in as " + user.username + ".")
             return redirect("index")
 
-        request.session["message"] = "Login failed. Check your credentials."
+        info(request, "Login failed. Check your credentials.")
         if "signup" in request.session:
             del request.session["signup"]
-            
+
         return redirect("login_form")
 
     else:
-        request.session["message"] = "Wrong request."
+        info(request, "Wrong request.")
 
     return redirect("login_form")
 
 
 def signup_handler(request):
-    del_msg(request)
-
     if request.method == "POST":
         request.session["signup"] = True
         data = request.POST
@@ -79,33 +75,29 @@ def signup_handler(request):
                     )
 
                 del request.session["signup"]
-                message = "Sign up completed. You can now log in."
-                request.session["success"] = True
+                success(request, "Sign up completed. You can now log in.")
+                return redirect("login_form")
 
-        request.session["message"] = message
+        info(request, message)
         return redirect("login_form")
 
     else:
-        request.session["message"] = "Wrong request."
+        info(request, "Wrong request.")
 
     return redirect("login_form")
 
 
 def logout_handler(request):
-    del_msg(request)
-
     if request.user.is_authenticated:
         logout(request)
-        request.session["message"] = "You are now logged out."
-        request.session["success"] = True
+        success(request, "You are now logged out.")
     else:
-        request.session["message"] = "Not logged in."
+        info(request, "Not logged in.")
 
     return redirect("index")
 
 
 def show_personal_profile(request, slg):
-    del_msg(request)
     player = check_player(slg)
 
     if (
@@ -128,9 +120,8 @@ def show_personal_profile(request, slg):
 
             player.save()
 
-            request.session["message"] = "Changes saved successfully."
-            request.session["success"] = True
-            return redirect("index")
+            success(request, "Changes saved successfully.")
+            return redirect("my_profile", player)
 
         votes = player.star_rating["votes"]
         if votes:
@@ -151,13 +142,11 @@ def show_personal_profile(request, slg):
             }
         )
 
-    request.session["message"] = "Not authorized."
+    info(request, "Not authorized.")
     return redirect("index")
 
 
 def show_profile(request, slg):
-    del_msg(request)
-
     player = check_player(slg)
 
     if player is not None:
@@ -167,7 +156,7 @@ def show_profile(request, slg):
             {"player": player}
         )
 
-    request.session["message"] = "User does not exist."
+    info(request, "User does not exist.")
     return redirect("index")
 
 
@@ -190,10 +179,3 @@ def check_player(slg):
     except Player.DoesNotExist:
         player = None
     return player
-
-
-def del_msg(request):
-    if "message" in request.session:
-        del request.session["message"]
-    if "success" in request.session:
-        del request.session["success"]

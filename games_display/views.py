@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 import datetime as dt
-from user_accounts.views import del_msg
+from django.contrib.messages import info, success
 from .models import FutsalGame
 from .forms import CreateGameForm
 
@@ -17,8 +17,6 @@ def display_games(request):
 
 
 def create_game(request):
-    del_msg(request)
-
     if request.method == "POST":
         data = request.POST
 
@@ -47,8 +45,7 @@ def create_game(request):
             game.creator = request.user
             game.save()
 
-            request.session["message"] = "Game successfully created."
-            request.session["success"] = True
+            success(request, "Game successfully created.")
             return redirect("index")
 
     new_game_form = CreateGameForm
@@ -61,8 +58,6 @@ def create_game(request):
 
 
 def game_info(request, slg):
-    del_msg(request)
-
     game = FutsalGame.objects.filter(id=slg).first()
     players = game.all_joining_players.all()
     duration = game.play_time_end - game.play_time_start
@@ -87,8 +82,6 @@ def game_info(request, slg):
 
 
 def my_games(request):
-    del_msg(request)
-
     created_games = request.user.game_creator.all()
     joined_games = FutsalGame.objects.filter(all_joining_players=request.user)
 
@@ -103,8 +96,6 @@ def my_games(request):
 
 
 def join_game(request, id):
-    del_msg(request)
-
     game = FutsalGame.objects.get(id=id)
     usr = request.user
 
@@ -119,26 +110,19 @@ def join_game(request, id):
 
     else:
         game.all_joining_players.add(usr)
-        message = "Successfully joined."
-        request.session["success"] = True
+        success(request, "Successfully joined.")
+        return redirect("my_games")
 
-    request.session["message"] = message
-
-    return render(
-        request,
-        "my-games.html"
-    )
+    info(request, message)
+    return redirect("my_games")
 
 
 def delete_game(request, id):
-    del_msg(request)
-
     game = FutsalGame.objects.filter(id=id)[0]
     if game.creator == request.user:
         game.delete()
-        request.session["message"] = "Game deleted."
-        request.session["success"] = True
+        success(request, "Game deleted.")
         return redirect("my_games")
 
-    request.session["message"] = "Can't delete other creators games."
-    return redirect("index")
+    info(request, "Can't delete other creators games.")
+    return redirect("my_games")

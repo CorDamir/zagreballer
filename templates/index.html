@@ -14,9 +14,11 @@
 </head>
 
 <body>
-    <div id="popup-message" {% if not request.session.message %} class="hidden" {% endif %}>
-        <span class={% if request.session.success %}"success-message" {% else %}"error-message" {% endif %}>
-            {{ request.session.message | safe }}
+    <div id="popup-message" {% if not messages %}class="hidden"{% endif %}>
+        {% for message in messages %}
+            <span class={% if message.tags == "success" %}"success-message" {% else %}"error-message" {% endif %}>
+                {{ message }}
+        {% endfor %}
         </span>
         <span id="popup-close-button">X</span>
     </div>

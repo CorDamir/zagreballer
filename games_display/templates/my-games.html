@@ -6,9 +6,7 @@
         <hr>
     </div>
         {% for game in created %}
-            <div class="game-card" onclick="location.href='{% url 'game_info' game.id %}'">
                 {% include "card-display.html" %}
-            </div>
         {% endfor %}
     
     <div class="text-description-in-flex">
@@ -17,8 +15,6 @@
     </div>
     
         {% for game in joined %}
-        <div class="game-card" onclick="location.href='{% url 'game_info' game.id %}'">
             {% include "card-display.html" %}
-        </div>
         {% endfor %}
 {% endblock %}
