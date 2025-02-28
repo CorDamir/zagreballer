@@ -32,6 +32,8 @@ def login_handler(request):
         if "signup" in request.session:
             del request.session["signup"]
 
+        return redirect("index")
+
     else:
         request.session["message"] = "Wrong request."
 

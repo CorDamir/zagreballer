@@ -36,6 +36,9 @@ def create_game(request):
 
         data.play_time_end = data.play_time_start + duration
 
+        print(data.play_time_end)
+        print(type(data.play_time_end))
+
         saving_form = CreateGameForm(data=data)
         if saving_form.is_valid():
             game = saving_form.save(commit=False)
@@ -61,11 +64,22 @@ def game_info(request, slg):
     del_msg(request)
 
     game = FutsalGame.objects.filter(id=slg).first()
+    players = game.all_joining_players.all()
+    duration = 1
+    # TODO IMPORTANT: CHANGE DATABASE AND MODEL
+    # OR IMPLEMENT DURATION HERE IF IMPOSSIBLE
+    players_missing = game.players_missing - players.count()
+    game.players_full = int(game.players_full / 2)
 
     return render(
         request,
         "game-info.html",
-        {"game": game}
+        {
+            "game": game,
+            "players": players,
+            "duration": duration,
+            "players_missing": players_missing
+        }
     )
 
 

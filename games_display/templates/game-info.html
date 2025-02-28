@@ -1,5 +1,73 @@
 {% extends "index.html" %}
-
+<!--
+    # game.
+        # players_full
+        # custom_description
+        # age_min, age_man
+        # play_time_start
+        # creator
+    # duration
+    # players. (players that joined)
+        #username
+    # players_missing (still missing number)
+-->
 {% block main %}
-    <h1>{{ game.id }}</h1>
+    <table>
+        <tbody>
+            <tr>
+                <td>Created by:</td>
+                <td>
+                    <a href="{% url 'profile' game.creator.username %}">
+                        {{ game.creator.username }}
+                    </a>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>Date and time:</td>
+                <td>{{ game.play_time_start | date:'l: d.m.Y G:i' }}</td>
+            </tr>
+            
+            <tr>
+                <td>Sports hall:</td>
+                <td>{{ game.futsal_field.name }}
+                    (TODO: ADDRESS DISPLAY / GMAPS)
+                </td>
+            </tr>
+            
+            <tr>
+                <td>Game length:</td>
+                <td>{{ duration }}</td>
+            </tr>
+            
+            <tr>
+                <td>Players per team:</td>
+                <td>{{ game.players_full }}</td>
+            </tr>
+            
+            <tr>
+                <td>Preferred age range:</td>
+                <td>{{ game.age_min }} - {{ game.age_max }}</td>
+            </tr>
+
+            <tr>
+                <td><strong>Spots still available:</strong></td>
+                <td>{{ players_missing }}</td>
+            </tr>
+        </tbody>
+
+        <div>
+            <div>Creator's notes</div>
+            <div>{{ game.custom_description }}</div>
+
+            {% if players %}
+                <div>Users already joined
+                    <div>
+                        {% for player in players %}
+                            <div><a href="{% url 'profile' player.username %}">@{{ player.username }}</a></div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+    </table>
 {% endblock %}
