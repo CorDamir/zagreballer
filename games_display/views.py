@@ -65,9 +65,7 @@ def game_info(request, slg):
 
     game = FutsalGame.objects.filter(id=slg).first()
     players = game.all_joining_players.all()
-    duration = 1
-    # TODO IMPORTANT: CHANGE DATABASE AND MODEL
-    # OR IMPLEMENT DURATION HERE IF IMPOSSIBLE
+    duration = game.play_time_end - game.play_time_start
     players_missing = game.players_missing - players.count()
     game.players_full = int(game.players_full / 2)
 

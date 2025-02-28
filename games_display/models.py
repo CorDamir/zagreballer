@@ -48,7 +48,7 @@ class FutsalGame(models.Model):
     age_min = models.IntegerField()
     age_max = models.IntegerField()
     play_time_start = models.DateTimeField()
-    play_time_end = models.TimeField()
+    play_time_end = models.DateTimeField()
 
     creator = models.ForeignKey(
         Player, on_delete=models.CASCADE, related_name="game_creator"
