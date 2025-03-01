@@ -6,11 +6,11 @@
 {% endblock %}
 
 {% block main %}
-    <div class="form-container">
-        <form action="{% url 'create_game' %}" method="POST">
+    <div class="forms-container">
+        <form id="game-create-form" action="{% url 'create_game' %}" method="POST">
                 {% csrf_token %}
                 <div>
-                    <label for="id_futsal_field">Select sports hall: </label>
+                    <label for="id_futsal_field" hidden>Select sports hall: </label>
                     {{ form.futsal_field }}
                 </div>
                 <hr>
@@ -62,7 +62,7 @@
                     <label for="id_custom_description">Description: </label>
                     {{ form.custom_description }}
                 </div>
-                <button type="submit">Create game!</button>
+                <input type="submit" class="button" value="Create game!">
         </form>
     </div>
 {% endblock %}

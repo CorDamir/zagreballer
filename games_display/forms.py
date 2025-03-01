@@ -53,12 +53,16 @@ class CreateGameForm(forms.ModelForm):
             )
         )
 
+    futsal_field = forms.ModelChoiceField(
+        queryset=models.FutsalField.objects,
+        empty_label="--- Select sports hall ---"
+        )
+
     hrs = [tuple([i, "0" + str(i)]) for i in range(1, 5)]
     duration_hours = forms.IntegerField(
-        widget=forms.Select(choices=hrs),
-        initial=1
+        widget=forms.Select(choices=hrs)
     )
 
     duration_minutes = forms.IntegerField(
         widget=forms.Select(choices=mins)
-    )  
+    )

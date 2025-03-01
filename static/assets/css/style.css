@@ -111,7 +111,7 @@ body {
 
 .game-card{
     user-select: none;
-    width: 330px;
+    width: 310px;
     border: 2px solid var(--strong);
     border-radius: 10px;
     background: url('../images/simple-background.jpeg') no-repeat center 65%;
@@ -140,7 +140,6 @@ body {
 .game-card:hover{
     filter: brightness(140%);
     transform: scale(102%);
-    /*box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);*/
 }
 
 .game-card-info-text{
@@ -151,6 +150,7 @@ body {
     padding-right: 30px;
 }
 
+/* PLAIN TEXT IN MAIN AREA */
 .text-description-in-flex {
     width: 100%;
     justify-self: center;
@@ -167,6 +167,238 @@ body {
     height: 3px;
 }
 
+/* FORMS STYLING BASE */
+.forms-container {
+    z-index: 5;
+    background-color: var(--strong);
+    color: var(--menu);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 350px;
+    width: 85%;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 10px rgba(0, 0, 0, 0.6);
+}
+
+.forms-container .registration {
+    display: none;
+}
+
+#form-toggler:checked ~ .registration {
+    display: block;
+}
+
+#form-toggler:checked ~ .login {
+    display: none;
+}
+
+#form-toggler {
+    display: none;
+}
+
+.forms-container .form {
+    padding: 2rem;
+}
+
+.form .header {
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+#game-create-form input.button,
+.form input {
+    box-sizing: border-box;
+    padding: 0 15px;
+    background-color: var(--bg);
+    height: 50px;
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 1.3rem;
+    border: 1px solid var(--bg);
+    border-radius: 6px;
+    outline: none;
+}
+
+#game-create-form input.button:focus,
+.form input:focus {
+    box-shadow: 0 0px 3px rgb(255, 255, 255);
+}
+
+.form a {
+    padding-left: 3px;
+    font-size: 14px;
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.form a:hover {
+    text-decoration: underline;
+}
+
+#game-create-form input.button,
+.form input.button {
+    color: #fff;
+    background: var(--accent-dim);
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: 1.7rem;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+#game-create-form input.button:hover,
+.form input.button:hover {
+    background: var(--accent);
+}
+
+.signup {
+    font-size: 17px;
+    text-align: center;
+}
+
+.signup label {
+    color: var(--accent);
+    cursor: pointer;
+}
+
+.signup label:hover {
+    text-decoration: underline;
+}
+
+/* END FORMS STYLING BASE */
+
+/* MY_PROFILE FORM ADJUSTMENTS */
+#user-image,
+#user-image > img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.form fieldset{
+    all: unset;
+}
+
+.form hr {
+    width: 100%;
+    margin: 10px 0;
+}
+
+#image-upload input {
+    display: none;
+}
+
+#image-upload label {
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 6px;
+    padding: 2px 5px;
+    margin: 2px;
+    font-size: smaller;
+    color: #fff;
+    background: var(--accent-dim);
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+#image-upload label:hover {
+    background-color: var(--accent);
+}
+
+#user-profile-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#data-edit-buttons,
+#star-upload-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#data-edit-buttons input,
+#user-data-set input{
+    font-size: 17px;
+    height: 32px;
+    margin-bottom: 7px;
+}
+
+#data-edit-buttons input {
+    margin: 20px 0 0 0;
+    width: 45%;
+}
+
+
+#game-create-form {
+    padding: 1.5rem;
+}
+
+#game-create-form hr {
+   margin: 12px 0;
+}
+
+.label-input-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* GAME CREATION FORM */
+#game-create-form > div {
+    align-items: flex-end;
+}
+
+#game-create-form textarea {
+    height: 90px;
+    background-color: var(--bg);
+    padding: 7px;
+    border-radius: 6px;
+    font-size: 17px;
+    margin-top: 3px;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+}
+
+#game-create-form textarea:focus {
+    outline: none;
+}
+
+#id_futsal_field{
+    width: 100%;
+}
+
+#game-create-form select {
+    appearance: none;
+}
+
+#game-create-form select:focus,
+#game-create-form input:focus,
+#game-create-form textarea:focus {
+    outline: 2px solid saddlebrown;
+}
+
+#game-create-form input,
+#game-create-form select {
+    height: 25px;
+    background-color: var(--bg);
+    padding: 0 7px;
+    border-radius: 6px;
+    font-size: 17px;
+    text-align: center;
+}
+
+#game-create-form input.button{
+    margin-bottom: 0;
+}
 
 /* MEDIA QUERIES */
 @media screen and (max-width: 1000px){

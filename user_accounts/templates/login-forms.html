@@ -1,11 +1,11 @@
 {% extends "index.html" %}
 
 {% block main %}
-    <div id="login-form-container">
+    <div class="forms-container">
         <input type="checkbox" id="form-toggler" {% if 'signup' in request.session %} checked {% endif %}>
 
         <div class="login form">
-            <header>Log in</header>
+            <div class="header">Log in</div>
 
             <form action="{% url 'login_handler' %}" method="POST">
                 {% csrf_token %}

@@ -6,41 +6,43 @@
     {% endblock %}
 
     {% block main %}
-        <form id="data-edit-form" action="{% url 'my_profile' user.username %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
+        <div class="forms-container">
+            <form id="data-edit-form" class="form" action="{% url 'my_profile' user.username %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
 
-            <div id="user-profile-hero">
-                <div id="user-image">
-                    <img src="{{ player.image.url }}" alt="profile photo">
+                <div id="user-profile-hero">
+                    <div id="user-image">
+                        <img src="{{ player.image.url }}" alt="profile photo">
+                    </div>
+
+                    <div id="star-upload-container">
+                        <div id="user-star-rating">TODO: STAR</div>
+                        <fieldset id="image-upload">{{ img_upload }}</fieldset>
+                    </div>
+
+                    <hr>
                 </div>
 
-                <div id="star-upload-container">
-                    <div id="user-star-rating">TODO: STAR</div>
-                    <fieldset id="image-upload">{{ img_upload }}</fieldset>
+                <fieldset id="user-data-set">
+                    <label for="first_name">First name:</label>
+                    <input type="text" value="{{ player.first_name }}" name="first_name" id="first_name">
+                
+                    <label for="last_name">Last name:</label>
+                    <input type="text" value="{{ player.last_name }}" name="last_name" id="last_name">
+                
+                    <label for="email">Email:</label>
+                    <input type="text" value="{{ player.email }}" name="email" id="email">
+                
+                    <label for="birthdate">Date of birth:</label>
+                    <input type="date" value="{{ player.birthdate | date:'Y-m-d' }}" name="birthdate" id="birthdate">
+                </fieldset>
+
+                <div id="data-edit-buttons">
+                    <input type="submit" class="button" value="Save change">
+                    <input type="reset" class="button">
                 </div>
-
-                <hr>
-            </div>
-
-            <fieldset id="user-data-set">
-                <label for="first_name">First name:</label>
-                <input type="text" value="{{ player.first_name }}" name="first_name" id="first_name">
-            
-                <label for="last_name">Last name:</label>
-                <input type="text" value="{{ player.last_name }}" name="last_name" id="last_name">
-            
-                <label for="email">Email:</label>
-                <input type="text" value="{{ player.email }}" name="email" id="email">
-            
-                <label for="birthdate">Date of birth:</label>
-                <input type="date" value="{{ player.birthdate | date:'Y-m-d' }}" name="birthdate" id="birthdate">
-            </fieldset>
-
-            <div id="data-edit-buttons">
-                <button type="submit">Save changes</button>
-                <button type="reset">Reset</button>
-            </div>
-        </form>
+            </form>
+        </div>
     {% endblock %}
 </body>
 
