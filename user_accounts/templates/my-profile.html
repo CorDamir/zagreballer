@@ -1,10 +1,6 @@
 {% extends "index.html" %}
 {% load static %}
 
-    {% block head %}
-        <link rel="stylesheet" href="{% static 'assets/css/my-profile.css' %}">
-    {% endblock %}
-
     {% block main %}
         <div class="forms-container">
             <form id="data-edit-form" class="form" action="{% url 'my_profile' user.username %}" method="POST" enctype="multipart/form-data">

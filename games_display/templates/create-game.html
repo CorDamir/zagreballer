@@ -1,10 +1,6 @@
 {% extends "index.html" %}
 {% load static %}
 
-{% block head %}
-    <link rel="stylesheet" href="{% static 'assets/css/game-creation.css' %}" type=text/css>
-{% endblock %}
-
 {% block main %}
     <div class="forms-container">
         <form id="game-create-form" action="{% url 'create_game' %}" method="POST">
@@ -45,7 +41,7 @@
                 </div>
                 <hr>
                 <div class="label-input-container">
-                    <label for="id_players_missing">Players missing: </label>
+                    <label for="id_players_missing">Players needed: </label>
                     {{ form.players_missing }}
                 </div>
                 <hr>

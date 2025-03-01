@@ -7,12 +7,15 @@ from .forms import CreateGameForm
 
 # Create your views here.
 def display_games(request):
-    joinable_games = FutsalGame.objects.all().order_by("play_time_start")
+    all_games = FutsalGame.objects.all().order_by("play_time_start")
+    set_games_for_display(all_games)
+
+    after_filters = all_games
 
     return render(
         request,
         "display.html",
-        {"games": joinable_games}
+        {"games": after_filters}
     )
 
 
@@ -33,9 +36,6 @@ def create_game(request):
             )
 
         data.play_time_end = data.play_time_start + duration
-
-        print(data.play_time_end)
-        print(type(data.play_time_end))
 
         saving_form = CreateGameForm(data=data)
         if saving_form.is_valid():
@@ -60,9 +60,6 @@ def create_game(request):
 def game_info(request, slg):
     game = FutsalGame.objects.filter(id=slg).first()
     players = game.all_joining_players.all()
-    duration = game.play_time_end - game.play_time_start
-    hs = duration.seconds // 3600
-    mins = duration.seconds // 60 % 60
 
     players_missing = game.players_missing - players.count()
     game.players_full = game.players_full // 2
@@ -73,10 +70,7 @@ def game_info(request, slg):
         {
             "game": game,
             "players": players,
-            "duration": duration,
             "players_missing": players_missing,
-            "hs": hs,
-            "mins": mins
         }
     )
 
@@ -84,6 +78,9 @@ def game_info(request, slg):
 def my_games(request):
     created_games = request.user.game_creator.all()
     joined_games = FutsalGame.objects.filter(all_joining_players=request.user)
+
+    set_games_for_display(created_games)
+    set_games_for_display(joined_games)
 
     return render(
         request,
@@ -126,3 +123,13 @@ def delete_game(request, id):
 
     info(request, "Can't delete other creators games.")
     return redirect("my_games")
+
+
+#               --- HELPER FUNCTIONS ---
+
+def set_games_for_display(all_games):
+    for game in all_games:
+        game.players_missing = (
+            game.players_missing - game.all_joining_players.count()
+            )
+        game.players_full = game.players_full // 2

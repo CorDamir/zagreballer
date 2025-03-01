@@ -1,16 +1,15 @@
-{% extends "index.html" %}
-<!--
-    # game.
-        # players_full
-        # custom_description
-        # age_min, age_man
-        # play_time_start
-        # creator
-    # duration
-    # players. (players that joined)
-        #username
-    # players_missing (still missing number)
+<!-- 
+    add preferred age range
+    add creator
+    add joining player list as links to profiles
+    add comments area
+    add join/leave button
+    add exact address and gmap link
+    
 -->
+
+{% extends "index.html" %}
+
 {% block main %}
     <table>
         <tbody>
@@ -24,8 +23,13 @@
             </tr>
             
             <tr>
-                <td>Date and time:</td>
-                <td>{{ game.play_time_start | date:'l: d.m.Y G:i' }}</td>
+                <td>Day:</td>
+                <td>{{ game.play_time_start | date:'l, d.m.Y' }}</td>
+            </tr>
+
+            <tr>
+                <td>Time:</td>
+                <td>{{ game.play_time_start | date:'G:i' }} - {{ game.play_time_end | date:'G:i' }}</td>
             </tr>
             
             <tr>
@@ -33,11 +37,6 @@
                 <td>{{ game.futsal_field.name }}
                     (TODO: ADDRESS DISPLAY / GMAPS)
                 </td>
-            </tr>
-            
-            <tr>
-                <td>Game length:</td>
-                <td>{{ hs }}:{{ mins }}</td>
             </tr>
             
             <tr>
@@ -51,14 +50,21 @@
             </tr>
 
             <tr>
-                <td><strong>Spots still available:</strong></td>
+                <td><strong>Players still needed:</strong></td>
                 <td><strong>{{ players_missing }}</strong></td>
             </tr>
+
+            {% if game.custom_description %}
+                <tr>
+                    <td>
+                    Creator's notes
+                    {{ game.custom_description }}
+                    </td>
+                </tr>
+            {% endif %}
         </tbody>
 
         <div>
-            <div>Creator's notes</div>
-            <div>{{ game.custom_description }}</div>
             <a href="{% url 'join_game' game.id %}"><button>JOIN</button></a>
             <a href="{% url 'delete_game' game.id %}"><button>DELETE</button></a>
             {% if players %}
@@ -70,5 +76,6 @@
                     </div>
                 </div>
             {% endif %}
+        </div>
     </table>
 {% endblock %}

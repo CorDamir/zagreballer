@@ -2,25 +2,47 @@
     <table>
         <tbody>
             <tr>
+                <td>Day:</td>
+                <td>{{ game.play_time_start | date:'l, d.m.Y' }}</td>
+            </tr>
+
+            <tr>
+                <td>Time:</td>
+                <td>{{ game.play_time_start | date:'G:i' }} - {{ game.play_time_end | date:'G:i' }}</td>
+            </tr>
+
+            <tr>
                 <td>Playing field:</td>
                 <td>{{ game.futsal_field.name }}</td>
-            </tr>
-            
-            <tr>
-                <td>Date and time:</td>
-                <td>{{ game.play_time_start | date:'l: d.m.Y G:i' }}</td>
             </tr>
             
             <tr>
                 <td>City block:</td>
                 <td>{{ game.futsal_field.get_location_cityblock_display }}</td>
             </tr>
+
+            <tr>
+                <td>Teams:</td>
+                <td>{{ game.players_full }} vs {{ game.players_full }}</td>
+            </tr>
+
+            <tr>
+                <td>Open spots:</td>
+                <td class="open-spots-accent">
+                    {% if game.players_missing %}
+                        {{ game.players_missing }}
+                    {% else %}
+                        Game is full.
+                    {% endif %}
+                </td>
+            </tr>
         </tbody>
     </table>
 
-    <hr>
-        
-    <div class="game-card-info-text">
-        {{ game.custom_description }}
-    </div>
+    {% if game.custom_description %}
+        <hr>
+        <div class="game-card-info-text">
+            {{ game.custom_description }}
+        </div>
+    {% endif %}
 </div> 

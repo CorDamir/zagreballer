@@ -10,10 +10,10 @@ class FutsalField(models.Model):
 
     CITYBLOCK_CHOICES = (
         (0, "Donji grad"),
-        (1, "Gornji grad – Medveščak"),
+        (1, "Medveščak"),
         (2, "Trnje"),
         (3, "Maksimir"),
-        (4, "Peščenica – Žitnjak"),
+        (4, "Žitnjak"),
         (5, "Novi Zagreb – istok"),
         (6, "Novi Zagreb – zapad"),
         (7, "Trešnjevka – sjever"),

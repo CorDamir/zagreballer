@@ -34,6 +34,8 @@ body {
     margin: 0;
     padding: 0;
     background-color: var(--bg);
+    background: url('../images/bg-big.jpeg') no-repeat center center;
+    background-size: cover;
 }
 
 /* POPUP MESSAGES */
@@ -81,9 +83,8 @@ body {
 /* MENU AND OPTIONS */
 #menu-options {
     grid-area: 1 / 1 / span 4 / span 1;
+    background-color: rgba(0,0,0, 0.7);
     box-shadow: 1px 0 7px 5px black;
-    background: url('../images/background_field.jpeg') no-repeat 60% 80%;
-    background-size: cover;
     padding: 1rem;
     color: white;
 }
@@ -104,50 +105,50 @@ body {
     grid-area: 1 / 2 / span 4 / span 3;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
     align-content: flex-start;
-    padding: 1rem;
+    padding: 1.5rem;
 }   
 
 .game-card{
+    font-weight: 300;
     user-select: none;
-    width: 310px;
-    border: 2px solid var(--strong);
+    width: 280px;
     border-radius: 10px;
-    background: url('../images/simple-background.jpeg') no-repeat center 65%;
+    background: url('../images/simple-background.jpeg') no-repeat center 90%;
     background-size: cover;
     color: white;
     padding: 0.7rem;
-    margin: 0.5rem;
+    margin: 10px 10px;
     cursor: pointer;
     transition: all 0.5s;
     height: auto;
 }
 
-.game-card > a {
-    all: unset;
-    z-index: 3;
-    visibility: hidden;
-    position: fixed;
-    width: 330px;
-    height: 160px;
+.game-card table {
+    width: 100%;
 }
 
-#games-container:hover .game-card:not(:hover) {
-    filter: brightness(50%);
+.game-card tr {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 5px;
+    margin: 5px 0;
 }
 
 .game-card:hover{
     filter: brightness(140%);
-    transform: scale(102%);
+    transform: scale(110%);
+    z-index: 3;
 }
 
 .game-card-info-text{
     padding: 10px;
 }
 
-.game-card td:first-child{
-    padding-right: 30px;
+.open-spots-accent {
+    color: var(--accent-shine);
+    font-weight: 800;
 }
 
 /* PLAIN TEXT IN MAIN AREA */
@@ -158,13 +159,21 @@ body {
 }
 
 .text-description-in-flex h2 {
-    font-weight: bold;
-    font-size: xx-large;
-    margin: 5px;
+    color: white;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 15px;
+    user-select: none;
+    font-size: x-large;
+    margin: 5px auto;
+    padding: 7px 80px;
+    width: fit-content;
+    letter-spacing: 5px;
 }
 
 .text-description-in-flex hr {
-    height: 3px;
+    border: 2px solid black;
+    margin: 15px auto;
+    width: 85%;
 }
 
 /* FORMS STYLING BASE */
