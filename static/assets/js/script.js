@@ -11,7 +11,9 @@ function docLoaded(){
     document.getElementById("menu-options").addEventListener("click", toggleMenu);
 
     YES.addEventListener("click", () => {
-        window.location.href = link;
+        postForm = document.getElementsByTagName("form")[0];
+        if (postForm) postForm.submit();
+        else window.location.href = link;
     })
 
     NO.addEventListener("click", () => {
