@@ -7,10 +7,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" type="text/css">
+    {% block head %}
+    {% endblock %}
     <title>ZagreBaller</title>
 </head>
 
 <body>
+    <div id="modal-container" class="hidden">
+        <div class="modal-element">
+            <h2>Are you sure?</h2>
+            <input type="button" class="button-temp" value="Yes" id="yes">
+            <input type="button" class="button-temp" value="No" id="no">
+        </div>
+    </div>
+
     <div id="popup-message" {% if not messages %}class="hidden"{% endif %}>
         {% for message in messages %}
             <span class={% if message.tags == "success" %}"success-message" {% else %}"error-message" {% endif %}>
@@ -54,5 +64,7 @@
     </main>
 
     <script src="{% static 'assets/js/script.js' %}"></script>
+    {% block script %}
+    {% endblock %}
 </body>
 </html>

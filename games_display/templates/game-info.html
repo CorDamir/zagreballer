@@ -1,17 +1,9 @@
 <!-- 
     add joining player list as links to profiles
     add comments area
-    add join/leave button
 
     game - modified data concrete game
     players - all joined players
-
-     if game.custom_description 
-        <hr>
-        <div class="game-card-info-text">
-             game.custom_description 
-        </div>
-     endif 
 -->
 
 {% extends "index.html" %}
@@ -46,23 +38,20 @@
             </tr>
 
             <tr>
-                <td>Preferred age range:</td>
+                <td>Ideal age range:</td>
                 <td>{{ game.age_min }} - {{ game.age_max }}</td>
             </tr>
 
             <tr>
                 <td>Exact address:</td>
                 <td>
-                    TODO: GMAPS link
+                    TODO: GMAPS
                 </td>
             </tr>
 
             <tr>
                 <td>Game creator:</td>
-                <td><a href="{% url 'profile' game.creator.username %}">
-                        @{{ game.creator.username }}
-                    </a>
-                </td>
+                <td>{{ game.creator.username }}</td>
             </tr>
 
             <tr>
@@ -81,15 +70,30 @@
         <hr>
         <div>{{ game.custom_description }}</div>
     {% endif %}
+    
     <hr>
+    
     <div id="control-buttons">
-        <input type="button" class="button" value="Join!">
-        <input type="button" class="button" value="Leave">
-        <input type="button" class="button" value="Edit">
-        <input type="button" class="button" value="Delete">
+        {% if request.user.id != game.creator.id %}
+            {% if not request.user in players %}
+                <input type="button" class="button-temp modal-activator" value="Join!" data-action="{% url 'join_game' game.id %}">
+            {% else %}
+                <input type="button" class="button-temp red modal-activator"
+                       value="Leave"
+                       data-action="{% url 'leave_game' game.id %}"
+                >
+            {% endif %}
+        
+        {% else %}
+            <input type="button" class="button-temp" value="Edit" data-action="{% url 'edit_game' game.id %}">
+            <input type="button" class="button-temp red modal-activator" value="Delete" data-action="{% url 'delete_game' game.id %}">
+        {% endif %}
     </div>
 </div> 
 
-<div class="detail-card">TODO: joined list</div>
-<div class="detail-card">TODO: comments</div>
+{% if request.user in players or request.user.id == game.creator.id %}
+    <div class="detail-card">TODO: joined list</div>
+    <div class="detail-card">TODO: comments</div>
+{% endif %}
+
 {% endblock %}

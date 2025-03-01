@@ -124,6 +124,14 @@ def delete_game(request, id):
     return redirect("my_games")
 
 
+def leave_game(request, id):
+    pass
+
+
+def edit_game(request, id):
+    pass
+
+
 #               --- HELPER FUNCTIONS ---
 
 def set_games_for_display(all_games):

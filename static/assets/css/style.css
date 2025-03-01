@@ -12,6 +12,7 @@
     --reddish: #ec0b43;
     --accent-shine: #85bfff;
     --dirty-white: #b1b1b1;
+    --reddish-acc: #ff96b0;
 }
 
 /* TOGGLE-able CLASSES */
@@ -38,6 +39,22 @@ body {
     background: url('../images/bg-big.jpeg') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
+}
+/* MODAL */
+#modal-container{
+    z-index: 999;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+}
+
+/* settings as modal on top*/
+.modal-element{
+    margin: auto;
+    margin-top: 50px;
+    background-color: white;
+    box-shadow: white 0 0 5px;
 }
 
 /* POPUP MESSAGES */
@@ -166,12 +183,17 @@ body {
 .detail-card {
     background: rgba(0, 0, 0, 0.9);
     color: var(--menu);
-    max-width: 350px;
+    max-width: 300px;
     width: 85%;
     border-radius: 10px;
     box-shadow: 0 0 3px 5px rgba(0, 0, 0, 0.6);
     padding: 20px;
     margin: 8px;
+}
+
+.detail-card hr {
+    margin: 10px auto;
+    width: 75%;
 }
 
 .detail-card table {
@@ -182,6 +204,44 @@ body {
     margin: 4px 0;
     display: flex;
     justify-content: space-between;
+}
+
+#control-buttons {
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-temp {
+    margin: 5px 10px;
+    color: var(--whitish);
+    background: var(--catch);
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.4s;
+    box-sizing: border-box;
+    padding: 0 15px;
+    height: 40px;
+    width: 100%;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    outline: none;
+    letter-spacing: 1px;
+}
+
+.button-temp:hover {
+    background: var(--accent);
+    color: black;
+}
+
+.button-temp.red {
+    background-color: var(--reddish);
+    border-color: black;
+}
+
+.button-temp.red:hover {
+    background-color: var(--reddish-acc);
 }
 
 /* PLAIN TEXT IN MAIN AREA */
