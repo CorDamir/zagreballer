@@ -58,11 +58,11 @@ def create_game(request):
 
 
 def game_info(request, slg):
-    game = FutsalGame.objects.filter(id=slg).first()
-    players = game.all_joining_players.all()
+    game = FutsalGame.objects.filter(id=slg).all()
+    set_games_for_display(game)
 
-    players_missing = game.players_missing - players.count()
-    game.players_full = game.players_full // 2
+    game = game[0]
+    players = game.all_joining_players.all()
 
     return render(
         request,
@@ -70,7 +70,6 @@ def game_info(request, slg):
         {
             "game": game,
             "players": players,
-            "players_missing": players_missing,
         }
     )
 

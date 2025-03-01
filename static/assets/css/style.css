@@ -57,6 +57,7 @@ body {
     font-size: larger;
     width: 25%;
     font-weight: bold;
+    cursor: pointer;
 }
 
 #popup-close-button {
@@ -79,7 +80,7 @@ body {
     display: grid;
     grid-template-columns: 250px auto auto auto;
     grid-template-rows: auto auto auto;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 /* MENU AND OPTIONS */
@@ -161,6 +162,28 @@ body {
     font-weight: 800;
 }
 
+/* GAME DETAILS SECTION */
+.detail-card {
+    background: rgba(0, 0, 0, 0.9);
+    color: var(--menu);
+    max-width: 350px;
+    width: 85%;
+    border-radius: 10px;
+    box-shadow: 0 0 3px 5px rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    margin: 8px;
+}
+
+.detail-card table {
+    width: 100%;
+}
+
+.detail-card tr {
+    margin: 4px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
 /* PLAIN TEXT IN MAIN AREA */
 .text-description-in-flex {
     width: 100%;
@@ -198,7 +221,7 @@ body {
     max-width: 350px;
     width: 85%;
     border-radius: 10px;
-    box-shadow: 0 0 5px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 3px 5px rgba(0, 0, 0, 0.6);
 }
 
 .forms-container .registration {

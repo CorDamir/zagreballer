@@ -14,7 +14,7 @@
     <div id="popup-message" {% if not messages %}class="hidden"{% endif %}>
         {% for message in messages %}
             <span class={% if message.tags == "success" %}"success-message" {% else %}"error-message" {% endif %}>
-                {{ message }}
+                {{ message | safe }}
             </span>
         {% endfor %}
         <span id="popup-close-button">X</span>

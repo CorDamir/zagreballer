@@ -1,27 +1,25 @@
 <!-- 
-    add preferred age range
-    add creator
     add joining player list as links to profiles
     add comments area
     add join/leave button
-    add exact address and gmap link
-    
+
+    game - modified data concrete game
+    players - all joined players
+
+     if game.custom_description 
+        <hr>
+        <div class="game-card-info-text">
+             game.custom_description 
+        </div>
+     endif 
 -->
 
 {% extends "index.html" %}
 
 {% block main %}
+<div class="detail-card">
     <table>
         <tbody>
-            <tr>
-                <td>Created by:</td>
-                <td>
-                    <a href="{% url 'profile' game.creator.username %}">
-                        {{ game.creator.username }}
-                    </a>
-                </td>
-            </tr>
-            
             <tr>
                 <td>Day:</td>
                 <td>{{ game.play_time_start | date:'l, d.m.Y' }}</td>
@@ -31,51 +29,67 @@
                 <td>Time:</td>
                 <td>{{ game.play_time_start | date:'G:i' }} - {{ game.play_time_end | date:'G:i' }}</td>
             </tr>
-            
+
             <tr>
-                <td>Sports hall:</td>
-                <td>{{ game.futsal_field.name }}
-                    (TODO: ADDRESS DISPLAY / GMAPS)
-                </td>
+                <td>Playing field:</td>
+                <td>{{ game.futsal_field.name }}</td>
             </tr>
             
             <tr>
-                <td>Players per team:</td>
-                <td>{{ game.players_full }}</td>
+                <td>City block:</td>
+                <td>{{ game.futsal_field.get_location_cityblock_display }}</td>
             </tr>
-            
+
+            <tr>
+                <td>Teams:</td>
+                <td>{{ game.players_full }} vs {{ game.players_full }}</td>
+            </tr>
+
             <tr>
                 <td>Preferred age range:</td>
                 <td>{{ game.age_min }} - {{ game.age_max }}</td>
             </tr>
 
             <tr>
-                <td><strong>Players still needed:</strong></td>
-                <td><strong>{{ players_missing }}</strong></td>
+                <td>Exact address:</td>
+                <td>
+                    TODO: GMAPS link
+                </td>
             </tr>
 
-            {% if game.custom_description %}
-                <tr>
-                    <td>
-                    Creator's notes
-                    {{ game.custom_description }}
-                    </td>
-                </tr>
-            {% endif %}
-        </tbody>
+            <tr>
+                <td>Game creator:</td>
+                <td><a href="{% url 'profile' game.creator.username %}">
+                        @{{ game.creator.username }}
+                    </a>
+                </td>
+            </tr>
 
-        <div>
-            <a href="{% url 'join_game' game.id %}"><button>JOIN</button></a>
-            <a href="{% url 'delete_game' game.id %}"><button>DELETE</button></a>
-            {% if players %}
-                <div>Users already joined
-                    <div>
-                        {% for player in players %}
-                            <div><a href="{% url 'profile' player.username %}">@{{ player.username }}</a></div>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endif %}
-        </div>
+            <tr>
+                <td>Open spots:</td>
+                <td>
+                    {% if game.players_missing %}
+                        {{ game.players_missing }}
+                    {% else %}
+                        Game is full.
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
     </table>
+    {% if game.custom_description %}
+        <hr>
+        <div>{{ game.custom_description }}</div>
+    {% endif %}
+    <hr>
+    <div id="control-buttons">
+        <input type="button" class="button" value="Join!">
+        <input type="button" class="button" value="Leave">
+        <input type="button" class="button" value="Edit">
+        <input type="button" class="button" value="Delete">
+    </div>
+</div> 
+
+<div class="detail-card">TODO: joined list</div>
+<div class="detail-card">TODO: comments</div>
 {% endblock %}

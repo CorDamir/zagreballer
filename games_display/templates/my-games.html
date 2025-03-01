@@ -1,37 +1,32 @@
 {% extends "index.html" %}
 
 {% block main %}
+
+    {% if created %}
     <div class="text-description-in-flex">
         <h2>CREATED GAMES</h2>
         <hr>
     </div>
-    
-    {% if created %}
         {% for game in created %}
             {% include "card-display.html" %}
         {% endfor %}
-        
-    {% else %}
-        <div class="text-description-in-flex">
-            <h2>NO GAMES FOUND</h2>
-        </div>
     {% endif %}
-    
-    <div class="text-description-in-flex">
-        <hr>
-        <h2>JOINED GAMES</h2>
-        <hr>
-    </div>
-    
+
     {% if joined %}
+        {% if created %} <div class="text-description-in-flex"><hr></div> {% endif %}
+        <div class="text-description-in-flex">
+            <h2>JOINED GAMES</h2>
+            <hr>
+        </div>    
         {% for game in joined %}
-                {% include "card-display.html" %}
+            {% include "card-display.html" %}
         {% endfor %}
+    {% endif %}
     
-    {% else %}
+    {% if not created and not joined %}
         <div class="text-description-in-flex">
             <h2>NO GAMES FOUND</h2>
         </div>
     {% endif %}
-    
+
 {% endblock %}
