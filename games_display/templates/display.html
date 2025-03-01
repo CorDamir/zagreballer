@@ -1,7 +1,20 @@
 {% extends "index.html" %}
 
 {% block main %}
-    {% for game in games %}
-            {% include "card-display.html" %}
-    {% endfor %}
+    <div class="text-description-in-flex">
+        <h2>GAMES MATCHING FILTERS</h2>
+        <hr>
+    </div>
+
+    {% if games %}
+        {% for game in games %}
+                {% include "card-display.html" %}
+        {% endfor %}
+    
+    {% else %}
+        <div class="text-description-in-flex">
+            <h2>NO GAMES FOUND</h2>
+        </div>
+    {% endif %}
+
 {% endblock %}

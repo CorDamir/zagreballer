@@ -11,6 +11,7 @@
     --whitish: floralwhite;
     --reddish: #ec0b43;
     --accent-shine: #85bfff;
+    --dirty-white: #b1b1b1;
 }
 
 /* TOGGLE-able CLASSES */
@@ -36,6 +37,7 @@ body {
     background-color: var(--bg);
     background: url('../images/bg-big.jpeg') no-repeat center center;
     background-size: cover;
+    background-attachment: fixed;
 }
 
 /* POPUP MESSAGES */
@@ -68,7 +70,7 @@ body {
     cursor: pointer;
 }
 
-#popup-close-button:hover {
+#popup-message:hover #popup-close-button {
     color: var(--reddish)
 }
 
@@ -87,6 +89,12 @@ body {
     box-shadow: 1px 0 7px 5px black;
     padding: 1rem;
     color: white;
+    width: 218px;
+}
+
+#menu-options,
+#grid-container {
+    transition: all 0.7s ease-out;
 }
 
 #menu-options a {
@@ -113,7 +121,9 @@ body {
 .game-card{
     font-weight: 300;
     user-select: none;
-    width: 280px;
+    min-width: 280px;
+    max-width: 380px;
+    flex: 1 1;
     border-radius: 10px;
     background: url('../images/simple-background.jpeg') no-repeat center 90%;
     background-size: cover;
@@ -138,7 +148,7 @@ body {
 
 .game-card:hover{
     filter: brightness(140%);
-    transform: scale(110%);
+    transform: scale(105%);
     z-index: 3;
 }
 
@@ -179,7 +189,7 @@ body {
 /* FORMS STYLING BASE */
 .forms-container {
     z-index: 5;
-    background-color: var(--strong);
+    background: rgba(0, 0, 0, 0.9);
     color: var(--menu);
     position: absolute;
     top: 50%;
@@ -222,12 +232,11 @@ body {
 .form input {
     box-sizing: border-box;
     padding: 0 15px;
-    background-color: var(--bg);
     height: 50px;
     width: 100%;
     font-size: 18px;
     margin-bottom: 1.3rem;
-    border: 1px solid var(--bg);
+    border: 1px solid var(--accent);
     border-radius: 6px;
     outline: none;
 }
@@ -250,8 +259,8 @@ body {
 
 #game-create-form input.button,
 .form input.button {
-    color: #fff;
-    background: var(--accent-dim);
+    color: var(--whitish);
+    background: var(--catch);
     font-size: 1.2rem;
     font-weight: 500;
     margin-top: 1.7rem;
@@ -262,6 +271,7 @@ body {
 #game-create-form input.button:hover,
 .form input.button:hover {
     background: var(--accent);
+    color: black;
 }
 
 .signup {
@@ -366,8 +376,9 @@ body {
 }
 
 #game-create-form textarea {
+    font-family: inherit;
     height: 90px;
-    background-color: var(--bg);
+    background-color: var(--dirty-white);
     padding: 7px;
     border-radius: 6px;
     font-size: 17px;
@@ -392,17 +403,18 @@ body {
 #game-create-form select:focus,
 #game-create-form input:focus,
 #game-create-form textarea:focus {
-    outline: 2px solid saddlebrown;
+    outline: 1px solid var(--menu);
 }
 
 #game-create-form input,
 #game-create-form select {
     height: 25px;
-    background-color: var(--bg);
+    background-color: var(--dirty-white);
     padding: 0 7px;
     border-radius: 6px;
     font-size: 17px;
     text-align: center;
+    margin-top: 5px;
 }
 
 #game-create-form input.button{
@@ -410,8 +422,21 @@ body {
 }
 
 /* MEDIA QUERIES */
-@media screen and (max-width: 1000px){
-    #popup-message{
+@media screen and (max-width: 768px){
+    #popup-message {
         width: 85%;
+    }
+
+    #menu-options {
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 99;
+    }
+
+    .open {
+        translate: -225px;
+    }
+
+    #grid-container {
+        grid-template-columns: 25px auto auto auto;
     }
 }

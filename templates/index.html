@@ -15,14 +15,16 @@
         {% for message in messages %}
             <span class={% if message.tags == "success" %}"success-message" {% else %}"error-message" {% endif %}>
                 {{ message }}
+            </span>
         {% endfor %}
-        </span>
         <span id="popup-close-button">X</span>
     </div>
 
     <main>
         <div id="grid-container">
-            <section id="menu-options">
+            <section id="menu-options" class="open">
+                <div id="menu-toggler"></div>
+
                 {% if not user.is_authenticated %}
                     You must be logged in to join games.
                     <a href="{% url 'login_form' %}">Login / Signup</a>
