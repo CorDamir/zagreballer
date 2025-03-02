@@ -135,6 +135,10 @@ body {
     width: 218px;
 }
 
+#menu-options hr {
+    margin-bottom: 25px;
+}
+
 #menu-options,
 #grid-container {
     transition: all 0.7s ease-out;
@@ -146,6 +150,12 @@ body {
     cursor: pointer;
     user-select: none;
     color: var(--accent-shine);
+}
+
+#nav > a {
+    font-size: larger;
+    display: block;
+    margin-top: 5px;
 }
 
 .joining-player a:hover,
@@ -238,6 +248,7 @@ body {
 #info-card{
     background-position: center bottom;
     font-weight: 500;
+    cursor: auto;
 }
 
 #info-card:hover {

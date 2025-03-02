@@ -45,15 +45,11 @@
                 {% else %}
                     Welcome {{ user.username }} <a href="{% url 'logout_handler' %}"><small>(logout)</small></a>
                     <hr>
-                    <nav>
+                    <nav id="nav">
                         <a href="{% url 'index' %}">Browse games</a>
-                        <br>
                         <a href="{% url 'my_profile' user.username %}">My profile</a>
-                        <br>
                         <a href="{% url 'my_games' %}">My games</a>
-                        <br>
                         <a href="{% url 'create_game' %}">Create new game</a>
-                        <br>
                     </nav>
                 {% endif %}
             </section>

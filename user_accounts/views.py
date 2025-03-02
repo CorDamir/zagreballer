@@ -5,6 +5,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.messages import info, success
 from .models import Player
 from .forms import PlayerImageUpdate
+from games_display.views import anon_user
 
 
 # views
@@ -98,6 +99,9 @@ def logout_handler(request):
 
 
 def show_personal_profile(request, slg):
+    if request.user.is_anonymous:
+        return anon_user(request)
+
     player = check_player(slg)
 
     if (

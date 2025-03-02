@@ -61,3 +61,19 @@ class FutsalGame(models.Model):
     all_joining_players = models.ManyToManyField(
         Player, related_name="joining_players"
         )
+
+
+class CommentModel(models.Model):
+    creator = models.ForeignKey(
+        Player,
+        related_name="comments",
+        null=True,
+        on_delete=models.SET_NULL
+        )
+
+    root_game = models.ForeignKey(
+        FutsalGame, related_name="comments", on_delete=models.CASCADE
+        )
+
+    content = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)

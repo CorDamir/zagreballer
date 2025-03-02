@@ -3,6 +3,7 @@ import datetime as dt
 from django.contrib.messages import info, success
 from .models import FutsalGame
 from .forms import CreateGameForm
+from user_accounts.views import check_player
 
 
 def display_games(request):
@@ -19,6 +20,9 @@ def display_games(request):
 
 
 def create_game(request):
+    if request.user.is_anonymous:
+        return anon_user(request)
+
     if request.method == "POST":
         data = request.POST
 
@@ -47,6 +51,10 @@ def create_game(request):
             success(request, "Game successfully created.")
             return redirect(f"../game-info/{game.id}")
 
+        else:
+            info(request, "Unable to create game.")
+            return redirect("my_games")
+
     new_game_form = CreateGameForm
 
     return render(
@@ -56,11 +64,15 @@ def create_game(request):
     )
 
 
-def game_info(request, slg):
-    game = FutsalGame.objects.filter(id=slg).all()
+def game_info(request, id):
+    game = check_game(id)
+
+    if game is None:
+        info("Cant find this game.")
+        return redirect("my_games")
+
     set_games_for_display(game)
 
-    game = game[0]
     players = game.all_joining_players.all()
 
     return render(
@@ -74,6 +86,9 @@ def game_info(request, slg):
 
 
 def my_games(request):
+    if request.user.is_anonymous:
+        return anon_user(request)
+
     created_games = request.user.game_creator.all()
     joined_games = FutsalGame.objects.filter(all_joining_players=request.user)
 
@@ -91,8 +106,19 @@ def my_games(request):
 
 
 def join_game(request, id):
-    game = FutsalGame.objects.get(id=id)
-    usr = request.user
+    game = check_game(id)
+    usr = check_player(request.user)
+
+    if request.user.is_anonymous:
+        return anon_user(request)
+
+    if usr is None:
+        info(request, "Error with user")
+        return redirect("login_form")
+
+    if game is None:
+        info(request, "Can't find this game.")
+        return redirect("my_games")
 
     if usr in game.all_joining_players.all():
         message = "Already joined this game."
@@ -113,7 +139,12 @@ def join_game(request, id):
 
 
 def delete_game(request, id):
-    game = FutsalGame.objects.get(id=id)
+    game = check_game(id)
+
+    if game is None:
+        info(request, "Can't find this game.")
+        return redirect("my_games")
+
     if game.creator == request.user:
         game.delete()
         success(request, "Game deleted.")
@@ -124,8 +155,19 @@ def delete_game(request, id):
 
 
 def leave_game(request, id):
-    usr = request.user
-    game = FutsalGame.objects.get(id=id)
+    usr = check_player(request.user)
+    game = check_game(id)
+
+    if request.user.is_anonymous:
+        return anon_user(request)
+
+    if usr is None:
+        info(request, "Error with user")
+        return redirect("login_form")
+
+    if game is None:
+        info(request, "Can't find this game.")
+        return redirect("my_games")
 
     if game.all_joining_players.contains(usr):
         game.all_joining_players.remove(usr)
@@ -138,10 +180,16 @@ def leave_game(request, id):
 
 
 def edit_game(request, id):
-    game = FutsalGame.objects.get(id=id)
+    game = check_game(id)
+
+    if game is None:
+        info(request, "Can't find this game.")
+        return redirect("my_games")
+
+    if request.user.is_anonymous:
+        return anon_user(request)
 
     if game.creator.id == request.user.id:
-
         if request.method == "POST":
             data = request.POST
 
@@ -191,3 +239,21 @@ def set_games_for_display(all_games):
         game.players_missing = (
             game.players_missing - game.all_joining_players.count()
             )
+
+
+def check_game(id):
+    """
+    argument: username;
+    returns 'Player' model instance if username exists in databese
+    returns 'None' otherwise
+    """
+    try:
+        game = FutsalGame.objects.get(id=id)
+    except FutsalGame.DoesNotExist:
+        game = None
+    return game
+
+
+def anon_user(request):
+    info(request, "You must be logged in for that.")
+    return redirect("login_form")
