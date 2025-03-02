@@ -8,6 +8,7 @@ function toggleMenu(){
 function displayConfirmationModal(){
     MODAL.classList.toggle("hidden");
     link = this.getAttribute("data-action");
+    console.log(link);
 }
 
 function docLoaded(){
@@ -15,10 +16,9 @@ function docLoaded(){
     document.getElementById("menu-toggler").addEventListener("click", toggleMenu);
 
     YES.addEventListener("click", () => {
-        postForm = document.getElementsByTagName("form")[0];
-        if (postForm) postForm.submit();
-        else window.location.href = link;
-    })
+        if (link) window.location.href = link;
+        else postForm = document.getElementsByTagName("form")[0].submit();
+       })
 
     NO.addEventListener("click", () => {
         MODAL.classList.toggle("hidden");
