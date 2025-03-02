@@ -235,10 +235,16 @@ def edit_game(request, id):
 #               --- HELPER FUNCTIONS ---
 
 def set_games_for_display(all_games):
-    for game in all_games:
-        game.players_missing = (
-            game.players_missing - game.all_joining_players.count()
+    if type(all_games) is FutsalGame:
+        all_games.players_missing = (
+            all_games.players_missing - all_games.all_joining_players.count()
             )
+
+    else:
+        for game in all_games:
+            game.players_missing = (
+                game.players_missing - game.all_joining_players.count()
+                )
 
 
 def check_game(id):
