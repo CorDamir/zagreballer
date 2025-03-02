@@ -3,7 +3,7 @@ import datetime as dt
 from django.contrib.messages import info, success
 from .models import FutsalGame
 from .forms import CreateGameForm
-from user_accounts.views import check_player
+from user_accounts.views import check_player, anon_user
 
 
 def display_games(request):
@@ -252,8 +252,3 @@ def check_game(id):
     except FutsalGame.DoesNotExist:
         game = None
     return game
-
-
-def anon_user(request):
-    info(request, "You must be logged in for that.")
-    return redirect("login_form")

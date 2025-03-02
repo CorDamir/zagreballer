@@ -5,7 +5,6 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.messages import info, success
 from .models import Player
 from .forms import PlayerImageUpdate
-from games_display.views import anon_user
 
 
 # views
@@ -183,3 +182,8 @@ def check_player(slg):
     except Player.DoesNotExist:
         player = None
     return player
+
+
+def anon_user(request):
+    info(request, "You must be logged in for that.")
+    return redirect("login_form")

@@ -66,3 +66,9 @@ class CreateGameForm(forms.ModelForm):
     duration_minutes = forms.IntegerField(
         widget=forms.Select(choices=mins)
     )
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = models.CommentModel
+        fields = ["root_game", "content"]
