@@ -43,7 +43,7 @@
             <tr>
                 <td>Exact address:</td>
                 <td>
-                    TODO: GMAPS
+                    <a href="{{ game.futsal_field.location_address }}" target="_blank" id="address-a">Map directions</a>
                 </td>
             </tr>
 
@@ -115,12 +115,12 @@
             <div class="comment-container">
                 <div class="small-info">
                     {{ c.creator }} on {{ c.created_on|date:'j.n.y - H:i' }}
-                    {% if c.creator.id == request.user.id %}
-                        <div id="remove-comment-button" 
-                             class="button-temp red modal-activator"
-                             data-action="{% url 'remove_comment' c.id %}"
-                             >remove</div>
-                    {% endif %}
+                        {% if c.creator.id == request.user.id %}
+                            <div id="remove-comment-button" 
+                                class="button-temp red modal-activator"
+                                data-action="{% url 'remove_comment' c.id %}"
+                                >remove</div>
+                        {% endif %}
                 </div> 
                 <blockquote>{{ c.content }}</blockquote>
             </div>
