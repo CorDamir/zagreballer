@@ -14,12 +14,12 @@ class CreateGameForm(forms.ModelForm):
             'custom_description'
             ]
 
-    players_nr = [tuple([i, i]) for i in range(6, 31, 2)]
+    players_nr = [tuple([i, i]) for i in range(2, 16)]
     players_miss = [tuple([i, i]) for i in range(1, 31)]
 
     players_full = forms.IntegerField(
         widget=forms.Select(choices=players_nr),
-        initial=12
+        initial=6
         )
     players_missing = forms.IntegerField(
         widget=forms.Select(choices=players_miss),

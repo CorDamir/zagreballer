@@ -76,7 +76,10 @@
     <div id="control-buttons">
         {% if request.user.id != game.creator.id %}
             {% if not request.user in players %}
-                <input type="button" class="button-temp modal-activator" value="Join!" data-action="{% url 'join_game' game.id %}">
+                <input type="button"
+                class="button-temp modal-activator"
+                value="Join!"
+                data-action="{% url 'join_game' game.id %}">
             {% else %}
                 <input type="button" class="button-temp red modal-activator"
                        value="Leave"
@@ -85,8 +88,11 @@
             {% endif %}
         
         {% else %}
-            <input type="button" class="button-temp" value="Edit" data-action="{% url 'edit_game' game.id %}">
-            <input type="button" class="button-temp red modal-activator" value="Delete" data-action="{% url 'delete_game' game.id %}">
+            <a href="{% url 'edit_game' game.id %}" class="button-temp">Edit</a>
+            <input type="button"
+                   class="button-temp red modal-activator"
+                   value="Delete"
+                   data-action="{% url 'delete_game' game.id %}">
         {% endif %}
     </div>
 </div> 

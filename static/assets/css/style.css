@@ -107,7 +107,7 @@ body {
 #menu-options {
     grid-area: 1 / 1 / span 4 / span 1;
     background-color: rgba(0,0,0, 0.7);
-    box-shadow: 1px 0 7px 5px black;
+    box-shadow: 1px 0 3px 5px black;
     padding: 1rem;
     color: white;
     width: 218px;
@@ -213,6 +213,13 @@ body {
     padding-top: 10px;
     display: flex;
     justify-content: space-around;
+}
+
+#control-buttons a {
+    text-decoration: none;
+    text-align: center;
+    display: table-cell;
+    padding-top: 5px;
 }
 
 .button-temp {
@@ -508,6 +515,12 @@ body {
 }
 
 /* MEDIA QUERIES */
+@media screen and (max-width: 405px){
+    html {
+        zoom: 70%;
+    }
+}
+
 @media screen and (max-width: 768px){
     #popup-message {
         width: 85%;
