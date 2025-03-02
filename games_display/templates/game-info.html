@@ -98,8 +98,27 @@
 </div> 
 
 {% if request.user in players or request.user.id == game.creator.id %}
-    <div class="detail-card">TODO: joined list</div>
-    <div class="detail-card">TODO: comments</div>
+    <div class="detail-card">
+        <h2>JOINING PLAYERS</h2>
+        <hr>
+        {% for player in players %}
+            <div class="joining-player">
+                <a href="{% url 'profile' player.username %}">{{ player.username }}</a>
+                <div>TODO: star</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    
+    <div class="detail-card">
+        <h2>COMMUNICATION</h2>
+        <hr>
+        {% for c in comments %}
+            <div class="comment-container">
+                TODO: COMMENT DISPLAY
+            </div>
+        {% endfor %}
+    </div>
 {% endif %}
 
 {% endblock %}

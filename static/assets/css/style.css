@@ -41,6 +41,7 @@ body {
     background-size: cover;
     background-attachment: fixed;
 }
+
 /* MODAL */
 
 #modal-container{
@@ -139,6 +140,7 @@ body {
     transition: all 0.7s ease-out;
 }
 
+.joining-player a,
 #menu-options a {
     all: unset;
     cursor: pointer;
@@ -146,6 +148,7 @@ body {
     color: var(--accent-shine);
 }
 
+.joining-player a:hover,
 #menu-options a:hover {
     text-decoration: underline;
 }
@@ -209,6 +212,7 @@ body {
     background-position: center bottom;
     font-weight: 500;
 }
+
 #info-card:hover {
     transform: none;
     filter: none;   
@@ -223,6 +227,8 @@ body {
     box-shadow: 0 0 3px 5px rgba(0, 0, 0, 0.6);
     padding: 20px;
     margin: 8px;
+    height: fit-content;
+    text-align: center;
 }
 
 .detail-card hr {
@@ -230,14 +236,17 @@ body {
     width: 75%;
 }
 
-.detail-card table {
-    width: 100%;
+.detail-card h2 {
+    margin: 0;
+    letter-spacing: 1px;
 }
 
-.detail-card tr {
-    margin: 4px 0;
-    display: flex;
-    justify-content: space-between;
+.joining-player {
+    margin: 15px 0;
+}
+
+.joining-player > div {
+    display: inline-block;
 }
 
 #control-buttons {
