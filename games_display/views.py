@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 import datetime as dt
 from django.contrib.messages import info, success
 from .models import FutsalGame
-from .forms import CreateGameForm
+from .forms import CreateGameForm, CommentForm
 from user_accounts.views import check_player, anon_user
 
 
@@ -74,13 +74,16 @@ def game_info(request, id):
     set_games_for_display(game)
 
     players = game.all_joining_players.all()
+    comment_form = CommentForm
+    comment_form.root_game = game
 
     return render(
         request,
         "game-info.html",
         {
             "game": game,
-            "players": players
+            "players": players,
+            "comment_form": comment_form,
         }
     )
 
@@ -230,6 +233,28 @@ def edit_game(request, id):
     else:
         info(request, "Can't edit games you didn't create")
         return redirect("my_games")
+
+
+def add_comment(request):
+    if request.method == "POST":
+        data = request.POST
+        usr = check_player(request.user.username)
+
+        if usr is None:
+            info(request, "Error with user")
+            return redirect("login_form")
+
+        comment_form = CommentForm(data=data)
+
+        if comment_form.is_valid:
+            saver = comment_form.save(commit=False)
+            saver.save()
+            return redirect(
+                f"../game-info/{data["root_game"]}"
+                )
+
+    info(request, "Bad request.")
+    return redirect("my_games")
 
 
 #               --- HELPER FUNCTIONS ---

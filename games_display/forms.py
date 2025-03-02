@@ -71,4 +71,4 @@ class CreateGameForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = models.CommentModel
-        fields = ["root_game", "content"]
+        fields = ["root_game", "content", "creator"]

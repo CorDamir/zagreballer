@@ -1,9 +1,7 @@
 <!-- 
-    add joining player list as links to profiles
-    add comments area
-
     game - modified data concrete game
     players - all joined players
+    comment_form - for adding comments
 -->
 
 {% extends "index.html" %}
@@ -73,7 +71,7 @@
     
     <hr>
     
-    <div id="control-buttons">
+    <div class="control-buttons">
         {% if request.user.id != game.creator.id %}
             {% if not request.user in players %}
                 <input type="button"
@@ -108,16 +106,36 @@
             </div>
         {% endfor %}
     </div>
-
     
     <div class="detail-card">
         <h2>COMMUNICATION</h2>
         <hr>
-        {% for c in comments %}
+        
+        {% for c in game.comments.all %}
             <div class="comment-container">
-                TODO: COMMENT DISPLAY
+                <div class="small-info">{{ c.creator }} on {{ c.created_on|date:'j.n.y - H:i' }}</div> 
+                <blockquote>{{ c.content }}</blockquote>
             </div>
         {% endfor %}
+        
+        <form method="POST" action="{% url 'add_comment' %}" id="add-comment-form">
+            {% csrf_token %}
+            
+            <input type="number" name="root_game" value="{{ game.id }}"  hidden>
+            <input type="number" name="creator" value="{{ request.user.id }}" hidden>
+
+            <label for="id_content" class="small-info">Add your comment:</label>
+            {{ comment_form.content }}
+
+            <div class="control-buttons">
+                <input type="submit"
+                    name="plchldr"
+                    id="add-comment-button"
+                    class="button-temp"
+                    value="ADD"
+                >
+            </div>
+        </form>
     </div>
 {% endif %}
 

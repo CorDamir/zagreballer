@@ -9,5 +9,6 @@ urlpatterns = [
     path('join-game/<int:id>', views.join_game, name="join_game"),
     path('delete-game/<int:id>', views.delete_game, name="delete_game"),
     path('leave-game/<int:id>', views.leave_game, name="leave_game"),
-    path('edit-game/<int:id>', views.edit_game, name="edit_game")
+    path('edit-game/<int:id>', views.edit_game, name="edit_game"),
+    path('add-comment', views.add_comment, name="add_comment")
 ]

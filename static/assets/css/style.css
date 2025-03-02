@@ -249,6 +249,7 @@ body {
     background-position: center bottom;
     font-weight: 500;
     cursor: auto;
+    height: fit-content;
 }
 
 #info-card:hover {
@@ -287,13 +288,13 @@ body {
     display: inline-block;
 }
 
-#control-buttons {
+.control-buttons {
     padding-top: 10px;
     display: flex;
     justify-content: space-around;
 }
 
-#control-buttons a {
+.control-buttons a {
     text-decoration: none;
     text-align: center;
     display: table-cell;
@@ -331,6 +332,52 @@ body {
 .button-temp.red:hover {
     background-color: var(--reddish-acc);
 }
+
+/*  COMMENTS IN GAME DETAIL */
+.comment-container blockquote {
+    text-align: left;
+    border-left: 5px solid var(--accent);
+    padding-left: 10px;
+    margin: 5px 0 0 25px;
+}
+
+.small-info {
+    text-align: left;
+    color: var(--accent);
+    display: block;
+    margin: 20px 0 0 0;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+#add-comment-form textarea{
+    resize: none;
+    background: inherit;
+    font-family: inherit;
+    color: var(--menu);
+    height: 50px;
+    width: 85%;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+#add-comment-form textarea:hover {
+    outline: 1px inset var(--accent);
+}
+
+#add-comment-form .control-buttons {
+    justify-content: flex-end;
+    margin-bottom: 5px;
+    padding: 0;
+}
+
+#add-comment-button {
+    margin-top: 0;
+    font-size: smaller;
+    height: 30px;
+    width: 70px;
+}
+
 
 /* PLAIN TEXT IN MAIN AREA */
 .text-description-in-flex {
