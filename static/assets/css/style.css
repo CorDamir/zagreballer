@@ -348,6 +348,7 @@ body {
     margin: 20px 0 0 0;
     font-family: monospace;
     font-size: 12px;
+    position: relative;
 }
 
 #add-comment-form textarea{
@@ -377,6 +378,17 @@ body {
     height: 30px;
     width: 70px;
 }
+
+#remove-comment-button {
+    font-size: small;
+    height: fit-content;
+    width: fit-content;
+    position: absolute;
+    top: -7px;
+    right: 50px;
+    padding-bottom: 2px;
+}
+
 
 
 /* PLAIN TEXT IN MAIN AREA */

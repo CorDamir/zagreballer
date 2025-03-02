@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 import datetime as dt
 from django.contrib.messages import info, success
-from .models import FutsalGame
+from .models import FutsalGame, CommentModel
 from .forms import CreateGameForm, CommentForm
 from user_accounts.views import check_player, anon_user
 
@@ -75,7 +75,7 @@ def game_info(request, id):
 
     players = game.all_joining_players.all()
     comment_form = CommentForm
-    comment_form.root_game = game
+    # comment_form.root_game = game
 
     return render(
         request,
@@ -255,6 +255,25 @@ def add_comment(request):
 
     info(request, "Bad request.")
     return redirect("my_games")
+
+
+def remove_comment(request, id):
+    usr = check_player(request.user.username)
+
+    if usr is None:
+        info(request, "You must be logged in.")
+        return redirect("login-form")
+
+    try:
+        comment = CommentModel.objects.get(id=id)
+    except CommentModel.DoesNotExist:
+        info(request, "Can't find that comment")
+        return redirect("my_games")
+
+    ref = comment.root_game.id
+
+    comment.delete()
+    return redirect(f"../game-info/{ref}")
 
 
 #               --- HELPER FUNCTIONS ---
