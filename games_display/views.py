@@ -68,7 +68,7 @@ def game_info(request, id):
     game = check_game(id)
 
     if game is None:
-        info("Cant find this game.")
+        info(request, "Cant find this game.")
         return redirect("my_games")
 
     set_games_for_display(game)
