@@ -170,7 +170,7 @@ body {
     height: 180px;
     background-color: rgba(0, 0, 0, 0.8);
     border-radius: 0 50% 50% 0;
-    transform: translate(235px);
+    translate: 235px;
     color: var(--accent);
     justify-content: center;
     align-items: center;
