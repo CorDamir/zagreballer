@@ -11,5 +11,4 @@ urlpatterns = [
         views.show_personal_profile,
         name="my_profile"
         ),
-    path('<slug:slg>', views.show_profile, name="profile"),
     ]

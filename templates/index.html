@@ -34,7 +34,7 @@
 
     <main>
         <div id="grid-container">
-            <section id="menu-options" class="open">
+            <aside id="menu-options" class="open">
                 <div id="menu-toggler" class="hidden">&gt;</div>
 
                 {% if not user.is_authenticated %}
@@ -52,7 +52,7 @@
                         <a href="{% url 'create_game' %}">Create new game</a>
                     </nav>
                 {% endif %}
-            </section>
+            </aside>
 
             <section id="games-container">
                 {% block main %}

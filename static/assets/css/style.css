@@ -60,7 +60,7 @@ body {
     background-color: var(--whitish);
     position: relative;
     top: 50%;
-    translate: 0 -100%;
+    transform: translate(0, -100%);
     border-radius: 6px;
     box-shadow: 0 0 5px 5px white;
     border: 1px solid black;
@@ -84,7 +84,7 @@ body {
 #popup-message {
     position: fixed;
     left: 50%;
-    translate: -50% 0%;
+    transform: translate(-50%, 0%);
     top: 5%;
     box-sizing: border-box;
     z-index: 10;
@@ -170,7 +170,7 @@ body {
     height: 180px;
     background-color: rgba(0, 0, 0, 0.8);
     border-radius: 0 50% 50% 0;
-    translate: 235px;
+    transform: translate(235px);
     color: var(--accent);
     justify-content: center;
     align-items: center;
@@ -231,7 +231,7 @@ body {
 
 .game-card:hover{
     filter: brightness(140%);
-    transform: scale(105%);
+    transform: scale(1.05);
     z-index: 3;
 }
 
@@ -392,7 +392,7 @@ body {
     width: 70px;
 }
 
-#remove-comment-button {
+.remove-comment-button {
     font-size: small;
     height: fit-content;
     width: fit-content;

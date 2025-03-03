@@ -101,7 +101,7 @@
         <hr>
         {% for player in players %}
             <div class="joining-player">
-                <a href="{% url 'profile' player.username %}">{{ player.username }}</a>
+                <a>TODO: ADD HREF TO ELEMENT FOR USER PROFILE</a>
                 <div>TODO: star</div>
             </div>
         {% endfor %}
@@ -116,9 +116,8 @@
                 <div class="small-info">
                     {{ c.creator }} on {{ c.created_on|date:'j.n.y - H:i' }}
                         {% if c.creator.id == request.user.id %}
-                            <div id="remove-comment-button" 
-                                class="button-temp red modal-activator"
-                                data-action="{% url 'remove_comment' c.id %}"
+                            <div class="button-temp red modal-activator remove-comment-button"
+                                 data-action="{% url 'remove_comment' c.id %}"
                                 >remove</div>
                         {% endif %}
                 </div> 
