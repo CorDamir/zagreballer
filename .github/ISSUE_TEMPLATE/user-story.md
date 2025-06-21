@@ -8,3 +8,6 @@ assignees: ''
 ---
 
 As a {role}, I want to {goal} so that {reason}
+
+ACCEPTANCE CRITERIA:
+- [ ] criteria 1 ...
