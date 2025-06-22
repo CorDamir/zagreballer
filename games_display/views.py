@@ -40,20 +40,35 @@ def create_game(request):
             data["start_hours"] + data["start_minutes"], '%H%M'
             ).time()
 
-        data.play_time_start = dt.datetime.combine(date, time)
+        play_time_start = dt.datetime.combine(date, time)
 
         duration = dt.timedelta(
             hours=int(data["duration_hours"]),
             minutes=int(data["duration_minutes"])
             )
 
-        data.play_time_end = data.play_time_start + duration
+        play_time_end = play_time_start + duration
 
         saving_form = CreateGameForm(data=data)
-        if saving_form.is_valid():
+
+        # validate start time to be at least one hour in future
+        if play_time_start < dt.datetime.now() + dt.timedelta(hours=1):
+            info(request, "Start time must be at least an hour in advance")
+
+        # validate age range entry - max bigger than min
+        # difference of 4 includes 5 different ages
+        elif int(data["age_max"]) - int(data["age_min"]) < 4:
+            info(
+                request,
+                "Please select ideal age range with at least five "
+                "year span and maximum age larger than minimum"
+                )
+
+        # if everything is ok save to database and redirect
+        elif saving_form.is_valid():
             game = saving_form.save(commit=False)
-            game.play_time_start = data.play_time_start
-            game.play_time_end = data.play_time_end
+            game.play_time_start = play_time_start
+            game.play_time_end = play_time_end
             game.creator = request.user
             game.save()
 
@@ -64,12 +79,16 @@ def create_game(request):
             info(request, "Unable to create game.")
             return redirect("my_games")
 
-    new_game_form = CreateGameForm
+    # this else activates if method is GET instead of POST
+    else:
+        saving_form = CreateGameForm
 
+    # saving_form will be default one if GET method
+    # otherwise it's what user input
     return render(
         request,
         "create-game.html",
-        {"form": new_game_form}
+        {"form": saving_form}
     )
 
 
