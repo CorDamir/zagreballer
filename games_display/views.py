@@ -7,10 +7,19 @@ from user_accounts.views import check_player, anon_user
 
 
 def display_games(request):
-    all_games = FutsalGame.objects.all().order_by("play_time_start")
-    set_games_for_display(all_games)
+    # show only games starting in future
+    after_filters = (
+        FutsalGame.objects.all()
+        .filter(play_time_start__gte=dt.datetime.now())
+        .order_by("play_time_start")
+        )
 
-    after_filters = all_games
+    # show only games not created by current user
+    usr = check_player(request.user)
+    if usr is not None:
+        after_filters = after_filters.exclude(creator=usr)
+
+    set_games_for_display(after_filters)
 
     return render(
         request,
