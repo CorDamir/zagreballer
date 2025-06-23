@@ -7,6 +7,7 @@ from cloudinary.models import CloudinaryField
 class Player(AbstractUser):
     birthdate = models.DateField(default="2000-10-10")
 
+    @staticmethod
     def returnDictionary():
         return dict(total=0, votes=0)
 

@@ -117,15 +117,26 @@ def show_personal_profile(request, slg):
             player.birthdate = data["birthdate"]
 
             # image works through form
-            PlayerImageUpdate(request.user.image,
-                              request.FILES,
-                              instance=player).save()
+            image_form = PlayerImageUpdate(
+                data,
+                request.FILES,
+                instance=player
+                )
 
-            player.save()
+            if image_form.is_valid():
+                image_form.save()
+                player.save()
+                success(request, "Changes saved successfully.")
+            else:
+                message = " ".join(
+                    err for errors in image_form.errors.values()
+                    for err in errors
+                )
+                info(request, message)
 
-            success(request, "Changes saved successfully.")
             return redirect("my_profile", player)
 
+        # on GET request
         votes = player.star_rating["votes"]
         if votes:
             rating = player.star_rating["total"] / votes
