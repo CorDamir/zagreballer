@@ -275,19 +275,18 @@ def edit_game(request, id):
                 success(request, "Changes saved.")
                 return redirect(f"../game-info/{id}")
 
-        # on GET request
-        else:
-            edit_game_form = get_complete_edit_form(game)
-            date_for_form = game.play_time_start.date().isoformat()
+        # on GET request or form not validated
+        edit_game_form = get_complete_edit_form(game)
+        date_for_form = game.play_time_start.date().isoformat()
 
-            return render(
-                request,
-                "create-game.html",
-                {
-                    "form": edit_game_form,
-                    "start_date": date_for_form
-                }
-            )
+        return render(
+            request,
+            "create-game.html",
+            {
+                "form": edit_game_form,
+                "start_date": date_for_form
+            }
+        )
 
     else:
         info(request, "Can't edit games you didn't create")
