@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import PasswordResetConfirmView
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.messages import info, success
@@ -8,6 +9,15 @@ from .forms import PlayerImageUpdate
 
 
 # views
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    def form_invalid(self, form):
+        message = "<br>".join(
+            error for errors in form.errors.values() for error in errors
+        )
+        info(self.request, message)
+        return self.render_to_response(self.get_context_data(form=form))
+
+
 def login_handler(request):
     if request.method == "POST":
         username = request.POST["username"]

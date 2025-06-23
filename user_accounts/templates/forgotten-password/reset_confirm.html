@@ -3,13 +3,18 @@
 {% block main %}
 <div class="forms-container">
     <div class="form">
-        <div class="header">Set New Password</div>
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.new_password1 }}
-            {{ form.new_password2 }}
-            <input type="submit" class="button" value="Change Password">
-        </form>
+        <div class="header">PASSWORD RESET</div>
+        {% if validlink %}
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.new_password1 }}
+                {{ form.new_password2 }}
+                <input type="submit" class="button" value="Change Password">
+            </form>
+        {% else %}
+            <p>This password reset link is invalid or has expired.</p>
+            <a href="{% url 'password_reset_form' %}">Request a new one</a>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
