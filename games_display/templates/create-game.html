@@ -15,7 +15,7 @@
             <hr>
             <div class="label-input-container">
                 <label for="start_date">Game day: </label>
-                <input type="date" value="{% now 'Y-m-d' %}" min="{% now 'Y-m-d' %}" name="start_date" id="start_date">
+                <input type="date" value="{{ start_date }}" min="{% now 'Y-m-d' %}" name="start_date" id="start_date">
             </div>
             <hr>
             <div class="label-input-container">

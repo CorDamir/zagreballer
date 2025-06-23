@@ -32,28 +32,42 @@ def create_game(request):
     if request.user.is_anonymous:
         return anon_user(request)
 
+    # set date to today for pre-input in form
+    date_for_form = dt.date.today().isoformat()
+
     if request.method == "POST":
         data = request.POST
-
-        date = dt.datetime.strptime(data["start_date"], '%Y-%m-%d')
-        time = dt.datetime.strptime(
-            data["start_hours"] + data["start_minutes"], '%H%M'
-            ).time()
-
-        play_time_start = dt.datetime.combine(date, time)
-
-        duration = dt.timedelta(
-            hours=int(data["duration_hours"]),
-            minutes=int(data["duration_minutes"])
-            )
-
-        play_time_end = play_time_start + duration
-
         saving_form = CreateGameForm(data=data)
 
+        # if user deleted date/part of date on input set it to None
+        try:
+            date = dt.datetime.strptime(data["start_date"], '%Y-%m-%d')
+            time = dt.datetime.strptime(
+                data["start_hours"] + data["start_minutes"], '%H%M'
+            ).time()
+
+            play_time_start = dt.datetime.combine(date, time)
+            duration = dt.timedelta(
+                hours=int(data["duration_hours"]),
+                minutes=int(data["duration_minutes"])
+                )
+            play_time_end = play_time_start + duration
+
+            date_for_form = data["start_date"]
+        except (ValueError, TypeError):
+            date = None
+
+        # validate date is input
+        if date is None:
+            info(request, "Please select a date")
+
         # validate start time to be at least one hour in future
-        if play_time_start < dt.datetime.now() + dt.timedelta(hours=1):
+        elif play_time_start < dt.datetime.now() + dt.timedelta(hours=1):
             info(request, "Start time must be at least an hour in advance")
+
+        # validate needed players number (creator not necessarily player)
+        elif int(data["players_missing"]) > int(data["players_full"]) * 2:
+            info(request, "Needed players can't exceed total players")
 
         # validate age range entry - max bigger than min
         # difference of 4 includes 5 different ages
@@ -84,11 +98,14 @@ def create_game(request):
         saving_form = CreateGameForm
 
     # saving_form will be default one if GET method
-    # otherwise it's what user input
+    # otherwise show user input and info message
     return render(
         request,
         "create-game.html",
-        {"form": saving_form}
+        {
+            "form": saving_form,
+            "start_date": date_for_form
+        }
     )
 
 

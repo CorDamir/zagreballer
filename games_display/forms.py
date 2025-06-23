@@ -40,7 +40,7 @@ class CreateGameForm(forms.ModelForm):
         initial=18
         )
 
-    mins = [list([i, i]) for i in range(0, 51, 10)]
+    mins = [[i, i] for i in range(0, 51, 10)]
     mins[0][1] = "00"
     start_minutes = forms.IntegerField(widget=forms.Select(choices=mins))
 
