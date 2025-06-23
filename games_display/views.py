@@ -269,11 +269,18 @@ def edit_game(request, id):
             saving_form, form_validated = validate_game_form(request, dates)
 
             if form_validated:
-                # set the instance to edit existing game!
-                saving_form.id = game.id
-                saving_form.save()
-                success(request, "Changes saved.")
-                return redirect(f"../game-info/{id}")
+                # additional check for player number due to joined users
+                if (
+                    game.all_joining_players.count()
+                    > saving_form.players_missing
+                ):
+                    info(request, "More joined players than players needed.")
+                else:
+                    # set the instance to edit existing game!
+                    saving_form.id = game.id
+                    saving_form.save()
+                    success(request, "Changes saved.")
+                    return redirect(f"../game-info/{id}")
 
         # on GET request or form not validated
         edit_game_form = get_complete_edit_form(game)
