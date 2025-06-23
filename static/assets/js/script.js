@@ -7,11 +7,13 @@ function toggleMenu(){
 
 function displayConfirmationModal(){
     postForm = document.getElementsByTagName("form")[0]
-    if (postForm.checkValidity()) {
-        MODAL.classList.toggle("hidden");
-        link = this.getAttribute("data-action");
+    link = this.getAttribute("data-action");
+
+    if (link) MODAL.classList.toggle("hidden")
+    else if (postForm) {
+        if (postForm.checkValidity()) MODAL.classList.toggle("hidden");
+        else postForm.reportValidity();
         }
-    else postForm.reportValidity()
 }
 
 function docLoaded(){
