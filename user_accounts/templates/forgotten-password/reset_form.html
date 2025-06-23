@@ -1,0 +1,21 @@
+{% extends "index.html" %}
+
+{% block main %}
+<div class="forms-container">
+    <div class="form">
+        <div class="header">Reset Password</div>
+
+        <form action="{% url 'reset_form' %}" method="POST">
+            {% csrf_token %}
+            <input name="email" type="email" placeholder="Enter your email" required>
+            <input type="submit" class="button" value="Send reset link">
+        </form>
+
+        <div class="signup">
+            <span class="signup">Remembered it?
+                <a href="{% url 'login_form' %}">Log in</a>
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock %}
