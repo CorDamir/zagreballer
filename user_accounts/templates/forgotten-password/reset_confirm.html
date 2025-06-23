@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+
+{% block main %}
+<div class="forms-container">
+    <div class="form">
+        <div class="header">Set New Password</div>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.new_password1 }}
+            {{ form.new_password2 }}
+            <input type="submit" class="button" value="Change Password">
+        </form>
+    </div>
+</div>
+{% endblock %}

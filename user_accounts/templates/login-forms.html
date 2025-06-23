@@ -11,7 +11,7 @@
                 {% csrf_token %}
                 <input name="username" type="text" placeholder="Enter your username" required>
                 <input name="password" type="password" placeholder="Enter your password" required>
-                <a href="{% url 'reset_form' %}">Forgot password?</a>
+                <a href="{% url 'password_reset_form' %}">Forgot password?</a>
                 <input type="submit" class="button" value="Log in">
             </form>
 

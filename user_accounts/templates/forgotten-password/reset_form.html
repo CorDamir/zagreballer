@@ -5,7 +5,7 @@
     <div class="form">
         <div class="header">Reset Password</div>
 
-        <form action="{% url 'reset_form' %}" method="POST">
+        <form action="{% url 'password_reset_form' %}" method="POST">
             {% csrf_token %}
             <input name="email" type="email" placeholder="Enter your email" required>
             <input type="submit" class="button" value="Send reset link">

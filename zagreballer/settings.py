@@ -29,7 +29,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ["127.0.0.1", ".herokuapp.com"]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -51,6 +51,16 @@ INSTALLED_APPS = [
     'games_display',
     'user_accounts',
 ]
+
+# email sending setup
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = False
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_API_KEY")
+DEFAULT_FROM_EMAIL = 'cordamir@gmail.com'
+# end of email sending setup
 
 CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
 AUTH_USER_MODEL = "user_accounts.Player"

@@ -17,27 +17,27 @@ urlpatterns = [
         auth_views.PasswordResetView.as_view(
             template_name="forgotten-password/reset_form.html"
         ),
-        name="reset_form",
+        name="password_reset_form",
     ),
     path(
         "forgotten-password/done/",
         auth_views.PasswordResetDoneView.as_view(
             template_name="forgotten-password/reset_done.html"
         ),
-        name="reset_done",
+        name="password_reset_done",
     ),
     path(
         "forgotten-password/confirm/<uidb64>/<token>/",
         auth_views.PasswordResetConfirmView.as_view(
             template_name="forgotten-password/reset_confirm.html"
         ),
-        name="reset_confirm",
+        name="password_reset_confirm",
     ),
     path(
         "forgotten-password/complete/",
         auth_views.PasswordResetCompleteView.as_view(
             template_name="forgotten-password/reset_complete.html"
         ),
-        name="reset_complete",
+        name="password_reset_complete",
     ),
     ]

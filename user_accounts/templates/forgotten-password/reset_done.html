@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+
+{% block main %}
+<div class="forms-container">
+    <div class="form">
+        <div class="header">Check your E-mail</div>
+        <p>If an account registered with that e-mail exists you will receive a reset link.</p>
+        <a href="{% url 'login_form' %}" class="button">Back to Login</a>
+    </div>
+</div>
+{% endblock %}
