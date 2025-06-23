@@ -6,18 +6,28 @@ function toggleMenu(){
 }
 
 function displayConfirmationModal(){
-    MODAL.classList.toggle("hidden");
-    link = this.getAttribute("data-action");
-    console.log(link);
+    postForm = document.getElementsByTagName("form")[0]
+    if (postForm.checkValidity()) {
+        MODAL.classList.toggle("hidden");
+        link = this.getAttribute("data-action");
+        }
+    else postForm.reportValidity()
 }
 
 function docLoaded(){
+    MENU = document.getElementById("menu-options");
+    YES = document.getElementById("yes");
+    NO = document.getElementById("no");
+    MODAL = document.getElementById("modal-container");
+    link = "";
+    postForm = null;
+
     document.getElementById("popup-message").addEventListener("click", closePopup);
     document.getElementById("menu-toggler").addEventListener("click", toggleMenu);
 
     YES.addEventListener("click", () => {
         if (link) window.location.href = link;
-        else postForm = document.getElementsByTagName("form")[0].submit();
+        else postForm.submit();
        });
 
     NO.addEventListener("click", () => {
@@ -29,11 +39,5 @@ function docLoaded(){
     }
 }
 
-const MENU = document.getElementById("menu-options");
-const YES = document.getElementById("yes");
-const NO = document.getElementById("no");
-const MODAL = document.getElementById("modal-container");
-let link = "";
-let postForm = null;
-
-document.onload = docLoaded();
+let MENU, YES, NO, MODAL, link, postForm;
+document.addEventListener("DOMContentLoaded", docLoaded);
