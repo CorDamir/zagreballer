@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ["127.0.0.1", ".herokuapp.com"]
+ALLOWED_HOSTS = ["127.0.0.1", ".herokuapp.com", "responsivedesignchecker.com"]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.codeinstitute-ide.net/",
@@ -59,7 +59,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = False
 EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_API_KEY")
-DEFAULT_FROM_EMAIL = 'cordamir@gmail.com'
+DEFAULT_FROM_EMAIL = os.environ.get("VALIDATED_EMAIL")
 # end of email sending setup
 
 CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
