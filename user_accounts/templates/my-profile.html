@@ -21,16 +21,16 @@
 
                 <fieldset id="user-data-set">
                     <label for="first_name">First name:</label>
-                    <input type="text" value="{{ player.first_name }}" name="first_name" id="first_name">
+                    <input type="text" value="{{ player.first_name }}" name="first_name" id="first_name" required>
                 
                     <label for="last_name">Last name:</label>
-                    <input type="text" value="{{ player.last_name }}" name="last_name" id="last_name">
+                    <input type="text" value="{{ player.last_name }}" name="last_name" id="last_name" required>
                 
                     <label for="email">Email:</label>
-                    <input type="text" value="{{ player.email }}" name="email" id="email">
+                    <input type="email" value="{{ player.email }}" name="email" id="email" required>
                 
                     <label for="birthdate">Date of birth:</label>
-                    <input type="date" value="{{ player.birthdate | date:'Y-m-d' }}" name="birthdate" id="birthdate">
+                    <input type="date" value="{{ player.birthdate | date:'Y-m-d' }}" name="birthdate" id="birthdate" required>
                 </fieldset>
 
                 <div id="data-edit-buttons">
