@@ -28,74 +28,101 @@ def display_games(request):
     )
 
 
+def format_date_inputs(data):
+    """
+    accepts POST data from game input form
+    returns *False* if date input invalid
+    returns dictionary with formatted datetime objects;
+    *play_time_start*
+    *play_time_end*
+
+    """
+    # if user deleted date/part of date on input return None
+    try:
+        date = dt.datetime.strptime(data["start_date"], '%Y-%m-%d')
+        time = dt.datetime.strptime(
+            data["start_hours"] + data["start_minutes"], '%H%M'
+        ).time()
+
+        play_time_start = dt.datetime.combine(date, time)
+        duration = dt.timedelta(
+            hours=int(data["duration_hours"]),
+            minutes=int(data["duration_minutes"])
+            )
+        play_time_end = play_time_start + duration
+    except (ValueError, TypeError):
+        return None
+
+    return {
+        "play_time_start": play_time_start,
+        "play_time_end": play_time_end
+    }
+
+
+def validate_game_form(request, dates):
+    """
+    Checks for correct user input for game data,
+    sets info message on failed validation.
+    returns *FutsalGame model instance* and "True" if data valid
+    returns *CreateGameForm object* and "False" on invalid data
+    """
+    data = request.POST
+    saving_form = CreateGameForm(data=data)
+
+    # validate date is input
+    if dates is None:
+        info(request, "Please select a date")
+
+    # validate start time to be at least one hour in future
+    elif dates["play_time_start"] < dt.datetime.now() + dt.timedelta(hours=1):
+        info(request, "Start time must be at least an hour in advance")
+
+    # validate needed players number (creator not necessarily player)
+    elif int(data["players_missing"]) > int(data["players_full"]) * 2:
+        info(request, "Needed players can't exceed total players")
+
+    # validate age range entry - max bigger than min
+    # difference of 4 includes 5 different ages
+    elif int(data["age_max"]) - int(data["age_min"]) < 4:
+        info(
+            request,
+            "Please select ideal age range with at least five "
+            "year span and maximum age larger than minimum"
+            )
+
+    # ALL OK: return game model and True for validation
+    elif saving_form.is_valid():
+        game = saving_form.save(commit=False)
+        game.play_time_start = dates["play_time_start"]
+        game.play_time_end = dates["play_time_end"]
+        game.creator = request.user
+        return game, True
+    else:
+        info(request, "Unable to create game.")
+
+    # validation fail: return form with user's inputs and False for validation
+    return saving_form, False
+
+
 def create_game(request):
     if request.user.is_anonymous:
         return anon_user(request)
 
-    # set date to today for pre-input in form
-    date_for_form = dt.date.today().isoformat()
-
     if request.method == "POST":
-        data = request.POST
-        saving_form = CreateGameForm(data=data)
-
-        # if user deleted date/part of date on input set it to None
-        try:
-            date = dt.datetime.strptime(data["start_date"], '%Y-%m-%d')
-            time = dt.datetime.strptime(
-                data["start_hours"] + data["start_minutes"], '%H%M'
-            ).time()
-
-            play_time_start = dt.datetime.combine(date, time)
-            duration = dt.timedelta(
-                hours=int(data["duration_hours"]),
-                minutes=int(data["duration_minutes"])
-                )
-            play_time_end = play_time_start + duration
-
-            date_for_form = data["start_date"]
-        except (ValueError, TypeError):
-            date = None
-
-        # validate date is input
-        if date is None:
-            info(request, "Please select a date")
-
-        # validate start time to be at least one hour in future
-        elif play_time_start < dt.datetime.now() + dt.timedelta(hours=1):
-            info(request, "Start time must be at least an hour in advance")
-
-        # validate needed players number (creator not necessarily player)
-        elif int(data["players_missing"]) > int(data["players_full"]) * 2:
-            info(request, "Needed players can't exceed total players")
-
-        # validate age range entry - max bigger than min
-        # difference of 4 includes 5 different ages
-        elif int(data["age_max"]) - int(data["age_min"]) < 4:
-            info(
-                request,
-                "Please select ideal age range with at least five "
-                "year span and maximum age larger than minimum"
-                )
+        dates = format_date_inputs(request.POST)
+        saving_form, form_validated = validate_game_form(request, dates)
 
         # if everything is ok save to database and redirect
-        elif saving_form.is_valid():
-            game = saving_form.save(commit=False)
-            game.play_time_start = play_time_start
-            game.play_time_end = play_time_end
-            game.creator = request.user
-            game.save()
-
+        if form_validated:
+            saving_form.save()
             success(request, "Game successfully created.")
-            return redirect(f"../game-info/{game.id}")
-
+            return redirect(f"../game-info/{saving_form.id}")
         else:
-            info(request, "Unable to create game.")
-            return redirect("my_games")
+            date_for_form = request.POST.get("start_date", "")
 
-    # this else activates if method is GET instead of POST
     else:
         saving_form = CreateGameForm
+        date_for_form = dt.date.today().isoformat()
 
     # saving_form will be default one if GET method
     # otherwise show user input and info message
@@ -120,7 +147,6 @@ def game_info(request, id):
 
     players = game.all_joining_players.all()
     comment_form = CommentForm
-    # comment_form.root_game = game
 
     return render(
         request,
