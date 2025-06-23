@@ -63,7 +63,7 @@ def validate_game_form(request, dates):
     """
     Checks for correct user input for game data,
     sets info message on failed validation.
-    returns *FutsalGame model instance* and "True" if data valid
+    returns *FutsalGame model* with correct data and "True" if data valid
     returns *CreateGameForm object* and "False" on invalid data
     """
     data = request.POST
@@ -265,45 +265,59 @@ def edit_game(request, id):
 
     if game.creator.id == request.user.id:
         if request.method == "POST":
-            data = request.POST
+            dates = format_date_inputs(request.POST)
+            saving_form, form_validated = validate_game_form(request, dates)
 
-            date = dt.datetime.strptime(data["start_date"], '%Y-%m-%d')
-            time = dt.datetime.strptime(
-                data["start_hours"] + data["start_minutes"], '%H%M'
-                ).time()
-
-            data.play_time_start = dt.datetime.combine(date, time)
-
-            duration = dt.timedelta(
-                hours=int(data["duration_hours"]),
-                minutes=int(data["duration_minutes"])
-                )
-
-            data.play_time_end = data.play_time_start + duration
-
-            saving_form = CreateGameForm(data=data, instance=game)
-
-            if saving_form.is_valid():
-                game = saving_form.save(commit=False)
-                game.play_time_start = data.play_time_start
-                game.play_time_end = data.play_time_end
-                game.save()
-
+            if form_validated:
+                # set the instance to edit existing game!
+                saving_form.id = game.id
+                saving_form.save()
                 success(request, "Changes saved.")
                 return redirect(f"../game-info/{id}")
 
+        # on GET request
         else:
-            edit_game_form = CreateGameForm(instance=game)
+            edit_game_form = get_complete_edit_form(game)
+            date_for_form = game.play_time_start.date().isoformat()
 
             return render(
                 request,
                 "create-game.html",
-                {"form": edit_game_form}
+                {
+                    "form": edit_game_form,
+                    "start_date": date_for_form
+                }
             )
 
     else:
         info(request, "Can't edit games you didn't create")
         return redirect("my_games")
+
+
+def get_complete_edit_form(game):
+    """
+    receives FutsalGame model,
+    calculates start time and duration from datetime objects,
+    returns CreateGameForm with complete model instance data
+    """
+    edit_game_form = CreateGameForm(instance=game)
+
+    total_duration_mins = int(
+        (game.play_time_end - game.play_time_start)
+        .total_seconds() // 60
+        )
+
+    start_hours = game.play_time_start.hour
+    start_minutes = game.play_time_start.minute
+    duration_hours = total_duration_mins // 60
+    duration_minutes = total_duration_mins % 60
+
+    edit_game_form.fields["start_hours"].initial = start_hours
+    edit_game_form.fields["start_minutes"].initial = start_minutes
+    edit_game_form.fields["duration_hours"].initial = duration_hours
+    edit_game_form.fields["duration_minutes"].initial = duration_minutes
+
+    return edit_game_form
 
 
 def add_comment(request):
@@ -365,7 +379,7 @@ def set_games_for_display(all_games):
 def check_game(id):
     """
     argument: username;
-    returns 'Player' model instance if username exists in databese
+    returns 'FutsalGame' model instance if given ID exists in databese
     returns 'None' otherwise
     """
     try:
