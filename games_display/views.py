@@ -381,7 +381,7 @@ def add_comment(request):
             saver = comment_form.save(commit=False)
             saver.save()
             return redirect(
-                f"../game-info/{data["root_game"]}"
+                f"../game-info/{data['root_game']}"
                 )
 
     info(request, "Bad request.")

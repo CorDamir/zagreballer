@@ -1,4 +1,29 @@
-# TESTING
+# TESTING AND VALIDATION
+
+This section documents all manual and automated testing performed on ZagreBaller. It includes test cases for all major user flows, component validations, code linting, and responsiveness verification.
+
+Each expandable section below represents a functional area tested.
+
+<br>
+
+## 📱 Responsiveness
+ZagreBaller is fully responsive and optimized for a wide range of devices and screen sizes. Key aspects: 
+
+- Flexible Grid System: Content adjusts gracefully using CSS Flexbox/Grid layouts to maintain readability and usability.
+
+- Media Queries: well-defined media queries to tailor styles for breakpoints:
+
+  - Mobile: < 768px
+  - Tablet and desktop: > 768px
+
+- Touch-Friendly Interactions: Buttons, inputs, and interactive elements are large enough and spaced appropriately for touch devices.
+
+Tested On:
+
+- Android (Chrome, Firefox)
+- Desktop (Chrome, Firefox, Edge)
+
+<br>
 
 ## Manual testing details
 
@@ -163,7 +188,6 @@
 </details><br>
 
 ## 🛠️ Issue Tracking & Fixes
-<detail>
 
 | Section                        | Issue Description                                                                 | Cause / Diagnosis                                            | Fix / Resolution Summary                                                                         |
 |-------------------------------|-----------------------------------------------------------------------------------|--------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
@@ -180,3 +204,127 @@
 | Game Pages (Multiple Buttons) | Some modal buttons don’t work                                                    | JS logic didn’t distinguish properly between buttons          | Improved `displayConfirmationModal()` logic using proper `if-else`                            |
 | Game Edit / Create            | HTML validation issue with incorrect semantic tag                                | Improper use of `<section>` where `<div>` is expected        | Replaced `<section>` with `<div>`                                                             |
 
+<br>
+
+## Code Validations
+
+### HTML
+
+Validated by [W3C HTML validator](https://validator.w3.org/)
+
+<details>
+<summary> While logged in </summary>
+<br>
+
+| Page | Result |
+|------|-------|
+| Browse games page | ![](./readme/!validation/html/logged-in/browse_games.png) |
+| Create game page | ![](./readme/!validation/html/logged-in/create_game.png) |
+| User dashboard | ![](./readme/!validation/html/logged-in/dashboard.png) |
+| Game detail | !![](./readme/!validation/html/logged-in/game_detail.png) |
+| My profile | ![](./readme/!validation/html/logged-in/my_profile.png) |
+</details>
+
+<br>
+
+<details>
+<summary> While logged out </summary>
+<br>
+
+| Page | Result |
+|------|-------|
+| Browse games page | ![](./readme/!validation/html/logged-out/browse_games.png) |
+| Game detail | ![](./readme/!validation/html/logged-out/game_detail.png) |
+| Log in page | ![](./readme/!validation/html/logged-out/log_in_log_out_form.png) |
+
+</details>
+
+### CSS
+
+Validated by [W3C CSS validator](https://jigsaw.w3.org/css-validator/)
+
+![](./readme/!validation/css/css_valid.png)
+
+### JAVASCRIPT
+
+Validated by [JSHint](https://jshint.com/)
+
+![](./readme/!validation/js/js_valid.png)
+
+### PYTHON
+
+Validated by [CI Python Linter](https://pep8ci.herokuapp.com/)
+
+<details>
+<summary> games_display/forms.py </summary>
+
+![](./readme/!validation/python/games_display_forms.png)
+
+</details>
+
+<details>
+<summary> games_display/models.py </summary>
+
+![](./readme/!validation/python/games_display_models.png)
+
+</details>
+
+<details>
+<summary> games_display/urls.py </summary>
+
+![](./readme/!validation/python/games_display_urls.png)
+
+</details>
+
+<details>
+<summary> games_display/views.py </summary>
+
+![](./readme/!validation/python/games_display_views.png)
+
+</details>
+
+<br>
+
+<details>
+<summary> user_accounts/forms.py </summary>
+
+![](./readme/!validation/python/user_accounts_forms.png)
+
+</details>
+
+<details>
+<summary> user_accounts/models.py </summary>
+
+![](./readme/!validation/python/user_accounts_models.png)
+
+</details>
+
+<details>
+<summary> user_accounts/urls.py </summary>
+
+![](./readme/!validation/python/user_accounts_urls.png)
+
+</details>
+
+<details>
+<summary> user_accounts/views.py </summary>
+
+![](./readme/!validation/python/user_accounts_views.png)
+
+</details>
+
+<br>
+
+## Performance Validation
+
+Validated by [Lighthouse](https://developer.chrome.com/docs/lighthouse/)
+### Desktop Performance
+![](./readme/!validation/lighthouse/lighthouse-desktop.png)
+### Mobile Performance
+![](./readme/!validation/lighthouse/lighthouse-mobile.png)
+
+<br>
+
+## Unresolved Issues
+
+ - No known issues at the time of writing

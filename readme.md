@@ -221,58 +221,7 @@ Ther is one more option on the sidebar after you've created next week's games an
 
 ![](readme/features/14-edit.png)
 
-# PROJECT CODE VALIDATION
 
-## CSS
-
-Project has only one large and unified style.css file that sparkles on validation
-
-![](readme/css-fixed.jpg)
-
-## JAVASCRIPT
-
-After adding in three missing semi-colons (switching between python and js has it's consequences) lonely script.js file also sparkles
-
-![](readme/js-pass.jpg)
-
-## PYTHON
-
-This is a list of python files I've tested:
-- games_display/admin.py
-- games_display/forms.py
-- games_display/models.py
-- games_display/urls.py
-- games_display/views.py
-- user_accounts/admin.py
-- user_accounts/forms.py
-- user_accounts/models.py
-- user_accounts/ulrs.py
-- user_accounts/views.py
-
-![](readme/python-pass.png)
-
-Result is the same with no issues.
-
-## HTML
-
-All html documents were tested by copying their content while live on heroku.
-For all but one this is the result:
-
-![](readme/html-val-success.png)
-
-However, on active my-profile.html page there are stray table elements which I don't know how or why appear there:
-
-![](readme/html-val-my-profile-errors.png)
-
-## LIGHTHOUSE
-
-Testing for mobile results:
-
-![](readme/lighthouse-mobile.png)
-
-Testing for desktop results:
-
-![](readme/lighthouse-desktop.png)
 
 # CREDITS
 
@@ -292,3 +241,4 @@ Testing for desktop results:
 - Y Sheet App https://app.ysheet.com/
 - sendgrid https://app.sendgrid.com/
 - chat gpt sheet to markdown
+- pep257 https://peps.python.org/pep-0257/
