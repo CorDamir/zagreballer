@@ -5,6 +5,11 @@ from django.contrib.auth.forms import SetPasswordForm
 
 
 class PlayerImageUpdate(forms.ModelForm):
+    """
+    Form for updating the player's profile image.
+
+    Validates uploaded file to ensure it is of image type.
+    """
     class Meta:
         model = models.Player
         fields = ["image"]
@@ -19,6 +24,11 @@ class PlayerImageUpdate(forms.ModelForm):
 
 
 class CustomSetPasswordForm(SetPasswordForm):
+    """
+    Custom password reset form extending Django's SetPasswordForm.
+
+    Adds user-friendly placeholders to password fields.
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

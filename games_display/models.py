@@ -4,6 +4,9 @@ from user_accounts.models import Player
 
 # Create your models here.
 class FutsalField(models.Model):
+    """
+    Represents a physical futsal venue with location and capacity details.
+    """
     name = models.CharField(max_length=100, unique=True, null=False)
     location_address = models.TextField(null=False)
     number_of_fields = models.IntegerField(default=1)
@@ -32,6 +35,7 @@ class FutsalField(models.Model):
         null=False, choices=CITYBLOCK_CHOICES
         )
 
+    @staticmethod
     def returnDictionary():
         return dict(longitude=0, latitude=0)
 
@@ -42,6 +46,10 @@ class FutsalField(models.Model):
 
 
 class FutsalGame(models.Model):
+    """
+    Represents a scheduled futsal game with time, location,
+    player constraints, and creator info.
+    """
     players_full = models.IntegerField()
     players_missing = models.IntegerField()
     custom_description = models.TextField()
@@ -64,6 +72,9 @@ class FutsalGame(models.Model):
 
 
 class CommentModel(models.Model):
+    """
+    Stores user comments on specific futsal games.
+    """
     creator = models.ForeignKey(
         Player,
         related_name="comments",

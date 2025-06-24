@@ -3,6 +3,10 @@ from . import models
 
 
 class CreateGameForm(forms.ModelForm):
+    """
+    Form to create a new FutsalGame with custom choices
+    for players, age, time, and duration.
+    """
     class Meta:
         model = models.FutsalGame
         fields = [
@@ -69,6 +73,9 @@ class CreateGameForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
+    """
+    Form to submit a comment on a specific futsal game.
+    """
     class Meta:
         model = models.CommentModel
         fields = ["root_game", "content", "creator"]
