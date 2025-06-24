@@ -7,6 +7,11 @@ from user_accounts.views import check_player, anon_user
 
 
 def display_games(request):
+    """
+    Display upcoming futsal games not created by the current user.
+    Filters games starting in the future and excludes those created
+    by the logged-in user.
+    """
     # show only games starting in future
     after_filters = (
         FutsalGame.objects.all()
@@ -30,12 +35,13 @@ def display_games(request):
 
 def format_date_inputs(data):
     """
-    accepts POST data from game input form
-    returns *False* if date input invalid
-    returns dictionary with formatted datetime objects;
-    *play_time_start*
-    *play_time_end*
+    Parses and validates date and time inputs from
+    POST data for game creation/editing.
 
+    Returns:
+        dict with 'play_time_start' and 'play_time_end'
+        as datetime objects if successful,
+        None if invalid inputs are found.
     """
     # if user deleted date/part of date on input return None
     try:
@@ -61,10 +67,16 @@ def format_date_inputs(data):
 
 def validate_game_form(request, dates):
     """
-    Checks for correct user input for game data,
-    sets info message on failed validation.
-    returns *FutsalGame model* with correct data and "True" if data valid
-    returns *CreateGameForm object* and "False" on invalid data
+    Validate the futsal game form data and business logic.
+
+    Args:
+        request: HttpRequest object containing POST data.
+        dates: dict with 'play_time_start' and 'play_time_end'
+        datetime objects or None.
+
+    Returns:
+        tuple: (FutsalGame instance or form instance,
+                Boolean indicating validity)
     """
     data = request.POST
     saving_form = CreateGameForm(data=data)
@@ -105,6 +117,10 @@ def validate_game_form(request, dates):
 
 
 def create_game(request):
+    """
+    Handle game creation form display and processing.
+    Only authenticated users can create games.
+    """
     if request.user.is_anonymous:
         return anon_user(request)
 
@@ -137,6 +153,10 @@ def create_game(request):
 
 
 def game_info(request, id):
+    """
+    Display detailed information about a specific game
+    For future need contains code to get all players that joined
+    """
     game = check_game(id)
 
     if game is None:
@@ -160,6 +180,10 @@ def game_info(request, id):
 
 
 def my_games(request):
+    """
+    User's dashboard:
+    display games created by the user and games joined by the user.
+    """
     if request.user.is_anonymous:
         return anon_user(request)
 
@@ -180,6 +204,9 @@ def my_games(request):
 
 
 def join_game(request, id):
+    """
+    Allows a user to join a futsal game if conditions are met.
+    """
     game = check_game(id)
     usr = check_player(request.user)
 
@@ -213,6 +240,9 @@ def join_game(request, id):
 
 
 def delete_game(request, id):
+    """
+    Allows the game creator to delete the game.
+    """
     game = check_game(id)
 
     if game is None:
@@ -229,6 +259,9 @@ def delete_game(request, id):
 
 
 def leave_game(request, id):
+    """
+    Allows a user to leave a game they have joined.
+    """
     usr = check_player(request.user)
     game = check_game(id)
 
@@ -243,7 +276,7 @@ def leave_game(request, id):
         info(request, "Can't find this game.")
         return redirect("my_games")
 
-    if game.all_joining_players.contains(usr):
+    if game.all_joining_players.filter(id=usr.id).exists():
         game.all_joining_players.remove(usr)
         success(request, "You left this game.")
 
@@ -254,6 +287,10 @@ def leave_game(request, id):
 
 
 def edit_game(request, id):
+    """
+    Allows the game creator to edit game details.
+    Handles GET for form display and POST for form submission.
+    """
     game = check_game(id)
 
     if game is None:
@@ -302,9 +339,9 @@ def edit_game(request, id):
 
 def get_complete_edit_form(game):
     """
-    receives FutsalGame model,
-    calculates start time and duration from datetime objects,
-    returns CreateGameForm with complete model instance data
+    Construct a CreateGameForm instance pre-filled
+    with the game's current data,
+    including start time and duration split into form fields.
     """
     edit_game_form = CreateGameForm(instance=game)
 
@@ -327,6 +364,9 @@ def get_complete_edit_form(game):
 
 
 def add_comment(request):
+    """
+    Allows a logged-in user to add a comment to a game.
+    """
     if request.method == "POST":
         data = request.POST
         usr = check_player(request.user.username)
@@ -337,7 +377,7 @@ def add_comment(request):
 
         comment_form = CommentForm(data=data)
 
-        if comment_form.is_valid:
+        if comment_form.is_valid():
             saver = comment_form.save(commit=False)
             saver.save()
             return redirect(
@@ -349,6 +389,9 @@ def add_comment(request):
 
 
 def remove_comment(request, id):
+    """
+    Allows the comment author to remove a comment by ID.
+    """
     usr = check_player(request.user.username)
 
     if usr is None:
@@ -370,6 +413,11 @@ def remove_comment(request, id):
 #               --- HELPER FUNCTIONS ---
 
 def set_games_for_display(all_games):
+    """
+    Adjust the players_missing field for display purposes,
+    subtracting the count of currently joined players.
+    Supports either a single FutsalGame instance or a queryset/list of them.
+    """
     if type(all_games) is FutsalGame:
         all_games.players_missing = (
             all_games.players_missing - all_games.all_joining_players.count()
@@ -384,9 +432,13 @@ def set_games_for_display(all_games):
 
 def check_game(id):
     """
-    argument: username;
-    returns 'FutsalGame' model instance if given ID exists in databese
-    returns 'None' otherwise
+    Retrieve a FutsalGame instance by ID.
+
+    Args:
+        id (int): The ID of the game.
+
+    Returns:
+        FutsalGame instance if found, None otherwise.
     """
     try:
         game = FutsalGame.objects.get(id=id)
