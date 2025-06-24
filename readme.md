@@ -407,6 +407,111 @@ Comprehensive testing was performed throughout the project. For detailed testing
 
 <br>
 
+## Forking And Deploying
+
+To have this project on your own repository and in deployment there is some work to be done, here are the steps
+
+### 🧪 Forking and Setting Up Locally
+
+1. Fork this repository to your GitHub account.
+2. In terminal, run:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3. Create an `env.py` file in the root directory.
+4. Add the following environmental variables (replace values inside quotes). Your `env.py` should look like this:  
+   ![](./readme/env_py.png)
+5. `DATABASE_URL`: Your PostgreSQL connection string (starts with `postgresql://`)
+6. `SECRET_KEY`: A random ~20-character string for Django
+7. `CLOUDINARY_URL`: Your Cloudinary API key  
+   [Video tutorial](https://www.youtube.com/watch?v=ok9mHOuvVSI)
+8. `EMAIL_API_KEY`: Your SendGrid API key (optional, for password recovery)
+9. `VALIDATED_EMAIL`: Your verified email with SendGrid  
+   [Video tutorial](https://www.youtube.com/watch?v=Waty-a586hk)
+
+### 🔧 First-Time Local Setup
+
+10. Open `games_display/models.py` and comment out line 38:
+
+    ```python
+    # @staticmethod
+    ```
+
+11. Open `user_accounts/models.py` and comment out line 10:
+
+    ```python
+    # @staticmethod
+    ```
+
+12. Run the following:
+
+    ```bash
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
+
+13. Uncomment the two `@staticmethod` lines.
+14. Create a superuser:
+
+    ```bash
+    python manage.py createsuperuser
+    ```
+
+15. In `zagreballer/settings.py`, set:
+
+    ```python
+    DEBUG = True
+    ```
+
+16. Run the local server:
+
+    ```bash
+    python manage.py runserver
+    ```
+
+17. Open the app in your browser, log in using the superuser credentials. Then add `/admin` to the URL to access the admin panel.
+18. Add at least one `FutsalField` in the admin panel.  
+    The "location address" must be a valid URL (used for Google Maps — any link works for testing).
+
+✅ You now have a working local app!
+
+---
+
+### 🚀 Deploying On Heroku
+
+1. In `zagreballer/settings.py`, change:
+
+    ```python
+    DEBUG = False
+    ```
+
+2. Collect static files:
+
+    ```bash
+    python manage.py collectstatic
+    ```
+
+3. Go to the [Heroku Dashboard](https://dashboard.heroku.com/apps)
+4. Click **New → Create new app**
+5. Choose a name and click **Create app**
+6. Under the **Deploy** tab, select **GitHub** as the deployment method
+7. Search for your forked repository and connect it
+8. Go to the **Settings** tab → click **Reveal Config Vars**
+9. Add all key-value pairs from your `env.py` file
+10. Add this additional config variable:
+
+    ```
+    DISABLE_COLLECTSTATIC = 1
+    ```
+
+11. Go back to the **Deploy** tab, scroll down, and click **Deploy Branch**
+
+🎉 Congratulations, you now have a live deployed app!
+
+<br>
+
 ## Credits and Acknowledgments
 
 - The custom Django user model was initially based on code from this helpful tutorial, which I later adapted to fit my needs: [Django Custom User Model Tutorial](https://learndjango.com/tutorials/django-custom-user-model)  
