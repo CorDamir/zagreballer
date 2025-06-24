@@ -8,8 +8,11 @@ from .models import Player
 from .forms import PlayerImageUpdate
 
 
-# views
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    """
+    Overrides the default PasswordResetConfirmView to display
+    form validation errors as Django messages.
+    """
     def form_invalid(self, form):
         message = "<br>".join(
             error for errors in form.errors.values() for error in errors
@@ -19,9 +22,14 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
 
 
 def login_handler(request):
+    """
+    Authenticates a user using submitted username and password.
+    On success: logs in the user and redirects to the index page.
+    On failure: sets message and redirects to the login form.
+    """
     if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
+        username = request.POST.get("username", "")
+        password = request.POST.get("password", "")
 
         user = authenticate(
             request,
@@ -47,42 +55,42 @@ def login_handler(request):
 
 
 def signup_handler(request):
+    """
+    Registers a new user if validation passes.
+    Stores errors as messages and redirects to login form on failure.
+    Deletes 'signup' session flag upon successful registration.
+    """
     if request.method == "POST":
         request.session["signup"] = True
         data = request.POST
-        user = Player
 
-        user.email = data["email"]
-        user.username = data["username"]
-        user.password = data["password"]
+        username = data.get("username", "")
+        password = data.get("password", "")
+        confirm_password = data.get("confirm-password", "")
+        email = data.get("email", "")
 
-        if (Player.objects.filter(username=user.username).exists()):
+        if (Player.objects.filter(username=username).exists()):
             message = "Username already taken :("
 
-        elif not (3 <= len(user.username) <= 15):
+        elif not (3 <= len(username) <= 15):
             message = "Username should be between 3 and 15 characters long."
 
-        elif user.password != data["confirm-password"]:
+        elif password != confirm_password:
             message = "Passwords do not match."
 
         else:
             try:
-                validate_password(
-                    user.password, user=user, password_validators=None
-                )
-
+                validate_password(password)
             except ValidationError as e:
-                message = ""
-                for error in e.error_list:
-                    for err in error.messages:
-                        message += err + "<br>"
-
-            else:
-                user = Player.objects.create_user(
-                    username=user.username,
-                    email=user.email,
-                    password=user.password
+                message = "<br>".join(
+                    err for error in e.error_list for err in error.messages
                     )
+            else:
+                Player.objects.create_user(
+                    username=username,
+                    email=email,
+                    password=password
+                )
 
                 del request.session["signup"]
                 success(request, "Sign up completed. You can now log in.")
@@ -98,6 +106,10 @@ def signup_handler(request):
 
 
 def logout_handler(request):
+    """
+    Logs out the current user and redirects to the index page.
+    Displays a success message if the user was logged in.
+    """
     if request.user.is_authenticated:
         logout(request)
         success(request, "You are now logged out.")
@@ -108,6 +120,11 @@ def logout_handler(request):
 
 
 def show_personal_profile(request, slg):
+    """
+    Displays and allows editing of the authenticated user's own profile.
+    If accessed via POST, updates personal data and profile image.
+    Requires the slug to match the logged-in user's username.
+    """
     if request.user.is_anonymous:
         return anon_user(request)
 
@@ -121,10 +138,10 @@ def show_personal_profile(request, slg):
 
         if request.method == "POST":
             data = request.POST
-            player.first_name = data["first_name"]
-            player.last_name = data["last_name"]
-            player.email = data["email"]
-            player.birthdate = data["birthdate"]
+            player.first_name = data.get("first_name", "")
+            player.last_name = data.get("last_name", "")
+            player.email = data.get("email", "")
+            player.birthdate = data.get("birthdate", "")
 
             # image works through form
             image_form = PlayerImageUpdate(
@@ -171,6 +188,11 @@ def show_personal_profile(request, slg):
 
 
 def show_profile(request, slg):
+    """
+    Displays a public user's profile by slug (username).
+    If the user does not exist, redirects to the index with a message.
+    Currently low on priority list for development.
+    """
     player = check_player(slg)
 
     if player is not None:
@@ -185,6 +207,9 @@ def show_profile(request, slg):
 
 
 def login_form(request):
+    """
+    Renders the login/signup form page.
+    """
     return render(
         request,
         "login-forms.html"
@@ -194,9 +219,13 @@ def login_form(request):
 # helper functions
 def check_player(slg):
     """
-    argument: username;
-    returns 'Player' model instance if username exists in databese
-    returns 'None' otherwise
+    Attempts to retrieve a Player by username (slug).
+
+    Args:
+        slg (str): Username slug to look up.
+
+    Returns:
+        Player instance if found, None otherwise.
     """
     try:
         player = Player.objects.get(username=slg)
