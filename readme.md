@@ -4,12 +4,13 @@ ZagreBaller is the ultimate app for futsal enthusiasts. Connect with players, or
 
 ![](readme/mockup.png)
 
-# PROJECT IDEA AND TARGET
+## PROJECT IDEA AND TARGET
 
 Project idea is to create an online platform dedicated to connecting futsal players, enabling them to organize games, join local events, and engage with a community of like-minded sports enthusiasts. It aims to simplify the process of finding futsal players and venues, fostering better access to recreational and competitive futsal opportunities. In addition, it serves as a great entry point for newcomers to the city to quickly find teams. Idea is based on a real need in my city and I'm proud to say it resulted in connecting a young Korean group to their first game even during research phase! Information gathered was organized into user stories with a noticed strong notion that the system needs to be fast and simple with no elaborate social media-like features.
 
+<br>
 
-## USER STORIES BASED APPROACH
+## USER STORIES
 
 ### Epic: User profile management
 
@@ -98,23 +99,81 @@ As a user, I want to see all the games I have joined or created, so that I can k
 - A list of all games user is a part of
 - A clear distinction between games the user has joined and games they have created.
 
+<br>
 
-# DATA MODEL
-Once again used pen and paper for drawing and came up with the generated model below. There were no changes to the idea of the model or fields made throughout the whole project. Some changes were made to fit django implementation.
+## Agile Development
 
-![](readme/database-model.jpg)
+Project followed Agile methodology throughout development. Core practices included:
 
-# UX DESIGN
+- **Iterative Planning**: Development began with user stories based on real-life interviews and observed needs in the local futsal community, forming the core of the MVP.
+
+- **Sprint-Based Progress**: Work was structured into short, focused sprints—each targeting key deliverables such as game creation, authentication, or messaging—allowing for incremental feature delivery and visible progress.
+
+- **Prioritization (MoSCoW Method)**: Features were prioritized using the MoSCoW method (Must have, Should have, Could have, Won’t have for now), ensuring the MVP was both functional and lean. "Must have" items included core gameplay features like joining and creating games, while less critical elements like player rankings were deferred.
+
+- **Retrospectives**: Each development cycle concluded with a reflection on what worked, what didn’t, and what could be improved—leading to ongoing UX and workflow enhancements, especially on mobile.
+
+### GitHub Agile Workflow
+
+The project’s Agile development was managed using GitHub Projects, Issues, and Milestones to ensure transparent and organized progress tracking.
+
+- **Project Board Structure:**  
+  The Kanban board is grouped by parent issues called **Epics**, each representing a broad feature area. Under each Epic, sub-issues represent individual **User Stories** (in the MVP milestone) or specific **Tasks** (in the Revision and Documentation milestones).
+
+- **Milestones:**  
+  - **MVP:** Contains all user stories necessary for the Minimum Viable Product, as outlined in this README.  
+  - **Revision:** Focuses on thorough testing, documenting test results, creating issues for bugs or improvements, and resolving them. Issues here are prioritized using the MoSCoW method with labels.  
+  - **Documentation:** Divided into two Epics — one for building `TESTING.md` (completed) and another for creating and refining this `README.md`.
+
+- **Issue Prioritization:**  
+  The MoSCoW method was applied to prioritize tasks and features across milestones, ensuring focus on essential functionality before moving to enhancements.
+
+Below is a snapshot of the project Kanban board grouped by Epics and sliced by milestones:
+
+![GitHub Project Kanban Board](./readme/gitHub_project_example.png)
+
+<br>
+
+## UX DESIGN
+
+### Logic behind choices
 
 Following the notion of making a simple, fast and direct system and realizing most players would be using phones to browse and join I've decided to organize games into cards and display them below each other with larger screens utilizing extra width to display them in rows. Easy with flexbox! Information shown will contain date, time, name of the arena, CITY BLOCK of the arena as newcomers to city would love to see that. It's followed by total players and a number of open spots. The crucial information and nothing more! On touching one of the cards extra information is shown and functionality to join displayed with a link to exact google maps location available. Forms for inputting data are simple, mobile-friendly, choice based and pre-filled with most popular options (like the date being today or team size of 6). Theme is to be vibrant background and darker elements with light text. Honestly because i personally like it. :)
 
-Just like for user stories I've used pen and paper to visualize the simple idea
+### Wireframes
 
-<img src="readme/general.jpg" width="300" height="300"><img src="readme/form.jpg" width="300" height="300">
+Created wireframes display general idea with a sidemenu for smaller screens and multiple columns display for larger screens
 
-However, I've used AI to generate background images and Coolors website to match colors to it. Links in credits section
+- Browsing games
 
-<img src="static/assets/images/bg-big.webp" width="200" height="250"><img src="static/assets/images/simple-background.webp" width="200" height="250">
+<img src="readme/wireframes/browse_page.png" width="750"/>
+
+<br>
+
+- Creating game
+
+<img src="readme/wireframes/create_edit_game.png" width="750"/>
+
+<br>
+
+- Game details after joining game
+
+<img src="readme/wireframes/game_detail.png" width="750"/>
+
+<br>
+
+- Collapsable menu on mobile
+
+<p float="left">
+  <img src="readme/wireframes/mobile_browse.png" height="600" style="margin-right:10px;">
+  <img src="./readme/wireframes/mobile_menu_open.png" height="600"/>
+</p>
+
+
+### Background and card images
+AI was used to generate background images and Coolors website to match colors to it. Links in credits section
+
+<img src="static/assets/images/bg-big.webp" width="350" height="620"><img src="static/assets/images/simple-background.webp" width="350" height="620">
 
 # FEATURES
 
@@ -219,11 +278,46 @@ Now you're back in newly edited game's detailed view and have the option to dele
 
 Ther is one more option on the sidebar after you've created next week's games and left for the day. It's waiting for your return and readily shows you all the games you've created and joined to easily organize yourself. My games gives you exactly this.
 
-![](readme/features/14-edit.png)
+![](readme/features/15-my-games.png)
 
+## DATA MODEL
+ - FutsalGame is the central model representing an instance of the organized game to be played with crucial information about needed players, how big the teams are, date and time of match
+ - Player is a model representing a person joining the game (or creating). It contains personal information and connects users to system via authentication
+ - FutsalGame and Player are in a `many-to-many` relationship for purpose of joining games as multiple players can join and create multiple games and game contains multiple players
+ - FutsalGame and Player also share another direct relationship related to game creation; `one-to-many` as one player can create multiple games, but a game can have only one creator
+ - FutsalField is a model representing a physical venue and containing it's location
+ - FutsalField and FutsalGame are in a `one-to-many` relationship as a game instance can only happen on one location, but a location can host multiple games
+ - CommentModel represents user's comment for a game communication section 
+ - CommentModel relates to both FutsalField and Player wih a `many-to-one` relationship as a particular comment can only have one creator and belong to one game but users can create many comments on many games
+ - please see diagram below for detailed information
 
+    ![](readme/database-model.jpg)
 
-# CREDITS
+<br>
+
+## Data Security
+
+ZagreBaller follows standard Django security practices to protect user data and application integrity. Key security measures include:
+
+- **Secret Management**: Sensitive information such as Django's secret key and API keys are stored securely in an `env.py` file and injected into environment variables. This ensures that no secrets are hard-coded or exposed in the codebase.
+
+- **Deployment Security**: The application is deployed on Heroku, which provides a secure platform with HTTPS enabled by default to ensure encrypted communication between users and the server.
+
+- **Debugging Mode**: Debugging mode is explicitly disabled (`DEBUG = False`) in the production environment to prevent exposure of sensitive debugging information.
+
+- **Authentication**: Django’s built-in authentication system manages user login securely, handling password hashing and session management.
+
+While no additional custom security features were implemented, the project benefits from Django’s mature security framework and the security infrastructure provided by Heroku.
+
+<br>
+
+## Testing
+
+Comprehensive testing was performed throughout the project. For detailed testing procedures and results, please see the [TESTING.md](./TESTING.md) file.
+
+<br>
+
+## Credits
 
 - I've copied the code and later edited it a bit while using this tutorial to create a custom user model in django: [Tutorial used](https://learndjango.com/tutorials/django-custom-user-model)
 - I've copied the code for login/signup two in one form and used it significantly on other elements of page after changing from this source: [Source for login form](https://www.codingnepalweb.com/create-login-registration-form-html-css/)
@@ -237,7 +331,7 @@ Ther is one more option on the sidebar after you've created next week's games an
 
 
 
-# TO STRUCTURE MENTIONS LATER
+## TO STRUCTURE MENTIONS LATER
 - Y Sheet App https://app.ysheet.com/
 - sendgrid https://app.sendgrid.com/
 - chat gpt sheet to markdown
