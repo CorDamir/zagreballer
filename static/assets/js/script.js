@@ -6,10 +6,10 @@ function toggleMenu(){
 }
 
 function displayConfirmationModal(){
-    postForm = document.getElementsByTagName("form")[0]
+    postForm = document.getElementsByTagName("form")[0];
     link = this.getAttribute("data-action");
 
-    if (link) MODAL.classList.toggle("hidden")
+    if (link) MODAL.classList.toggle("hidden");
     else if (postForm) {
         if (postForm.checkValidity()) MODAL.classList.toggle("hidden");
         else postForm.reportValidity();

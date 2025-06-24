@@ -285,3 +285,10 @@ Testing for desktop results:
 - I've used [chatGPT](https://chatgpt.com/) to generate generic user stories before starting the project and its response has affected my design and approach
 - To get fitting colors after settling on my background I used [coolors](https://coolors.co/c2efb3-97abb1-746f72-735f3d-594a26)
 - AI generated images were converted to .webp format using [freeconvert](https://www.freeconvert.com/)
+
+
+
+# TO STRUCTURE MENTIONS LATER
+- Y Sheet App https://app.ysheet.com/
+- sendgrid https://app.sendgrid.com/
+- chat gpt sheet to markdown
