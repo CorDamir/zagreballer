@@ -350,11 +350,6 @@ Realizing you'll actually be starting an hour later than shown, you click on edi
 
 Now you're back in newly edited game's detailed view and have the option to delete it since three of your friends cancelled and you don't feel like looking for 6 more players in the next 40 minutes. No problem, just use the delete button, confirm the action and you're done. Start looking for players earlier next time :)
 
-<details>
-  <summary>View Features</summary><br>
-
-</details>
-
 ### My games
 
 Ther is one more option on the sidebar after you've created next week's games and left for the day. It's waiting for your return and readily shows you all the games you've created and joined to easily organize yourself. My games gives you exactly this.
@@ -527,3 +522,4 @@ To have this project on your own repository and in deployment there is some work
 - The [Y Sheet App](https://app.ysheet.com/) was used to organize and manage all development and testing data efficiently  
 - Email functionality for password recovery was implemented using [SendGrid](https://app.sendgrid.com/)  
 - To learn and follow Python docstring standards, I referred to [PEP 257](https://peps.python.org/pep-0257/)
+- Wireframes were generated using [Balzamiq](https://balsamiq.com/)
