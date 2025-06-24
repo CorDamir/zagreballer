@@ -368,7 +368,7 @@ Ther is one more option on the sidebar after you've created next week's games an
 
 <br>
 
-## DATA MODEL
+## Data Model
 
 - **FutsalGame** is the core model representing a scheduled futsal match, including essential details such as the number of players needed, team sizes, and the date and time of the game.  
 - **Player** represents a user participating in the system, either by joining or creating games. It stores personal information and is linked to the authentication system.  
@@ -407,22 +407,18 @@ Comprehensive testing was performed throughout the project. For detailed testing
 
 <br>
 
-## Credits
+## Credits and Acknowledgments
 
-- I've copied the code and later edited it a bit while using this tutorial to create a custom user model in django: [Tutorial used](https://learndjango.com/tutorials/django-custom-user-model)
-- I've copied the code for login/signup two in one form and used it significantly on other elements of page after changing from this source: [Source for login form](https://www.codingnepalweb.com/create-login-registration-form-html-css/)
-- To generate images [Leonardo AI](https://app.leonardo.ai/) was used
-- To fix database - django interaction by running SQL queries directly I used [DBeaver](https://dbeaver.io/)
-- To remind myself of html/css and research options [W3Schools](https://www.w3schools.com/) and [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/CSS) were a great source
-- By far the biggest source of information and time spent on reading and research was [official django documentation](https://docs.djangoproject.com/en/5.1/)
-- I've used [chatGPT](https://chatgpt.com/) to generate generic user stories before starting the project and its response has affected my design and approach
-- To get fitting colors after settling on my background I used [coolors](https://coolors.co/c2efb3-97abb1-746f72-735f3d-594a26)
-- AI generated images were converted to .webp format using [freeconvert](https://www.freeconvert.com/)
-
-
-
-## TO STRUCTURE MENTIONS LATER
-- Y Sheet App https://app.ysheet.com/
-- sendgrid https://app.sendgrid.com/
-- chat gpt sheet to markdown
-- pep257 https://peps.python.org/pep-0257/
+- The custom Django user model was initially based on code from this helpful tutorial, which I later adapted to fit my needs: [Django Custom User Model Tutorial](https://learndjango.com/tutorials/django-custom-user-model)  
+- The combined login/signup form design was inspired by this source, and I extended its style to other page elements after customization: [Login/Registration Form Source](https://www.codingnepalweb.com/create-login-registration-form-html-css/)  
+- All images were generated using the AI tool [Leonardo AI](https://app.leonardo.ai/)  
+- For managing and troubleshooting database interactions, especially running direct SQL queries with Django, I relied on the database tool [DBeaver](https://dbeaver.io/)  
+- To refresh and research HTML/CSS concepts, I frequently consulted [W3Schools](https://www.w3schools.com/) and the [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/CSS)  
+- The most comprehensive and invaluable resource throughout development was the [official Django documentation](https://docs.djangoproject.com/en/5.1/)  
+- I used [ChatGPT](https://chatgpt.com/) to generate generic user stories at the start of the project, which significantly influenced the design and development approach
+- Also, [ChatGPT](https://chatgpt.com/) to convert spreadsheed data into markdown format copied directly to TESTING.md saving enormous amount of time   
+- After selecting the background images, the color palette was carefully chosen using [Coolors](https://coolors.co/c2efb3-97abb1-746f72-735f3d-594a26)  
+- AI-generated images were optimized and converted to .webp format with the help of [FreeConvert](https://www.freeconvert.com/)
+- The [Y Sheet App](https://app.ysheet.com/) was used to organize and manage all development and testing data efficiently  
+- Email functionality for password recovery was implemented using [SendGrid](https://app.sendgrid.com/)  
+- To learn and follow Python docstring standards, I referred to [PEP 257](https://peps.python.org/pep-0257/)
